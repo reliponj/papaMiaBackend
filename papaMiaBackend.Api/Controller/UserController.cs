@@ -33,6 +33,11 @@ namespace papaMiaBackend.Api.Controller
         [HttpPost]
         public IActionResult CreateUser([FromBody] User user)
         {
+            if (string.IsNullOrWhiteSpace(user.Username) || string.IsNullOrWhiteSpace(user.Email))
+            {
+                return BadRequest(new { Message = "Username and Email are required" });
+            }
+
             user.Id = _nextId++;
             user.CreatedAt = DateTime.UtcNow;
 
@@ -44,6 +49,11 @@ namespace papaMiaBackend.Api.Controller
         [HttpPut("{id}")]
         public IActionResult UpdateUser(int id, [FromBody] User updatedUser)
         {
+            if (string.IsNullOrWhiteSpace(updatedUser.Username) || string.IsNullOrWhiteSpace(updatedUser.Email))
+            {
+                return BadRequest(new { Message = "Username and Email are required" });
+            }
+
             var existingUser = _users.FirstOrDefault(u => u.Id == id);
             if (existingUser == null)
             {
@@ -52,6 +62,7 @@ namespace papaMiaBackend.Api.Controller
 
             existingUser.Username = updatedUser.Username;
             existingUser.Email = updatedUser.Email;
+            existingUser.IsActive = updatedUser.IsActive;
 
             return Ok(existingUser);
         }
