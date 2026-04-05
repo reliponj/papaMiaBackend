@@ -1,3 +1,6 @@
 <Solution>
   <Project Path="papaMiaBackend.Api/papaMiaBackend.Api.csproj" />
+  <Project Path="papaMiaBackend.BusinessLogic/papaMiaBackend.BusinessLogic.csproj" Id="65267793-9855-4999-882a-674c7c2708a4" />
+  <Project Path="papaMiaBackend.Domain/papaMiaBackend.Domain.csproj" Id="99c87f12-e886-4579-885a-2ab9d9e3b121" />
+  <Project Path="papaMiaBackend.Helpers/papaMiaBackend.Helpers.csproj" Id="351468e7-d56e-4a08-a9d4-3064ed11fb89" />
 </Solution>
