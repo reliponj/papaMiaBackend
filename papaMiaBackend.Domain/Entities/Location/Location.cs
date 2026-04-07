@@ -33,4 +33,15 @@ public class Location
     [StringLength(100, MinimumLength = 5, ErrorMessage = "Worktime cannot be longer than 100 chars.")]
     public string Worktime { get; set; } = string.Empty;
 
+    [Required]
+    [Display(Name = "Latitude")]
+    public double Latitude { get; set; }
+
+    [Required]
+    [Display(Name = "Longitude")]
+    public double Longitude { get; set; }
+
+    [Display(Name = "ImageUrl")]
+    public string ImageUrl { get; set; } = string.Empty;
+
 }
