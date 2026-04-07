@@ -1,16 +1,16 @@
-using Microsoft.EntityFrameworkCore;
-using papaMiaBackend.Domain.Entities.User;
+﻿using Microsoft.EntityFrameworkCore;
+using papaMiaBackend.Domain.Entities.Product;
 
 namespace papaMiaBackend.DataAccess.Context;
 
-public class UserContext : DbContext
+public class ProductContext : DbContext
 {
-    public UserContext(DbContextOptions<UserContext> options)
+    public ProductContext(DbContextOptions<ProductContext> options)
         : base(options)
     {
     }
 
-    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Product> Products { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

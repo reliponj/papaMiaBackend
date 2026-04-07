@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 DbSession.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<UserContext>(options => options.UseNpgsql(DbSession.ConnectionString));
+builder.Services.AddDbContext<ProductContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
