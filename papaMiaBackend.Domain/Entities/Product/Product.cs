@@ -31,10 +31,20 @@ public class Product
     [Display(Name = "ImageUrl")]
     public string ImageUrl { get; set; } = string.Empty;
 
+    [Required]
+    [Display(Name = "Weight")]
+    public int Weight { get; set; } = 0;
+
+    [Required]
+    [Display(Name = "WeightType")]
+    public string WeightType { get; set; } = string.Empty;
+
     [Display(Name = "Allergens")]
     public string Allergens { get; set; } = string.Empty;
 
     [Display(Name = "IsActive")]
     public bool IsActive { get; set; } = true;
+
+
 }
 
