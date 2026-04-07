@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using papaMiaBackend.Domain.Entities.User;
 
-namespace papaMiaBackend.BusinessLogic.DBModel;
+namespace papaMiaBackend.Domain.Data;
 
 public class UserContext : DbContext
 {

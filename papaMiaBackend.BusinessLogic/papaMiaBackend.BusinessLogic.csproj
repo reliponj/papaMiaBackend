@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -9,14 +9,6 @@
   <ItemGroup>
     <ProjectReference Include="..\papaMiaBackend.Domain\papaMiaBackend.Domain.csproj" />
     <ProjectReference Include="..\papaMiaBackend.Helpers\papaMiaBackend.Helpers.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DBModel\Seed\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
   </ItemGroup>
 
 </Project>
