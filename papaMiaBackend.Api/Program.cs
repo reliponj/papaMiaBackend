@@ -1,6 +1,7 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
-using papaMiaBackend.Domain.Data;
+using papaMiaBackend.DataAccess;
+using papaMiaBackend.DataAccess.Context;
 
 var envPath = Path.Combine(AppContext.BaseDirectory, ".env");
 if (File.Exists(envPath))
@@ -10,9 +11,9 @@ if (File.Exists(envPath))
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+DbSession.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<UserContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<UserContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

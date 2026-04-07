@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\papaMiaBackend.BusinessLogic\papaMiaBackend.BusinessLogic.csproj" />
+    <ProjectReference Include="..\papaMiaBackend.DataAccess\papaMiaBackend.DataAccess.csproj" />
     <ProjectReference Include="..\papaMiaBackend.Domain\papaMiaBackend.Domain.csproj" />
   </ItemGroup>
 
