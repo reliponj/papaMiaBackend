@@ -12,8 +12,8 @@ using papaMiaBackend.DataAccess.Context;
 namespace papaMiaBackend.DataAccess.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20260407111934_Initial")]
-    partial class Initial
+    [Migration("20260407184848_Initial Migration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
