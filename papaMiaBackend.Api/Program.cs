@@ -15,6 +15,7 @@ DbSession.ConnectionString = builder.Configuration.GetConnectionString("DefaultC
 
 builder.Services.AddDbContext<UserContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<ProductContext>(options => options.UseNpgsql(DbSession.ConnectionString));
+builder.Services.AddDbContext<LocationContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
