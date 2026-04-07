@@ -1,15 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
+using papaMiaBackend.Domain.Entities.User;
 
-namespace papaMiaBackend.BusinessLogic.DBModel
+namespace papaMiaBackend.BusinessLogic.DBModel;
+
+public class UserContext : DbContext
 {
-    class UserContext : DbContext
+    public UserContext(DbContextOptions<UserContext> options)
+        : base(options)
     {
-        public UserContext() : base()
-        {
-
-        }
     }
+
+    public virtual DbSet<UDbTable> Users { get; set; }
 }

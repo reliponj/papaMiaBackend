@@ -1,4 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using papaMiaBackend.BusinessLogic.DBModel;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<UserContext>(options =>options.UseSqlite("papamia.db"));
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

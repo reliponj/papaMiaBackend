@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace papaMiaBackend.Domain.Entities.User
 {
-    class UDbTable
+    public class UDbTable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -32,6 +32,6 @@ namespace papaMiaBackend.Domain.Entities.User
         [StringLength(30)]
         public string LastIp { get; set; }
 
-        public URole Level { get; set; }
+        public URole Level { get; set; } = new URole();
     }
 }
