@@ -26,6 +26,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<UserMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ProductMappingProfile>());
 builder.Services.AddScoped<BusinessLogicManager>();
 
 var app = builder.Build();

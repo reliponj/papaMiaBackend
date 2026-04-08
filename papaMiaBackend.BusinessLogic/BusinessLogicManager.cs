@@ -8,21 +8,23 @@ namespace papaMiaBackend.BusinessLogic;
 public class BusinessLogicManager
 {
     private readonly IMapper _mapper;
-    private readonly UserContext _db;
+    private readonly UserContext _userDb;
+    private readonly ProductContext _productDb;
 
-    public BusinessLogicManager(IMapper mapper, UserContext db)
+    public BusinessLogicManager(IMapper mapper, UserContext userDb, ProductContext productDb)
     {
         _mapper = mapper;
-        _db = db;
+        _userDb = userDb;
+        _productDb = productDb;
     }
 
     public IUserAction UserAction()
     {
-        return new UserActionExecution(_mapper, _db);
+        return new UserActionExecution(_mapper, _userDb);
     }
 
     public IProductAction ProductAction()
     {
-        return new ProductActionExecution(_mapper, _db);
+        return new ProductActionExecution(_mapper, _productDb);
     }
 }
