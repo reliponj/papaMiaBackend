@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using papaMiaBackend.BusinessLogic.Interfaces;
+using papaMiaBackend.Domain.Models.User;
 
 namespace papaMiaBackend.Api.Controller;
 
@@ -20,5 +21,19 @@ public class UserController : ControllerBase
     {
         var users = _user.GetAllUsersAction();
         return Ok(users);
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult GetUserById(int id)
+    {
+        var user = _user.GetUserByIdAction(id);
+        return Ok(user);
+    }
+
+    [HttpPost]
+    public IActionResult CreateUser(UserCreateDto userCreateDto)
+    {
+        var user = _user.CreateUserAction(userCreateDto);
+        return Ok(user);
     }
 }

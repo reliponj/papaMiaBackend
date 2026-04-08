@@ -7,21 +7,27 @@ public class UserActions
 {
     public UserActions() { }
 
+    internal List<UserDto> users = new List<UserDto>();
+
     internal List<UserDto> GetAllUsersActionExecution()
     {
-        var users = new List<UserDto>();
+        return users;
+    }
 
+    internal UserDto GetUserByIdActionExecution(int id)
+    {
+        var user = users.FirstOrDefault(u => u.Id == id);
+        return user;
+    }
+
+    internal UserDto CreateUserActionExecution(UserCreateDto userCreateDto)
+    {
         var user = new UserDto
         {
-            Id = 1,
-            Username = "TestUser",
-            Email = "test@example.com",
-            LastLogin = DateTime.UtcNow,
-            LastIp = "127.0.0.1",
-            Level = URole.User
+            Username = userCreateDto.Username,
+            Email = userCreateDto.Email,
         };
-
         users.Add(user);
-        return users;
+        return user;
     }
 }

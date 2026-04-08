@@ -10,4 +10,14 @@ public class UserActionExecution : UserActions, IUserAction
     {
         return GetAllUsersActionExecution();
     }
+
+    public UserDto GetUserByIdAction(int id)
+    {
+        return GetUserByIdActionExecution(id);
+    }
+
+    public UserDto CreateUserAction(UserCreateDto userCreateDto)
+    {
+        return CreateUserActionExecution(userCreateDto);
+    }
 }
