@@ -18,7 +18,7 @@ public class UserActionExecution : UserActions, IUserAction
         return GetAllUsersActionExecution();
     }
 
-    public UserDto GetUserByIdAction(int id)
+    public UserDto? GetUserByIdAction(int id)
     {
         return GetUserByIdActionExecution(id);
     }
@@ -28,13 +28,13 @@ public class UserActionExecution : UserActions, IUserAction
         return CreateUserActionExecution(userCreateDto);
     }
 
-    public UserDto UpdateUserAction(int id, UserUpdateDto userUpdateDto)
+    public UserDto? UpdateUserAction(int id, UserUpdateDto userUpdateDto)
     {
         return UpdateUserActionExecution(id, userUpdateDto);
     }
 
-    public void DeleteUserAction(int id)
+    public bool DeleteUserAction(int id)
     {
-        DeleteUserActionExecution(id);
+        return DeleteUserActionExecution(id);
     }
 }

@@ -19,16 +19,16 @@ public class UserActions
 
     internal List<UserDto> GetAllUsersActionExecution()
     {
-        var entities = Db.Users.AsNoTracking().ToList();
+        var entities = Db.Users.ToList();
         return Mapper.Map<List<UserDto>>(entities);
     }
 
-    internal UserDto GetUserByIdActionExecution(int id)
+    internal UserDto? GetUserByIdActionExecution(int id)
     {
-        var entity = Db.Users.AsNoTracking().FirstOrDefault(u => u.Id == id);
+        var entity = Db.Users.FirstOrDefault(u => u.Id == id);
         if (entity == null)
         {
-            throw new Exception("User not found");
+            return null;
         }
 
         return Mapper.Map<UserDto>(entity);
@@ -42,12 +42,12 @@ public class UserActions
         return Mapper.Map<UserDto>(entity);
     }
 
-    internal UserDto UpdateUserActionExecution(int id, UserUpdateDto userUpdateDto)
+    internal UserDto? UpdateUserActionExecution(int id, UserUpdateDto userUpdateDto)
     {
         var entity = Db.Users.FirstOrDefault(u => u.Id == id);
         if (entity == null)
         {
-            throw new Exception("User not found");
+            return null;
         }
 
         entity.Username = userUpdateDto.Username;
@@ -56,15 +56,16 @@ public class UserActions
         return Mapper.Map<UserDto>(entity);
     }
 
-    internal void DeleteUserActionExecution(int id)
+    internal bool DeleteUserActionExecution(int id)
     {
         var entity = Db.Users.FirstOrDefault(u => u.Id == id);
         if (entity == null)
         {
-            throw new Exception("User not found");
+            return false;
         }
 
         Db.Users.Remove(entity);
         Db.SaveChanges();
+        return true;
     }
 }

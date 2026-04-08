@@ -11,6 +11,8 @@ public class UserController : ControllerBase
 {
     internal IUserAction _user;
 
+    private IActionResult UserNotFound() => NotFound(new { message = "user_not_found" });
+
     public UserController(BusinessLogicManager bl)
     {
         _user = bl.UserAction();
@@ -27,6 +29,11 @@ public class UserController : ControllerBase
     public IActionResult GetUserById(int id)
     {
         var user = _user.GetUserByIdAction(id);
+        if (user is null)
+        {
+            return UserNotFound();
+        }
+
         return Ok(user);
     }
 
@@ -41,13 +48,23 @@ public class UserController : ControllerBase
     public IActionResult UpdateUser(int id, UserUpdateDto userUpdateDto)
     {
         var user = _user.UpdateUserAction(id, userUpdateDto);
+        if (user is null)
+        {
+            return UserNotFound();
+        }
+
         return Ok(user);
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteUser(int id)
     {
-        _user.DeleteUserAction(id);
+        var result = _user.DeleteUserAction(id);
+        if (!result)
+        {
+            return UserNotFound();
+        }
+
         return NoContent();
     }
 }
