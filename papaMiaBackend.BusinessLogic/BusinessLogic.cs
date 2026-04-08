@@ -1,15 +1,14 @@
-﻿using papaMiaBackend.BusinessLogic.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using papaMiaBackend.BusinessLogic.Interfaces;
+using papaMiaBackend.BusinessLogic.Structure;
 
-namespace papaMiaBackend.BusinessLogic
+namespace papaMiaBackend.BusinessLogic;
+
+public class BusinessLogic
 {
-    public class BusinessLogic
+    public BusinessLogic() { }
+
+    public IUserAction UserAction()
     {
-        public ISessionAction GetSessionBL()
-        {
-            return new SessionBL();
-        }
+        return new UserActionExecution();
     }
 }
