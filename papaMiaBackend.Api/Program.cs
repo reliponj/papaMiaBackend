@@ -1,5 +1,8 @@
+using AutoMapper;
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using papaMiaBackend.BusinessLogic;
+using papaMiaBackend.BusinessLogic.Mapping;
 using papaMiaBackend.DataAccess;
 using papaMiaBackend.DataAccess.Context;
 
@@ -21,6 +24,9 @@ builder.Services.AddDbContext<BannerContext>(options => options.UseNpgsql(DbSess
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<UserMappingProfile>());
+builder.Services.AddScoped<BusinessLogicManager>();
 
 var app = builder.Build();
 

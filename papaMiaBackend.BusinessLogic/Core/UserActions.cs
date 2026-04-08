@@ -1,3 +1,6 @@
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Entities.User;
 using papaMiaBackend.Domain.Models.User;
 
@@ -5,55 +8,63 @@ namespace papaMiaBackend.BusinessLogic.Core;
 
 public class UserActions
 {
-    public UserActions() { }
+    protected readonly IMapper Mapper;
+    protected readonly UserContext Db;
 
-    internal List<UserDto> users = new List<UserDto>();
+    public UserActions(IMapper mapper, UserContext db)
+    {
+        Mapper = mapper;
+        Db = db;
+    }
 
     internal List<UserDto> GetAllUsersActionExecution()
     {
-        return users;
+        var entities = Db.Users.AsNoTracking().ToList();
+        return Mapper.Map<List<UserDto>>(entities);
     }
 
     internal UserDto GetUserByIdActionExecution(int id)
     {
-        var user = users.FirstOrDefault(u => u.Id == id);
-        if (user == null)
+        var entity = Db.Users.AsNoTracking().FirstOrDefault(u => u.Id == id);
+        if (entity == null)
         {
             throw new Exception("User not found");
         }
-        return user;
+
+        return Mapper.Map<UserDto>(entity);
     }
 
     internal UserDto CreateUserActionExecution(UserCreateDto userCreateDto)
     {
-        var user = new UserDto
-        {
-            Username = userCreateDto.Username,
-            Email = userCreateDto.Email,
-        };
-        users.Add(user);
-        return user;
+        var entity = Mapper.Map<User>(userCreateDto);
+        Db.Users.Add(entity);
+        Db.SaveChanges();
+        return Mapper.Map<UserDto>(entity);
     }
 
     internal UserDto UpdateUserActionExecution(int id, UserUpdateDto userUpdateDto)
     {
-        var user = users.FirstOrDefault(u => u.Id == id);
-        if (user == null)
+        var entity = Db.Users.FirstOrDefault(u => u.Id == id);
+        if (entity == null)
         {
             throw new Exception("User not found");
         }
-        user.Username = userUpdateDto.Username;
-        user.Email = userUpdateDto.Email;
-        return user;
+
+        entity.Username = userUpdateDto.Username;
+        entity.Email = userUpdateDto.Email;
+        Db.SaveChanges();
+        return Mapper.Map<UserDto>(entity);
     }
 
     internal void DeleteUserActionExecution(int id)
     {
-        var user = users.FirstOrDefault(u => u.Id == id);
-        if (user == null)
+        var entity = Db.Users.FirstOrDefault(u => u.Id == id);
+        if (entity == null)
         {
             throw new Exception("User not found");
         }
-        users.Remove(user);
+
+        Db.Users.Remove(entity);
+        Db.SaveChanges();
     }
 }

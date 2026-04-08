@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
 using papaMiaBackend.Domain.Models.User;
 
@@ -10,9 +11,8 @@ public class UserController : ControllerBase
 {
     internal IUserAction _user;
 
-    public UserController()
+    public UserController(BusinessLogicManager bl)
     {
-        var bl = new papaMiaBackend.BusinessLogic.BusinessLogic();
         _user = bl.UserAction();
     }
 
@@ -47,7 +47,7 @@ public class UserController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeleteUser(int id)
     {
-        var user = _user.DeleteUserAction(id);
+        _user.DeleteUserAction(id);
         return NoContent();
     }
 }

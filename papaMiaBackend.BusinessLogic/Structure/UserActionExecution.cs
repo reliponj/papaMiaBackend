@@ -1,11 +1,18 @@
+using AutoMapper;
 using papaMiaBackend.BusinessLogic.Core;
 using papaMiaBackend.BusinessLogic.Interfaces;
+using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Models.User;
 
 namespace papaMiaBackend.BusinessLogic.Structure;
 
 public class UserActionExecution : UserActions, IUserAction
 {
+    public UserActionExecution(IMapper mapper, UserContext db)
+        : base(mapper, db)
+    {
+    }
+
     public List<UserDto> GetAllUsersAction()
     {
         return GetAllUsersActionExecution();
@@ -28,6 +35,6 @@ public class UserActionExecution : UserActions, IUserAction
 
     public void DeleteUserAction(int id)
     {
-        return DeleteUserActionExecution(id);
+        DeleteUserActionExecution(id);
     }
 }
