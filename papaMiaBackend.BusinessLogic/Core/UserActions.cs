@@ -17,6 +17,10 @@ public class UserActions
     internal UserDto GetUserByIdActionExecution(int id)
     {
         var user = users.FirstOrDefault(u => u.Id == id);
+        if (user == null)
+        {
+            throw new Exception("User not found");
+        }
         return user;
     }
 
@@ -29,5 +33,27 @@ public class UserActions
         };
         users.Add(user);
         return user;
+    }
+
+    internal UserDto UpdateUserActionExecution(int id, UserUpdateDto userUpdateDto)
+    {
+        var user = users.FirstOrDefault(u => u.Id == id);
+        if (user == null)
+        {
+            throw new Exception("User not found");
+        }
+        user.Username = userUpdateDto.Username;
+        user.Email = userUpdateDto.Email;
+        return user;
+    }
+
+    internal void DeleteUserActionExecution(int id)
+    {
+        var user = users.FirstOrDefault(u => u.Id == id);
+        if (user == null)
+        {
+            throw new Exception("User not found");
+        }
+        users.Remove(user);
     }
 }

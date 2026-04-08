@@ -36,4 +36,18 @@ public class UserController : ControllerBase
         var user = _user.CreateUserAction(userCreateDto);
         return Ok(user);
     }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdateUser(int id, UserUpdateDto userUpdateDto)
+    {
+        var user = _user.UpdateUserAction(id, userUpdateDto);
+        return Ok(user);
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteUser(int id)
+    {
+        var user = _user.DeleteUserAction(id);
+        return NoContent();
+    }
 }
