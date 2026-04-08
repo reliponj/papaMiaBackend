@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using papaMiaBackend.BusinessLogic;
+using papaMiaBackend.BusinessLogic.Interfaces;
 
 namespace papaMiaBackend.Api.Controller;
 
@@ -6,4 +8,18 @@ namespace papaMiaBackend.Api.Controller;
 [ApiController]
 public class ProductController : ControllerBase
 {
+    internal IProductAction _product;
+
+    public ProductController(BusinessLogicManager bl)
+    {
+        _product = bl.ProductAction();
+    }
+
+    [HttpGet]
+    public IActionResult GetAllProducts()
+    {
+        var products = _product.GetAllProductsAction();
+        return Ok(products);
+    }
+
 }

@@ -20,4 +20,9 @@ public class BusinessLogicManager
     {
         return new UserActionExecution(_mapper, _db);
     }
+
+    public IProductAction ProductAction()
+    {
+        return new ProductActionExecution(_mapper, _db);
+    }
 }
