@@ -35,4 +35,4 @@ jobs:
             echo "Restarting service..."
             sudo systemctl restart papamia
 
-            echo "Deployment finished"
+            echo "Deployment finished..."
