@@ -23,7 +23,7 @@ jobs:
           port: ${{ secrets.SSH_PORT || 22 }}
           script_stop: true
           script: |
-            set -e
+            sudo -i
 
             echo "Pulling latest code..."
             cd /var/www/papaMiaBackend
