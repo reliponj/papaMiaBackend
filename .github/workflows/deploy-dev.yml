@@ -1,0 +1,38 @@
+name: Deploy (dev)
+
+on:
+  push:
+    branches:
+      - dev
+
+concurrency:
+  group: deploy-dev
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH — pull, publish, restart service
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script_stop: true
+          script: |
+            sudo -i
+
+            echo "Pulling latest code..."
+            cd /var/www/dev/papaMiaBackend
+            git pull origin dev
+
+            echo "Publishing project..."
+            dotnet publish papaMiaBackend.Api/papaMiaBackend.Api.csproj -c Release -o publish
+
+            echo "Restarting service..."
+            sudo systemctl restart papamia-dev
+
+            echo "Deployment finished..."
