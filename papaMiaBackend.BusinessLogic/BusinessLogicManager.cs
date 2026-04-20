@@ -25,6 +25,11 @@ public class BusinessLogicManager
         return new UserActionExecution(_mapper, _userDb);
     }
 
+    public IAuthAction AuthAction()
+    {
+        return new AuthActionExecution(_userDb, _mapper);
+    }
+
     public IProductAction ProductAction()
     {
         return new ProductActionExecution(_mapper, _productDb);
