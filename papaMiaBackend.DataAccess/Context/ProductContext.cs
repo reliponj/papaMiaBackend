@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using papaMiaBackend.Domain.Entities.Product;
+using papaMiaBackend.Domain.Entities.Category;
 
 namespace papaMiaBackend.DataAccess.Context;
 
@@ -11,6 +12,7 @@ public class ProductContext : DbContext
     }
 
     public virtual DbSet<Product> Products { get; set; }
+    public virtual DbSet<Category> Categories { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -19,4 +21,5 @@ public class ProductContext : DbContext
             optionsBuilder.UseNpgsql(DbSession.ConnectionString);
         }
     }
+
 }
