@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using papaMiaBackend.Domain.Models.Category;
 
 namespace papaMiaBackend.BusinessLogic.Interfaces;
 public interface ICategoryAction
 {
+    List<CategoryDto> GetAllCategoriesAction();
 }
 

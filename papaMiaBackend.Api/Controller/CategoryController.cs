@@ -15,5 +15,13 @@ public class CategoryController : ControllerBase
     {
         _category = bl.CategoryAction();
     }
+
+    [HttpGet]
+    public IActionResult GetAllCategories()
+    {
+        var categories = _category.GetAllCategoriesAction();
+        return Ok(categories);
+    }
+
 }
 
