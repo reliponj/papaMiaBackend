@@ -37,6 +37,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseForwardedHeaders();
+
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
