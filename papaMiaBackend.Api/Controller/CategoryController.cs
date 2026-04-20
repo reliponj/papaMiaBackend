@@ -41,5 +41,15 @@ public class CategoryController : ControllerBase
         return Ok(category);
     }
 
+    [HttpPut("{id}")]
+    public IActionResult UpdateCategory(int id, CategoryUpdateDto categoryUpdateDto)
+    {
+        var category = _category.UpdateCategoryAction(id, categoryUpdateDto);
+        if (category == null)
+        {
+            return NotFound(new { message = "category_not_found" });
+        }
+        return Ok(category);
+    }
 }
 

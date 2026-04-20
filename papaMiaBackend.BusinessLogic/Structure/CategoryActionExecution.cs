@@ -24,5 +24,9 @@ public class CategoryActionExecution : CategoryActions, ICategoryAction
     {
         return CreateCategoryActionExecution(categoryCreateDto);
     }
+    public CategoryDto? UpdateCategoryAction(int id, CategoryUpdateDto categoryUpdateDto)
+    {
+        return UpdateCategoryActionExecution(id, categoryUpdateDto);
+    }
 }
 

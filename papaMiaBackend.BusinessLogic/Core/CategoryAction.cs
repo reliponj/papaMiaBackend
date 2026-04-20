@@ -35,5 +35,19 @@ public class CategoryActions
         Db.SaveChanges();
         return Mapper.Map<CategoryDto>(entity);
     }
+    internal CategoryDto? UpdateCategoryActionExecution(int id, CategoryUpdateDto categoryUpdateDto)
+    {
+        var entity = Db.Categories.FirstOrDefault(c => c.Id == id);
+        if (entity == null)
+        {
+            return null;
+        }
+        entity.Name = categoryUpdateDto.Name;
+        entity.Description = categoryUpdateDto.Description;
+        entity.Icon = categoryUpdateDto.Icon;
+        entity.Sort = categoryUpdateDto.Sort;
+        Db.SaveChanges();
+        return Mapper.Map<CategoryDto>(entity);
+    }
 }
 
