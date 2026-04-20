@@ -16,5 +16,9 @@ public class CategoryActionExecution : CategoryActions, ICategoryAction
     {
         return GetAllCategoriesActionExecution();
     }
+    public CategoryDto? GetCategoryByIdAction(int id)
+    {
+        return GetCategoryByIdActionExecution(id);
+    }
 }
 

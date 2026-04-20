@@ -23,5 +23,17 @@ public class CategoryController : ControllerBase
         return Ok(categories);
     }
 
+    [HttpGet("{id}")]
+    public IActionResult GetCategoryById(int id)
+    {
+        var category = _category.GetCategoryByIdAction(id);
+        if (category == null)
+        {
+            return NotFound(new { message = "category_not_found" });
+        }
+        return Ok(category);
+    }
+
+
 }
 

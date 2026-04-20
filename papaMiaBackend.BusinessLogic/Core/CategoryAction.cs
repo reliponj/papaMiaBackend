@@ -2,6 +2,7 @@
 using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Models.Category;
 using papaMiaBackend.Domain.Entities.Category;
+using papaMiaBackend.Domain.Models.Product;
 
 namespace papaMiaBackend.BusinessLogic.Core;
 public class CategoryActions
@@ -18,5 +19,15 @@ public class CategoryActions
         var entities = Db.Categories.ToList();
         return Mapper.Map<List<CategoryDto>>(entities);
     }
+    internal CategoryDto? GetCategoryByIdActionExecution(int id)
+    {
+        var entity = Db.Categories.FirstOrDefault(c => c.Id == id);
+        if (entity == null)
+        {
+            return null;
+        }
+        return Mapper.Map<CategoryDto>(entity);
+    }
+
 }
 

@@ -4,5 +4,6 @@ namespace papaMiaBackend.BusinessLogic.Interfaces;
 public interface ICategoryAction
 {
     List<CategoryDto> GetAllCategoriesAction();
+    CategoryDto? GetCategoryByIdAction(int id);
 }
 
