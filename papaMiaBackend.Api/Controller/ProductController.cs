@@ -23,7 +23,7 @@ public class ProductController : ControllerBase
         return Ok(products);
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public IActionResult GetProductById(int id)
     {
         var product = _product.GetProductByIdAction(id);
@@ -35,11 +35,21 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateProduct(ProductDto productDto)
+    public IActionResult CreateProduct(ProductCreateDto productCreateDto)
     {
-        var product = _product.CreateProductAction(productDto);
+        var product = _product.CreateProductAction(productCreateDto);
         return Ok(product);
     }
 
+    [HttpPut("{id}")]
+    public IActionResult UpdateProduct(int id, ProductUpdateDto productUpdateDto)
+    {
+        var product = _product.UpdateProductAction(id, productUpdateDto);
+        if (product == null)
+        {
+            return NotFound(new { message = "product_not_found" });
+        }
+        return Ok(product);
+    }
 }
 

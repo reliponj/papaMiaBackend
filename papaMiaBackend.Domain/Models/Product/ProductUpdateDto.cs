@@ -1,6 +1,5 @@
 ﻿namespace papaMiaBackend.Domain.Models.Product;
-
-public class ProductCreateDto
+public class ProductUpdateDto
 {
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
@@ -10,3 +9,4 @@ public class ProductCreateDto
     public string WeightType { get; set; } = string.Empty;
     public string Allergens { get; set; } = string.Empty;
 }
+
