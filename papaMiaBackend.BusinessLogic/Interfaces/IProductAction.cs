@@ -8,7 +8,7 @@ public interface IProductAction
 {
     List<ProductDto> GetAllProductsAction();
     ProductDto? GetProductByIdAction(int id);
-
+    ProductDto CreateProductAction(ProductDto productDto);
 }
 
 

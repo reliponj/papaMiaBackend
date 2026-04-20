@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
+using papaMiaBackend.Domain.Models.Product;
 
 namespace papaMiaBackend.Api.Controller;
 
@@ -33,6 +34,12 @@ public class ProductController : ControllerBase
         return Ok(product);
     }
 
+    [HttpPost]
+    public IActionResult CreateProduct(ProductDto productDto)
+    {
+        var product = _product.CreateProductAction(productDto);
+        return Ok(product);
+    }
 
 }
 
