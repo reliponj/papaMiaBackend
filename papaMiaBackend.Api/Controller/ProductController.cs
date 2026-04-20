@@ -51,5 +51,15 @@ public class ProductController : ControllerBase
         }
         return Ok(product);
     }
-}
 
+    [HttpDelete("{id}")]
+    public IActionResult DeleteProduct(int id)
+    {
+        var result = _product.DeleteProductAction(id);
+        if (!result)
+        {
+            return NotFound(new { message = "product_not_found" });
+        }
+        return NoContent();
+    }
+}

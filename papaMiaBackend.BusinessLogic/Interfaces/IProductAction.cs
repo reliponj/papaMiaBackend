@@ -7,6 +7,7 @@ public interface IProductAction
     ProductDto? GetProductByIdAction(int id);
     ProductDto CreateProductAction(ProductCreateDto productCreateDto);
     ProductDto? UpdateProductAction(int id, ProductUpdateDto productUpdateDto);
+    bool DeleteProductAction(int id);
 }
 
 
