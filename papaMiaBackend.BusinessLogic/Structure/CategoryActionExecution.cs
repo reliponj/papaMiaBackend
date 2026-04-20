@@ -28,5 +28,9 @@ public class CategoryActionExecution : CategoryActions, ICategoryAction
     {
         return UpdateCategoryActionExecution(id, categoryUpdateDto);
     }
+    public bool DeleteCategoryAction(int id)
+    {
+        return DeleteCategoryActionExecution(id);
+    }
 }
 

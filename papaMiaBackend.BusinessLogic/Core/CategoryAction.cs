@@ -49,5 +49,16 @@ public class CategoryActions
         Db.SaveChanges();
         return Mapper.Map<CategoryDto>(entity);
     }
+    internal bool DeleteCategoryActionExecution(int id)
+    {
+        var entity = Db.Categories.FirstOrDefault(c => c.Id == id);
+        if (entity == null)
+        {
+            return false;
+        }
+        Db.Categories.Remove(entity);
+        Db.SaveChanges();
+        return true;
+    }
 }
 

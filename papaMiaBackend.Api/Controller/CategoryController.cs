@@ -51,5 +51,16 @@ public class CategoryController : ControllerBase
         }
         return Ok(category);
     }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteCategory(int id)
+    {
+        var result = _category.DeleteCategoryAction(id);
+        if (!result)
+        {
+            return NotFound(new { message = "category_not_found" });
+        }
+        return NoContent();
+    }
 }
 

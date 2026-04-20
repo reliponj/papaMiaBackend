@@ -7,5 +7,6 @@ public interface ICategoryAction
     CategoryDto? GetCategoryByIdAction(int id);
     CategoryDto CreateCategoryAction(CategoryCreateDto categoryCreateDto);
     CategoryDto? UpdateCategoryAction(int id, CategoryUpdateDto categoryUpdateDto);
+    bool DeleteCategoryAction(int id);
 }
 
