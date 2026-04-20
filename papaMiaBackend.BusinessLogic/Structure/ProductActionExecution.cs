@@ -15,8 +15,28 @@ public class ProductActionExecution : ProductActions, IProductAction
         : base(mapper, db)
     {
     }
+
     public List<ProductDto> GetAllProductsAction()
     {
         return GetAllProductsActionExecution();
+    }
+    public ProductDto? GetProductByIdAction(int id)
+    {
+        return GetProductByIdActionExecution(id);
+    }
+
+    public ProductDto CreateProductAction(ProductCreateDto productCreateDto)
+    {
+        return CreateProductActionExecution(productCreateDto);
+    }
+
+    public ProductDto? UpdateProductAction(int id, ProductUpdateDto productUpdateDto)
+    {
+        return UpdateProductActionExecution(id, productUpdateDto);
+    }
+
+    public bool DeleteProductAction(int id)
+    {
+        return DeleteProductActionExecution(id);
     }
 }
