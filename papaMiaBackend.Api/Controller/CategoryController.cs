@@ -1,0 +1,19 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using papaMiaBackend.BusinessLogic;
+using papaMiaBackend.BusinessLogic.Interfaces;
+using papaMiaBackend.Domain.Models.Category;
+
+namespace papaMiaBackend.Api.Controller;
+
+[Route("api/category")]
+[ApiController]
+public class CategoryController : ControllerBase
+{
+    internal ICategoryAction _category;
+
+    public CategoryController(BusinessLogicManager bl)
+    {
+        _category = bl.CategoryAction();
+    }
+}
+
