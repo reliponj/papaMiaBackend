@@ -22,4 +22,17 @@ public class ProductController : ControllerBase
         return Ok(products);
     }
 
+    [HttpGet]
+    public IActionResult GetProductById(int id)
+    {
+        var product = _product.GetProductByIdAction(id);
+        if (product == null)
+        {
+            return NotFound(new { message = "product_not_found" });
+        }
+        return Ok(product);
+    }
+
+
 }
+

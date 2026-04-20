@@ -7,5 +7,8 @@ namespace papaMiaBackend.BusinessLogic.Interfaces;
 public interface IProductAction
 {
     List<ProductDto> GetAllProductsAction();
+    ProductDto? GetProductByIdAction(int id);
+
 }
+
 
