@@ -34,6 +34,12 @@ public class CategoryController : ControllerBase
         return Ok(category);
     }
 
+    [HttpPost]
+    public IActionResult CreateCategory(CategoryCreateDto categoryCreateDto)
+    {
+        var category = _category.CreateCategoryAction(categoryCreateDto);
+        return Ok(category);
+    }
 
 }
 

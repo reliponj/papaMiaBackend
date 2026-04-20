@@ -28,6 +28,12 @@ public class CategoryActions
         }
         return Mapper.Map<CategoryDto>(entity);
     }
-
+    internal CategoryDto CreateCategoryActionExecution(CategoryCreateDto categoryCreateDto)
+    {
+        var entity = Mapper.Map<Category>(categoryCreateDto);
+        Db.Categories.Add(entity);
+        Db.SaveChanges();
+        return Mapper.Map<CategoryDto>(entity);
+    }
 }
 

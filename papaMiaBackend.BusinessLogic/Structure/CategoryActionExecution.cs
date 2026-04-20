@@ -20,5 +20,9 @@ public class CategoryActionExecution : CategoryActions, ICategoryAction
     {
         return GetCategoryByIdActionExecution(id);
     }
+    public CategoryDto CreateCategoryAction(CategoryCreateDto categoryCreateDto)
+    {
+        return CreateCategoryActionExecution(categoryCreateDto);
+    }
 }
 

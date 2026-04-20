@@ -5,5 +5,6 @@ public interface ICategoryAction
 {
     List<CategoryDto> GetAllCategoriesAction();
     CategoryDto? GetCategoryByIdAction(int id);
+    CategoryDto CreateCategoryAction(CategoryCreateDto categoryCreateDto);
 }
 
