@@ -1,10 +1,12 @@
 using AutoMapper;
 using DotNetEnv;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Mapping;
 using papaMiaBackend.DataAccess;
 using papaMiaBackend.DataAccess.Context;
+using papaMiaBackend.Domain.Entities.User;
 
 var envPath = Path.Combine(AppContext.BaseDirectory, ".env");
 if (File.Exists(envPath))
@@ -21,6 +23,8 @@ builder.Services.AddDbContext<ProductContext>(options => options.UseNpgsql(DbSes
 builder.Services.AddDbContext<LocationContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<BannerContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<CartContext>(options => options.UseNpgsql(DbSession.ConnectionString));
+
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
