@@ -24,4 +24,8 @@ public class BannerActionExecution : BannerActions, IBannerAction
     {
         return CreateBannerActionExecution(bannerCreateDto);
     }
+    public BannerDto? UpdateBannerAction(int id, BannerUpdateDto bannerUpdateDto)
+    {
+        return UpdateBannerActionExecution(id, bannerUpdateDto);
+    }
 }

@@ -37,5 +37,14 @@ public class BannerController : ControllerBase
         var banner = _banner.CreateBannerAction(bannerCreateDto);
         return Ok(banner);
     }
-     
+    [HttpPut("{id}")]
+    public IActionResult UpdateBanner(int id, BannerUpdateDto bannerUpdateDto)
+    {
+        var banner = _banner.UpdateBannerAction(id, bannerUpdateDto);
+        if (banner == null)
+        {
+            return NotFound(new { message = "banner_not_found" });
+        }
+        return Ok(banner);
+    }
 }

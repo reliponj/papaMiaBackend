@@ -35,4 +35,17 @@ public class BannerActions
         Db.SaveChanges();
         return Mapper.Map<BannerDto>(entity);
     }
+    internal BannerDto? UpdateBannerActionExecution(int id, BannerUpdateDto bannerUpdateDto)
+    {
+        var entity = Db.Banners.FirstOrDefault(b => b.Id == id);
+        if (entity == null)
+        {
+            return null;
+        }
+        entity.ImageUrl = bannerUpdateDto.ImageUrl;
+        entity.Link = bannerUpdateDto.Link;
+        entity.Sort = bannerUpdateDto.Sort;
+        Db.SaveChanges();
+        return Mapper.Map<BannerDto>(entity);
+    }
 }
