@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using papaMiaBackend.DataAccess.Context;
+using papaMiaBackend.Domain.Models.Banner;
 
 namespace papaMiaBackend.BusinessLogic.Core;
 
@@ -11,5 +12,10 @@ public class BannerActions
     {
         Mapper = mapper;
         Db = db;
+    }
+    internal List<BannerDto> GetAllBannersActionExecution()
+    {
+        var entities = Db.Banners.ToList();
+        return Mapper.Map<List<BannerDto>>(entities);
     }
 }

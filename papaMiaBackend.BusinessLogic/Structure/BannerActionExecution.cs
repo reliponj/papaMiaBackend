@@ -11,4 +11,8 @@ public class BannerActionExecution : BannerActions, IBannerAction
         : base(mapper, db)
     {
     }
+    public List<BannerDto> GetAllBannersAction()
+    {
+        return GetAllBannersActionExecution();
+    }
 }

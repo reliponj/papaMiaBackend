@@ -13,4 +13,12 @@ public class BannerController : ControllerBase
     {
         _banner = bl.BannerAction();
     }
+
+    [HttpGet]
+    public IActionResult GetAllBanners()
+    {
+        var banners = _banner.GetAllBannersAction();
+        return Ok(banners);
+    }
+
 }
