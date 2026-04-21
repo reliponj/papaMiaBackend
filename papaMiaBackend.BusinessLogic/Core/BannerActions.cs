@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Models.Banner;
+using papaMiaBackend.Domain.Entities.Banner;
 
 namespace papaMiaBackend.BusinessLogic.Core;
 
@@ -25,6 +26,13 @@ public class BannerActions
         {
             return null;
         }
+        return Mapper.Map<BannerDto>(entity);
+    }
+    internal BannerDto CreateBannerActionExecution(BannerCreateDto bannerCreateDto)
+    {
+        var entity = Mapper.Map<Banner>(bannerCreateDto);
+        Db.Banners.Add(entity);
+        Db.SaveChanges();
         return Mapper.Map<BannerDto>(entity);
     }
 }

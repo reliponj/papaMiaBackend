@@ -20,4 +20,8 @@ public class BannerActionExecution : BannerActions, IBannerAction
     {
         return GetBannerByIdActionExecution(id);
     }
+    public BannerDto CreateBannerAction(BannerCreateDto bannerCreateDto)
+    {
+        return CreateBannerActionExecution(bannerCreateDto);
+    }
 }

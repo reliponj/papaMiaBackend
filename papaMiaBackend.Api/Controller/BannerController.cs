@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
+using papaMiaBackend.Domain.Models.Banner;
 
 namespace papaMiaBackend.Api.Controller;
 
@@ -30,4 +31,11 @@ public class BannerController : ControllerBase
         }
         return Ok(banner);
     }
+    [HttpPost]
+    public IActionResult CreateBanner(BannerCreateDto bannerCreateDto)
+    {
+        var banner = _banner.CreateBannerAction(bannerCreateDto);
+        return Ok(banner);
+    }
+     
 }
