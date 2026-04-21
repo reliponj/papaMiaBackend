@@ -5,15 +5,15 @@ using papaMiaBackend.Domain.Models.User;
 
 namespace papaMiaBackend.Api.Controller;
 
-[Route("api/user")]
+[Route("api/admin/user")]
 [ApiController]
-public class UserController : ControllerBase
+public class UserAdminController : ControllerBase
 {
     internal IUserAction _user;
 
     private IActionResult UserNotFound() => NotFound(new { message = "user_not_found" });
 
-    public UserController(BusinessLogicManager bl)
+    public UserAdminController(BusinessLogicManager bl)
     {
         _user = bl.UserAction();
     }

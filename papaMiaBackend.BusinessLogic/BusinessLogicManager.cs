@@ -51,6 +51,7 @@ public class BusinessLogicManager
     public ICartAction CartAction()
     {
         return new CartActionExecution(_mapper, _cartDb);
+    }
 
     public ICategoryAction CategoryAction()
     {
