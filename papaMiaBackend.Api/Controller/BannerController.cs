@@ -20,5 +20,14 @@ public class BannerController : ControllerBase
         var banners = _banner.GetAllBannersAction();
         return Ok(banners);
     }
-
+    [HttpGet("{id}")]
+    public IActionResult GetBannerById(int id)
+    {
+        var banner = _banner.GetBannerByIdAction(id);
+        if (banner == null)
+        {
+            return NotFound(new { message = "banner_not_found" }); 
+        }
+        return Ok(banner);
+    }
 }

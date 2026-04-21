@@ -18,4 +18,13 @@ public class BannerActions
         var entities = Db.Banners.ToList();
         return Mapper.Map<List<BannerDto>>(entities);
     }
+    internal BannerDto? GetBannerByIdActionExecution(int id)
+    {
+        var entity = Db.Banners.FirstOrDefault(b => b.Id == id);
+        if (entity == null)
+        {
+            return null;
+        }
+        return Mapper.Map<BannerDto>(entity);
+    }
 }
