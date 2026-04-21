@@ -7,4 +7,5 @@ public interface IBannerAction
     BannerDto? GetBannerByIdAction(int id);
     BannerDto CreateBannerAction(BannerCreateDto bannerCreateDto);
     BannerDto? UpdateBannerAction(int id, BannerUpdateDto bannerUpdateDto);
+    bool DeleteBannerAction(int id);
 }

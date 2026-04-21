@@ -28,4 +28,8 @@ public class BannerActionExecution : BannerActions, IBannerAction
     {
         return UpdateBannerActionExecution(id, bannerUpdateDto);
     }
+    public bool DeleteBannerAction(int id)
+    {
+        return DeleteBannerActionExecution(id);
+    }
 }

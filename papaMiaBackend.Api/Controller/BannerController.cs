@@ -47,4 +47,14 @@ public class BannerController : ControllerBase
         }
         return Ok(banner);
     }
+    [HttpDelete("{id}")]
+    public IActionResult DeleteBanner(int id)
+    {
+        var result = _banner.DeleteBannerAction(id);
+        if (!result)
+        {
+            return NotFound(new { message = "banner_not_found" });
+        }
+        return NoContent();
+    }
 }

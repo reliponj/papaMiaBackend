@@ -48,4 +48,15 @@ public class BannerActions
         Db.SaveChanges();
         return Mapper.Map<BannerDto>(entity);
     }
+    internal bool DeleteBannerActionExecution(int id)
+    {
+        var entity = Db.Banners.FirstOrDefault(b => b.Id == id);
+        if (entity == null)
+        {
+            return false;
+        }
+        Db.Banners.Remove(entity);
+        Db.SaveChanges();
+        return true;
+    }
 }
