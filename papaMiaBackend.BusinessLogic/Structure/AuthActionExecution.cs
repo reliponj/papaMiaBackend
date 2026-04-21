@@ -6,7 +6,6 @@ using papaMiaBackend.BusinessLogic.Interfaces;
 using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Entities.User;
 using papaMiaBackend.Domain.Models.Auth;
-using papaMiaBackend.Domain.Models.User;
 
 namespace papaMiaBackend.BusinessLogic.Structure;
 
@@ -21,12 +20,12 @@ public class AuthActionExecution : AuthActions, IAuthAction
     {
     }
 
-    public UserDto Register(RegisterRequestDto request)
+    public AuthTokenPair Register(RegisterRequestDto request)
     {
         return RegisterActionExecution(request);
     }
 
-    public UserDto? Login(LoginRequestDto request, string clientIp)
+    public AuthTokenPair? Login(LoginRequestDto request, string clientIp)
     {
         return LoginActionExecution(request, clientIp);
     }

@@ -30,7 +30,7 @@ public class AuthActions
         JwtSettings = jwtOptions.Value;
     }
 
-    internal UserDto RegisterActionExecution(RegisterRequestDto request)
+    internal AuthTokenPair RegisterActionExecution(RegisterRequestDto request)
     {
         var entity = new User
         {
@@ -46,10 +46,10 @@ public class AuthActions
         Db.Users.Add(entity);
         Db.SaveChanges();
 
-        return Mapper.Map<UserDto>(entity);
+        return CreateAndPersistTokenPair(entity.Id);
     }
 
-    internal UserDto? LoginActionExecution(LoginRequestDto request, string clientIp)
+    internal AuthTokenPair? LoginActionExecution(LoginRequestDto request, string clientIp)
     {
         var user = Db.Users.FirstOrDefault(u => u.Email == request.Email);
         if (user is null)
@@ -63,7 +63,7 @@ public class AuthActions
         user.LastIp = clientIp;
         Db.SaveChanges();
 
-        return Mapper.Map<UserDto>(user);
+        return CreateAndPersistTokenPair(user.Id);
     }
 
     internal AuthTokenPair? RefreshTokensExecution(string refreshToken)
