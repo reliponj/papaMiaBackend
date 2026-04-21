@@ -32,4 +32,14 @@ public class AuthController : ControllerBase
 
         return Ok(user);
     }
+
+    [HttpPost("refresh")]
+    public IActionResult Refresh([FromBody] RefreshRequestDto request)
+    {
+        var tokens = _auth.RefreshTokens(request.RefreshToken);
+        if (tokens is null)
+            return Unauthorized();
+
+        return Ok(tokens);
+    }
 }

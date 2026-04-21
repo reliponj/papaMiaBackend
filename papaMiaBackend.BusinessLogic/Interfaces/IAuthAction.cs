@@ -8,4 +8,6 @@ public interface IAuthAction
     UserDto Register(RegisterRequestDto request);
 
     UserDto? Login(LoginRequestDto request, string clientIp);
+
+    AuthTokenPair? RefreshTokens(string refreshToken);
 }
