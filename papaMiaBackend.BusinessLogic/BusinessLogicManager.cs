@@ -27,4 +27,8 @@ public class BusinessLogicManager
     {
         return new ProductActionExecution(_mapper, _productDb);
     }
+    public ICategoryAction CategoryAction()
+    {
+        return new CategoryActionExecution(_mapper, _productDb);
+    }
 }
