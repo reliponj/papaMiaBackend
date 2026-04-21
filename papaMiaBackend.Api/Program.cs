@@ -3,8 +3,8 @@ using DotNetEnv;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
-using papaMiaBackend.Api;
 using papaMiaBackend.Api.Auth;
+using papaMiaBackend.Api.Swagger;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Mapping;
 using papaMiaBackend.DataAccess;
@@ -51,7 +51,7 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "bearer",
         BearerFormat = "JWT"
     });
-    c.DocumentFilter<SwaggerBearerDocumentFilter>();
+    c.OperationFilter<SwaggerBearerOperationFilter>();
 });
 
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<UserMappingProfile>());
