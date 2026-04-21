@@ -68,7 +68,7 @@ public class AuthActions
 
     internal AuthTokenPair? RefreshTokensExecution(string refreshToken)
     {
-        if (!refreshToken)
+        if (string.IsNullOrWhiteSpace(refreshToken))
             return null;
 
         var hash = RefreshTokenHasher.Hash(refreshToken);
