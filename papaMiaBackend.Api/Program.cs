@@ -2,6 +2,9 @@ using AutoMapper;
 using DotNetEnv;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
+using papaMiaBackend.Api;
+using papaMiaBackend.Api.Auth;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Mapping;
 using papaMiaBackend.DataAccess;
@@ -29,14 +32,27 @@ builder.Services.AddDbContext<CartContext>(options => options.UseNpgsql(DbSessio
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
-builder.Services.Configure<JwtGenerationSettings>(builder.Configuration.GetSection(JwtGenerationSettings.SectionName));
-var jwt = builder.Configuration.GetSection(JwtGenerationSettings.SectionName).Get<JwtGenerationSettings>();
-if (jwt is null)
-    throw new InvalidOperationException("Set JWT in project");
+builder.Services.Configure<JwtGenerationSettings>(
+    builder.Configuration.GetSection(JwtGenerationSettings.SectionName));
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Access token",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT"
+    });
+    c.DocumentFilter<SwaggerBearerDocumentFilter>();
+});
 
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<UserMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ProductMappingProfile>());
