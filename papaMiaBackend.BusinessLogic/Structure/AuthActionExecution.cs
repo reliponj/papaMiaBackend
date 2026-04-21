@@ -20,4 +20,9 @@ public class AuthActionExecution : AuthActions, IAuthAction
     {
         return RegisterActionExecution(request);
     }
+
+    public UserDto? Login(LoginRequestDto request, string clientIp)
+    {
+        return LoginActionExecution(request, clientIp);
+    }
 }

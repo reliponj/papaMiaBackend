@@ -38,4 +38,21 @@ public class AuthActions
 
         return Mapper.Map<UserDto>(entity);
     }
+
+    internal UserDto? LoginActionExecution(LoginRequestDto request, string clientIp)
+    {
+        var user = Db.Users.FirstOrDefault(u => u.Email == request.Email);
+        if (user is null)
+            return null;
+
+        var verification = PasswordHasher.VerifyHashedPassword(user, user.Password, request.Password);
+        if (verification == PasswordVerificationResult.Failed)
+            return null;
+
+        user.LastLogin = DateTime.UtcNow;
+        user.LastIp = clientIp;
+        Db.SaveChanges();
+
+        return Mapper.Map<UserDto>(user);
+    }
 }
