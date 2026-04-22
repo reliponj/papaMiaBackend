@@ -11,4 +11,8 @@
     <ProjectReference Include="..\papaMiaBackend.Helpers\papaMiaBackend.Helpers.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Promocode\" />
+  </ItemGroup>
+
 </Project>
