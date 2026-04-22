@@ -1,0 +1,14 @@
+﻿using AutoMapper;
+using papaMiaBackend.BusinessLogic.Core;
+using papaMiaBackend.BusinessLogic.Interfaces;
+using papaMiaBackend.DataAccess.Context;
+
+namespace papaMiaBackend.BusinessLogic.Structure;
+
+public class PromocodeActionExecution : PromocodeActions, IPromocodeAction
+{
+    public PromocodeActionExecution(IMapper mapper, PromocodeContext db)
+        : base(mapper, db)
+    {
+    }
+}

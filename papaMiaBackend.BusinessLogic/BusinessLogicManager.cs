@@ -11,13 +11,15 @@ public class BusinessLogicManager
     private readonly UserContext _userDb;
     private readonly ProductContext _productDb;
     private readonly BannerContext _bannerDb;
+    private readonly PromocodeContext _promocodeDb;
 
-    public BusinessLogicManager(IMapper mapper, UserContext userDb, ProductContext productDb, BannerContext bannerDb)
+    public BusinessLogicManager(IMapper mapper, UserContext userDb, ProductContext productDb, BannerContext bannerDb, PromocodeContext promocodeDb)
     {
         _mapper = mapper;
         _userDb = userDb;
         _productDb = productDb;
         _bannerDb = bannerDb;
+        _promocodeDb = promocodeDb;
     }
 
     public IUserAction UserAction()
@@ -36,5 +38,9 @@ public class BusinessLogicManager
     public IBannerAction BannerAction()
     {
         return new BannerActionExecution(_mapper, _bannerDb);
+    }
+    public IPromocodeAction PromocodeAction()
+    {
+        return new PromocodeActionExecution(_mapper, _promocodeDb);
     }
 }
