@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using papaMiaBackend.Api.Auth;
+using papaMiaBackend.Api.Swagger;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
-using papaMiaBackend.Domain.Models.User;
 
 namespace papaMiaBackend.Api.Controller;
 
@@ -9,62 +10,26 @@ namespace papaMiaBackend.Api.Controller;
 [ApiController]
 public class UserController : ControllerBase
 {
-    internal IUserAction _user;
+    private readonly IUserAction _user;
+    private readonly ICurrentUser _currentUser;
 
-    private IActionResult UserNotFound() => NotFound(new { message = "user_not_found" });
-
-    public UserController(BusinessLogicManager bl)
+    public UserController(BusinessLogicManager bl, ICurrentUser currentUser)
     {
         _user = bl.UserAction();
+        _currentUser = currentUser;
     }
 
-    [HttpGet]
-    public IActionResult GetAllUsers()
+    [SwaggerBearer]
+    [HttpGet("me")]
+    public IActionResult Me()
     {
-        var users = _user.GetAllUsersAction();
-        return Ok(users);
-    }
+        if (!_currentUser.TryGetUserId(out var id))
+            return Unauthorized();
 
-    [HttpGet("{id}")]
-    public IActionResult GetUserById(int id)
-    {
         var user = _user.GetUserByIdAction(id);
         if (user is null)
-        {
-            return UserNotFound();
-        }
+            return NotFound();
 
         return Ok(user);
-    }
-
-    [HttpPost]
-    public IActionResult CreateUser(UserCreateDto userCreateDto)
-    {
-        var user = _user.CreateUserAction(userCreateDto);
-        return Ok(user);
-    }
-
-    [HttpPut("{id}")]
-    public IActionResult UpdateUser(int id, UserUpdateDto userUpdateDto)
-    {
-        var user = _user.UpdateUserAction(id, userUpdateDto);
-        if (user is null)
-        {
-            return UserNotFound();
-        }
-
-        return Ok(user);
-    }
-
-    [HttpDelete("{id}")]
-    public IActionResult DeleteUser(int id)
-    {
-        var result = _user.DeleteUserAction(id);
-        if (!result)
-        {
-            return UserNotFound();
-        }
-
-        return NoContent();
     }
 }

@@ -16,9 +16,10 @@ public class User
     [StringLength(30, MinimumLength = 5, ErrorMessage = "Username cannot be longer than 30 chars.")]
     public string Username { get; set; } = string.Empty;
 
+    /// <summary>Хеш пароля (PBKDF2). Plaintext не хранить.</summary>
     [Required]
     [Display(Name = "Password")]
-    [StringLength(50, MinimumLength = 8, ErrorMessage = "Password cannot be shorter than 8 chars.")]
+    [StringLength(500)]
     public string Password { get; set; } = string.Empty;
 
     [Required]
