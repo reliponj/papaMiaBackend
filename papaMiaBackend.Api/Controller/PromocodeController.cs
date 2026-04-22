@@ -13,5 +13,12 @@ public class PromocodeController : ControllerBase
     {
         _promocode = bl.PromocodeAction();
     }
+
+    [HttpGet]
+    public IActionResult GetAllPromocodes()
+    {
+        var promocodes = _promocode.GetAllPromocodesAction();
+        return Ok(promocodes);
+    }
 }
 

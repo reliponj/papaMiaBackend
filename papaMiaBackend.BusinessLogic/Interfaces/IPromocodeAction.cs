@@ -1,5 +1,7 @@
-﻿namespace papaMiaBackend.BusinessLogic.Interfaces;
+﻿using papaMiaBackend.Domain.Models.Promocode;
+
+namespace papaMiaBackend.BusinessLogic.Interfaces;
 public interface IPromocodeAction
 {
-    
+    List<PromocodeDto> GetAllPromocodesAction();
 }

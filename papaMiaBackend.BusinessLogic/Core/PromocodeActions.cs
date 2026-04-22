@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using papaMiaBackend.DataAccess.Context;
+using papaMiaBackend.Domain.Models.Promocode;
 
 namespace papaMiaBackend.BusinessLogic.Core;
 public class PromocodeActions
@@ -10,5 +11,10 @@ public class PromocodeActions
     {
         Mapper = mapper;
         Db = db;
+    }
+    internal List<PromocodeDto> GetAllPromocodesActionExecution()
+    {
+        var entities = Db.Promocodes.ToList();
+        return Mapper.Map<List<PromocodeDto>>(entities);
     }
 }
