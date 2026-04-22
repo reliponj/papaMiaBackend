@@ -4,4 +4,5 @@ namespace papaMiaBackend.BusinessLogic.Interfaces;
 public interface IPromocodeAction
 {
     List<PromocodeDto> GetAllPromocodesAction();
+    PromocodeDto? GetPromocodeByIdAction(int id);
 }

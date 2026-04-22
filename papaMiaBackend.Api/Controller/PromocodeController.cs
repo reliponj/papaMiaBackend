@@ -20,5 +20,15 @@ public class PromocodeController : ControllerBase
         var promocodes = _promocode.GetAllPromocodesAction();
         return Ok(promocodes);
     }
-}
+    [HttpGet("{id}")]
+    public IActionResult GetPromocodeById(int id)
+    {
+        var promocode = _promocode.GetPromocodeByIdAction(id);
+        if (promocode == null)
+        {
+            return NotFound(new { message = "promocode_not_found" });
+        }
+        return Ok(promocode);
+    }
 
+}

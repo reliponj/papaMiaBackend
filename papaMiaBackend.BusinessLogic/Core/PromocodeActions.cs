@@ -17,4 +17,13 @@ public class PromocodeActions
         var entities = Db.Promocodes.ToList();
         return Mapper.Map<List<PromocodeDto>>(entities);
     }
+    internal PromocodeDto? GetPromocodeByIdActionExecution(int id)
+    {
+        var entity = Db.Promocodes.FirstOrDefault(p => p.Id == id);
+        if (entity == null)
+        {
+            return null;
+        }
+        return Mapper.Map<PromocodeDto>(entity);
+    }
 }

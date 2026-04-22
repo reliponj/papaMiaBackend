@@ -16,4 +16,8 @@ public class PromocodeActionExecution : PromocodeActions, IPromocodeAction
     {
         return GetAllPromocodesActionExecution();
     }
+    public PromocodeDto? GetPromocodeByIdAction(int id)
+    {
+        return GetPromocodeByIdActionExecution(id);
+    }
 }
