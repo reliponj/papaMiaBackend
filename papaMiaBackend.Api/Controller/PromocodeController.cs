@@ -47,4 +47,14 @@ public class PromocodeController : ControllerBase
         }
         return Ok(promocode);
     }
+    [HttpDelete("{id}")]
+    public IActionResult DeletePromocode(int id)
+    {
+        var result = _promocode.DeletePromocodeAction(id);
+        if (!result)
+        {
+            return NotFound(new { message = "promocode_not_found" });
+        }
+        return NoContent();
+    }
 }

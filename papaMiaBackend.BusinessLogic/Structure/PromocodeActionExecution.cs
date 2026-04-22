@@ -28,4 +28,8 @@ public class PromocodeActionExecution : PromocodeActions, IPromocodeAction
     {
         return UpdatePromocodeActionExecution(id, promocodeUpdateDto);
     }
+    public bool DeletePromocodeAction(int id)
+    {
+        return DeletePromocodeActionExecution(id);
+    }
 }

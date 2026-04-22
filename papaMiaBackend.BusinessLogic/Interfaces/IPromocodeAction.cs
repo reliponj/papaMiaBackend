@@ -7,4 +7,5 @@ public interface IPromocodeAction
     PromocodeDto? GetPromocodeByIdAction(int id);
     PromocodeDto CreatePromocodeAction(PromocodeCreateDto promocodeCreateDto);
     PromocodeDto? UpdatePromocodeAction(int id, PromocodeUpdateDto promocodeUpdateDto);
+    bool DeletePromocodeAction(int id);
 }

@@ -48,5 +48,15 @@ public class PromocodeActions
         Db.SaveChanges();
         return Mapper.Map<PromocodeDto>(entity);
     }
-
+    internal bool DeletePromocodeActionExecution(int id)
+    {
+        var entity = Db.Promocodes.FirstOrDefault(p => p.Id == id);
+        if (entity == null)
+        {
+            return false;
+        }
+        Db.Promocodes.Remove(entity);
+        Db.SaveChanges();
+        return true;
+    }
 }
