@@ -5,4 +5,5 @@ public interface IPromocodeAction
 {
     List<PromocodeDto> GetAllPromocodesAction();
     PromocodeDto? GetPromocodeByIdAction(int id);
+    PromocodeDto CreatePromocodeAction(PromocodeCreateDto promocodeCreateDto);
 }

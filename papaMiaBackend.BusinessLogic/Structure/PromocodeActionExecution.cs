@@ -20,4 +20,8 @@ public class PromocodeActionExecution : PromocodeActions, IPromocodeAction
     {
         return GetPromocodeByIdActionExecution(id);
     }
+    public PromocodeDto CreatePromocodeAction(PromocodeCreateDto promocodeCreateDto)
+    {
+        return CreatePromocodeActionExecution(promocodeCreateDto);
+    }
 }

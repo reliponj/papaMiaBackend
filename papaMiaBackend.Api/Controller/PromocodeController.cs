@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
+using papaMiaBackend.Domain.Models.Promocode;
 
 namespace papaMiaBackend.Api.Controller;
 
@@ -30,5 +31,11 @@ public class PromocodeController : ControllerBase
         }
         return Ok(promocode);
     }
-
+    [HttpPost]
+    public IActionResult CreatePromocode(PromocodeCreateDto promocodeCreateDto)
+    {
+        var promocode = _promocode.CreatePromocodeAction(promocodeCreateDto);
+        return Ok(promocode);
+    }
+     
 }
