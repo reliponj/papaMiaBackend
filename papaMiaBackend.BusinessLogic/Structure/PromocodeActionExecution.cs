@@ -24,4 +24,8 @@ public class PromocodeActionExecution : PromocodeActions, IPromocodeAction
     {
         return CreatePromocodeActionExecution(promocodeCreateDto);
     }
+    public PromocodeDto? UpdatePromocodeAction(int id, PromocodeUpdateDto promocodeUpdateDto)
+    {
+        return UpdatePromocodeActionExecution(id, promocodeUpdateDto);
+    }
 }

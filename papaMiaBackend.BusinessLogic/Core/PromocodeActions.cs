@@ -34,6 +34,19 @@ public class PromocodeActions
         Db.SaveChanges();
         return Mapper.Map<PromocodeDto>(entity);
     }
-   
-    
+    internal PromocodeDto? UpdatePromocodeActionExecution(int id, PromocodeUpdateDto promocodeUpdateDto)
+    {
+        var entity = Db.Promocodes.FirstOrDefault(p => p.Id == id);
+        if (entity == null)
+        {
+            return null;
+        }
+        entity.Code = promocodeUpdateDto.Code;
+        entity.Percent = promocodeUpdateDto.Percent;
+        entity.ExpiryDate = promocodeUpdateDto.ExpiryDate;
+        entity.IsActive = promocodeUpdateDto.IsActive;
+        Db.SaveChanges();
+        return Mapper.Map<PromocodeDto>(entity);
+    }
+
 }

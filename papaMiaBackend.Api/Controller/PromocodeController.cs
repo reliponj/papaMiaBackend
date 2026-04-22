@@ -37,5 +37,14 @@ public class PromocodeController : ControllerBase
         var promocode = _promocode.CreatePromocodeAction(promocodeCreateDto);
         return Ok(promocode);
     }
-     
+    [HttpPut("{id}")]
+    public IActionResult UpdatePromocode(int id, PromocodeUpdateDto promocodeUpdateDto)
+    {
+        var promocode = _promocode.UpdatePromocodeAction(id, promocodeUpdateDto);
+        if (promocode == null)
+        {
+            return NotFound(new { message = "promocode_not_found" });
+        }
+        return Ok(promocode);
+    }
 }
