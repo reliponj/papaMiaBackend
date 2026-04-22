@@ -49,6 +49,7 @@ public class ProductActions
         entity.Weight = productUpdateDto.Weight;
         entity.WeightType = productUpdateDto.WeightType;
         entity.Allergens = productUpdateDto.Allergens;
+        entity.IsActive = productUpdateDto.IsActive;
         Db.SaveChanges();
         return Mapper.Map<ProductDto>(entity);
     }

@@ -8,5 +8,6 @@ public class ProductUpdateDto
     public int Weight { get; set; } = 0;
     public string WeightType { get; set; } = string.Empty;
     public string Allergens { get; set; } = string.Empty;
+    public bool IsActive { get; set; } = true;
 }
 

@@ -28,6 +28,7 @@ builder.Services.AddDbContext<UserContext>(options => options.UseNpgsql(DbSessio
 builder.Services.AddDbContext<ProductContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<LocationContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<BannerContext>(options => options.UseNpgsql(DbSession.ConnectionString));
+builder.Services.AddDbContext<PromocodeContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<CartContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
@@ -56,7 +57,11 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<UserMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ProductMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<CategoryMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<BannerMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<PromocodeMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<CartMappingProfile>());
+
 builder.Services.AddScoped<BusinessLogicManager>();
 
 var app = builder.Build();
