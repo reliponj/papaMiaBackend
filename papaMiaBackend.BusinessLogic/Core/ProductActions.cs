@@ -44,14 +44,7 @@ public class ProductActions
         {
             return null;
         }
-        entity.Name = productUpdateDto.Name;
-        entity.Description = productUpdateDto.Description;
-        entity.Price = productUpdateDto.Price;
-        entity.ImageUrl = productUpdateDto.ImageUrl;
-        entity.Weight = productUpdateDto.Weight;
-        entity.WeightType = productUpdateDto.WeightType;
-        entity.Allergens = productUpdateDto.Allergens;
-        entity.IsActive = productUpdateDto.IsActive;
+        Mapper.Map(productUpdateDto, entity);
         Db.SaveChanges();
         var updated = Db.Products.Include(p => p.Category).First(p => p.Id == entity.Id);
         return Mapper.Map<ProductDto>(updated);

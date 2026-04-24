@@ -9,4 +9,6 @@ public class ProductCreateDto
     public int Weight { get; set; } = 0;
     public string WeightType { get; set; } = string.Empty;
     public string Allergens { get; set; } = string.Empty;
+
+    public int CategoryId { get; set; }
 }

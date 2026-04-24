@@ -11,7 +11,12 @@ public class ProductMappingProfile : Profile
         CreateMap<Product, ProductDto>();
 
         CreateMap<ProductCreateDto, Product>()
-            .ForMember(d => d.Id, o => o.Ignore());
+            .ForMember(d => d.Id, o => o.Ignore())
+            .ForMember(d => d.Category, o => o.Ignore());
+
+        CreateMap<ProductUpdateDto, Product>()
+            .ForMember(d => d.Id, o => o.Ignore())
+            .ForMember(d => d.Category, o => o.Ignore());
     }
 }
 
