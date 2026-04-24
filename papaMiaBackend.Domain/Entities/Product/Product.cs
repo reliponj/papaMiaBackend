@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using papaMiaBackend.Domain.Entities.Category;
 
 namespace papaMiaBackend.Domain.Entities.Product;
 
@@ -42,6 +43,11 @@ public class Product
     [Display(Name = "IsActive")]
     public bool IsActive { get; set; } = true;
 
+    [Required]
+    [Display(Name = "Category")]
+    public int CategoryId { get; set; }
 
+    [ForeignKey(nameof(CategoryId))]
+    public Category.Category Category { get; set; } = null!;
 }
 
