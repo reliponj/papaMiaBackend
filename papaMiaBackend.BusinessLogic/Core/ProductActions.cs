@@ -15,10 +15,14 @@ public class ProductActions
         Mapper = mapper;
         Db = db;
     }
-    internal List<ProductDto> GetAllProductsActionExecution()
+    internal List<ProductListDto> GetAllProductsActionExecution(int? categoryId)
     {
-        var entities = Db.Products.Include(p => p.Category).ToList();
-        return Mapper.Map<List<ProductDto>>(entities);
+        IQueryable<Product> query = Db.Products;
+        if (categoryId is int cid)
+        {
+            query = query.Where(p => p.CategoryId == cid);
+        }
+        return Mapper.Map<List<ProductListDto>>(query.ToList());
     }
     internal ProductDto? GetProductByIdActionExecution(int id)
     {

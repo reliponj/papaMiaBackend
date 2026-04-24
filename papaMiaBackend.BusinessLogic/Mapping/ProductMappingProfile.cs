@@ -9,6 +9,7 @@ public class ProductMappingProfile : Profile
     public ProductMappingProfile()
     {
         CreateMap<Product, ProductDto>();
+        CreateMap<Product, ProductListDto>();
 
         CreateMap<ProductCreateDto, Product>()
             .ForMember(d => d.Id, o => o.Ignore())
