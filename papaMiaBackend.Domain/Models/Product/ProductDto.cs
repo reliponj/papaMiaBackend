@@ -1,4 +1,7 @@
-﻿namespace papaMiaBackend.Domain.Models.Product;
+﻿using papaMiaBackend.Domain.Models.Category;
+
+namespace papaMiaBackend.Domain.Models.Product;
+
 public class ProductDto
 {
     public int Id { get; set; }
@@ -11,4 +14,7 @@ public class ProductDto
     public string Allergens { get; set; } = string.Empty;
     public bool IsActive { get; set; } = true;
 
+    public int CategoryId { get; set; }
+
+    public CategoryDto? Category { get; set; }
 }

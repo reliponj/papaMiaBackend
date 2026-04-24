@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Models.Product;
 using papaMiaBackend.Domain.Entities.Product;
@@ -16,12 +17,12 @@ public class ProductActions
     }
     internal List<ProductDto> GetAllProductsActionExecution()
     {
-        var entities = Db.Products.ToList();
+        var entities = Db.Products.Include(p => p.Category).ToList();
         return Mapper.Map<List<ProductDto>>(entities);
     }
     internal ProductDto? GetProductByIdActionExecution(int id)
     {
-        var entity = Db.Products.FirstOrDefault(p => p.Id == id);
+        var entity = Db.Products.Include(p => p.Category).FirstOrDefault(p => p.Id == id);
         if (entity == null)
         {
             return null;
@@ -33,7 +34,8 @@ public class ProductActions
         var entity = Mapper.Map<Product>(productCreateDto);
         Db.Products.Add(entity);
         Db.SaveChanges();
-        return Mapper.Map<ProductDto>(entity);
+        var created = Db.Products.Include(p => p.Category).First(p => p.Id == entity.Id);
+        return Mapper.Map<ProductDto>(created);
     }
     internal ProductDto? UpdateProductActionExecution(int id, ProductUpdateDto productUpdateDto)
     {
@@ -51,7 +53,8 @@ public class ProductActions
         entity.Allergens = productUpdateDto.Allergens;
         entity.IsActive = productUpdateDto.IsActive;
         Db.SaveChanges();
-        return Mapper.Map<ProductDto>(entity);
+        var updated = Db.Products.Include(p => p.Category).First(p => p.Id == entity.Id);
+        return Mapper.Map<ProductDto>(updated);
     }
     internal bool DeleteProductActionExecution(int id)
     {
