@@ -9,5 +9,7 @@ public class RoleMappingProfile : Profile
     public RoleMappingProfile()
     {
         CreateMap<Role, RoleDto>();
+        CreateMap<Permission, PermissionDto>();
+        CreateMap<PermissionGroup, PermissionGroupDto>();
     }
 }

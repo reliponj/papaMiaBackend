@@ -61,6 +61,10 @@ public class BusinessLogicManager
     {
         return new RoleActionExecution(_mapper, _roleDb);
     }
+    public IPermissionGroupAction PermissionGroupAction()
+    {
+        return new PermissionGroupActionExecution(_mapper, _roleDb);
+    }
     public ICartAction CartAction()
     {
         return new CartActionExecution(_mapper, _cartDb);

@@ -59,6 +59,27 @@ public static class RoleSeed
         EnsurePermission(db, usersGroup.Id, "Users.Delete", "users.delete", "Delete users");
 
         db.SaveChanges();
+
+        var adminRole = db.Roles
+            .Where(r => r.Code == "admin")
+            .FirstOrDefault();
+
+        if (adminRole != null)
+        {
+            var usersPermissions = db.Permissions
+                .Where(p => p.PermissionGroupId == usersGroup.Id)
+                .ToList();
+
+            db.Entry(adminRole).Collection(r => r.Permissions).Load();
+
+            foreach (var permission in usersPermissions)
+            {
+                if (adminRole.Permissions.All(p => p.Id != permission.Id))
+                    adminRole.Permissions.Add(permission);
+            }
+
+            db.SaveChanges();
+        }
     }
 
     private static void EnsurePermission(
