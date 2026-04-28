@@ -9,11 +9,11 @@ using papaMiaBackend.DataAccess.Context;
 
 #nullable disable
 
-namespace papaMiaBackend.DataAccess.Migrations.Role
+namespace papaMiaBackend.DataAccess.Migrations
 {
-    [DbContext(typeof(RoleContext))]
-    [Migration("20260428134053_Roles")]
-    partial class Roles
+    [DbContext(typeof(UserContext))]
+    [Migration("20260428143953_Roles to User")]
+    partial class RolestoUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace papaMiaBackend.DataAccess.Migrations.Role
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("papaMiaBackend.Domain.Entities.User.Role", b =>
+            modelBuilder.Entity("papaMiaBackend.Domain.Entities.User.RefreshToken", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,27 +33,28 @@ namespace papaMiaBackend.DataAccess.Migrations.Role
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                    b.Property<DateTime>("ExpiresAtUtc")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsSystem")
-                        .HasColumnType("boolean");
+                    b.Property<DateTime?>("RevokedAtUtc")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("TokenHash")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("papaMiaBackend.Domain.Entities.User.User", b =>
@@ -77,16 +78,10 @@ namespace papaMiaBackend.DataAccess.Migrations.Role
                     b.Property<DateTime>("LastLogin")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("Level")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
-
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -95,21 +90,18 @@ namespace papaMiaBackend.DataAccess.Migrations.Role
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("papaMiaBackend.Domain.Entities.User.User", b =>
+            modelBuilder.Entity("papaMiaBackend.Domain.Entities.User.RefreshToken", b =>
                 {
-                    b.HasOne("papaMiaBackend.Domain.Entities.User.Role", null)
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId");
-                });
+                    b.HasOne("papaMiaBackend.Domain.Entities.User.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("papaMiaBackend.Domain.Entities.User.Role", b =>
-                {
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
