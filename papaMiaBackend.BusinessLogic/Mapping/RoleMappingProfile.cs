@@ -15,8 +15,16 @@ public class RoleMappingProfile : Profile
             .ForMember(d => d.PermissionGroupId, o => o.Ignore())
             .ForMember(d => d.PermissionGroup, o => o.Ignore())
             .ForMember(d => d.Roles, o => o.Ignore());
+        CreateMap<PermissionUpdateDto, Permission>()
+            .ForMember(d => d.Id, o => o.Ignore())
+            .ForMember(d => d.PermissionGroupId, o => o.Ignore())
+            .ForMember(d => d.PermissionGroup, o => o.Ignore())
+            .ForMember(d => d.Roles, o => o.Ignore());
         CreateMap<PermissionGroup, PermissionGroupDto>();
         CreateMap<PermissionGroupCreateDto, PermissionGroup>()
+            .ForMember(d => d.Id, o => o.Ignore())
+            .ForMember(d => d.Permissions, o => o.Ignore());
+        CreateMap<PermissionGroupUpdateDto, PermissionGroup>()
             .ForMember(d => d.Id, o => o.Ignore())
             .ForMember(d => d.Permissions, o => o.Ignore());
     }

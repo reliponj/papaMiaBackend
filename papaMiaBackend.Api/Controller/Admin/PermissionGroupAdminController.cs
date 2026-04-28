@@ -35,6 +35,18 @@ public class PermissionGroupAdminController : ControllerBase
         return Ok(group);
     }
 
+    [HttpPut("{id}")]
+    public IActionResult UpdatePermissionGroup(int id, PermissionGroupUpdateDto permissionGroupUpdateDto)
+    {
+        var group = _permissionGroup.UpdatePermissionGroupAction(id, permissionGroupUpdateDto);
+        if (group == null)
+        {
+            return NotFound(new { message = "permission_group_not_found" });
+        }
+
+        return Ok(group);
+    }
+
     [HttpDelete("{id}")]
     public IActionResult DeletePermissionGroup(int id)
     {

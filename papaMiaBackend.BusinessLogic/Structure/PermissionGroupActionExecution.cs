@@ -28,9 +28,24 @@ public class PermissionGroupActionExecution : PermissionGroupActions, IPermissio
         return AddPermissionToGroupActionExecution(id, permissionCreateDto);
     }
 
+    public PermissionDto? UpdatePermissionAction(int id, PermissionUpdateDto permissionUpdateDto)
+    {
+        return UpdatePermissionActionExecution(id, permissionUpdateDto);
+    }
+
+    public bool DeletePermissionAction(int id)
+    {
+        return DeletePermissionActionExecution(id);
+    }
+
     public PermissionGroupDto? CreatePermissionGroupAction(PermissionGroupCreateDto permissionGroupCreateDto)
     {
         return CreatePermissionGroupActionExecution(permissionGroupCreateDto);
+    }
+
+    public PermissionGroupDto? UpdatePermissionGroupAction(int id, PermissionGroupUpdateDto permissionGroupUpdateDto)
+    {
+        return UpdatePermissionGroupActionExecution(id, permissionGroupUpdateDto);
     }
 
     public bool DeletePermissionGroupAction(int id)

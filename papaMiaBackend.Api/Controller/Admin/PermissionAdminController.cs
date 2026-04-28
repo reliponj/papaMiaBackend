@@ -45,4 +45,28 @@ public class PermissionAdminController : ControllerBase
 
         return Ok(permission);
     }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdatePermission(int id, PermissionUpdateDto permissionUpdateDto)
+    {
+        var permission = _permissionGroup.UpdatePermissionAction(id, permissionUpdateDto);
+        if (permission == null)
+        {
+            return NotFound(new { message = "permission_not_found" });
+        }
+
+        return Ok(permission);
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeletePermission(int id)
+    {
+        var result = _permissionGroup.DeletePermissionAction(id);
+        if (!result)
+        {
+            return NotFound(new { message = "permission_not_found" });
+        }
+
+        return NoContent();
+    }
 }

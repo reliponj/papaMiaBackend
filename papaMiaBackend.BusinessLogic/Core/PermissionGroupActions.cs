@@ -59,6 +59,32 @@ public class PermissionGroupActions
         return Mapper.Map<PermissionDto>(entity);
     }
 
+    internal PermissionDto? UpdatePermissionActionExecution(int id, PermissionUpdateDto permissionUpdateDto)
+    {
+        var entity = Db.Permissions.FirstOrDefault(p => p.Id == id);
+        if (entity == null)
+        {
+            return null;
+        }
+
+        Mapper.Map(permissionUpdateDto, entity);
+        Db.SaveChanges();
+        return Mapper.Map<PermissionDto>(entity);
+    }
+
+    internal bool DeletePermissionActionExecution(int id)
+    {
+        var entity = Db.Permissions.FirstOrDefault(p => p.Id == id);
+        if (entity == null)
+        {
+            return false;
+        }
+
+        Db.Permissions.Remove(entity);
+        Db.SaveChanges();
+        return true;
+    }
+
     internal PermissionGroupDto? CreatePermissionGroupActionExecution(PermissionGroupCreateDto permissionGroupCreateDto)
     {
         var exists = Db.PermissionGroups.Any(g => g.Code == permissionGroupCreateDto.Code);
@@ -72,6 +98,31 @@ public class PermissionGroupActions
         Db.PermissionGroups.Add(entity);
         Db.SaveChanges();
         return Mapper.Map<PermissionGroupDto>(entity);
+    }
+
+    internal PermissionGroupDto? UpdatePermissionGroupActionExecution(int id, PermissionGroupUpdateDto permissionGroupUpdateDto)
+    {
+        var entity = Db.PermissionGroups
+            .Include(g => g.Permissions)
+            .FirstOrDefault(g => g.Id == id);
+        if (entity == null)
+        {
+            return null;
+        }
+
+        Mapper.Map(permissionGroupUpdateDto, entity);
+
+        var permissions = Db.Permissions
+            .Where(p => permissionGroupUpdateDto.PermissionIds.Contains(p.Id))
+            .ToList();
+        entity.Permissions = permissions;
+
+        Db.SaveChanges();
+
+        var updated = Db.PermissionGroups
+            .Include(g => g.Permissions)
+            .First(g => g.Id == id);
+        return Mapper.Map<PermissionGroupDto>(updated);
     }
 
     internal bool DeletePermissionGroupActionExecution(int id)
