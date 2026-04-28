@@ -9,6 +9,7 @@ using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Mapping;
 using papaMiaBackend.DataAccess;
 using papaMiaBackend.DataAccess.Context;
+using papaMiaBackend.DataAccess.Seeds;
 using papaMiaBackend.Domain.Entities.User;
 using papaMiaBackend.Domain.Models.Auth;
 
@@ -67,6 +68,12 @@ builder.Services.AddAutoMapper(cfg => cfg.AddProfile<RoleMappingProfile>());
 builder.Services.AddScoped<BusinessLogicManager>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleDb = scope.ServiceProvider.GetRequiredService<RoleContext>();
+    RoleSeed.Apply(roleDb);
+}
 
 if (app.Environment.IsDevelopment())
 {

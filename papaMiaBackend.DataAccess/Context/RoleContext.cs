@@ -12,6 +12,7 @@ public class RoleContext : DbContext
 
     public virtual DbSet<Role> Roles { get; set; }
     public virtual DbSet<Permission> Permissions { get; set; }
+    public virtual DbSet<PermissionGroup> PermissionGroups { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

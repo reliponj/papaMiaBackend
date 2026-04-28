@@ -31,6 +31,4 @@ public class User
 
     [StringLength(30)]
     public string LastIp { get; set; } = string.Empty;
-
-    public URole Level { get; set; }
 }

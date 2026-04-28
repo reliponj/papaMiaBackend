@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace papaMiaBackend.Domain.Entities.Role;
 
-[Table("Permissions")]
-public class Permission
+[Table("PermissionGroups")]
+public class PermissionGroup
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -21,11 +21,5 @@ public class Permission
     [StringLength(250)]
     public string Description { get; set; } = string.Empty;
 
-    [Required]
-    public int PermissionGroupId { get; set; }
-
-    [ForeignKey(nameof(PermissionGroupId))]
-    public PermissionGroup PermissionGroup { get; set; } = null!;
-
-    public ICollection<Role> Roles { get; set; } = new List<Role>();
+    public ICollection<Permission> Permissions { get; set; } = new List<Permission>();
 }

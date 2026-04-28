@@ -13,7 +13,6 @@ public class UserMappingProfile : Profile
         CreateMap<UserCreateDto, User>()
             .ForMember(d => d.Id, o => o.Ignore())
             .ForMember(d => d.LastLogin, o => o.MapFrom(_ => DateTime.UtcNow))
-            .ForMember(d => d.LastIp, o => o.MapFrom(_ => string.Empty))
-            .ForMember(d => d.Level, o => o.MapFrom(_ => URole.User));
+            .ForMember(d => d.LastIp, o => o.MapFrom(_ => string.Empty));
     }
 }
