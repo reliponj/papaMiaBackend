@@ -1,0 +1,22 @@
+using Microsoft.EntityFrameworkCore;
+using papaMiaBackend.Domain.Entities.User;
+
+namespace papaMiaBackend.DataAccess.Context;
+
+public class RoleContext : DbContext
+{
+    public RoleContext(DbContextOptions<RoleContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<Role> Roles { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseNpgsql(DbSession.ConnectionString);
+        }
+    }
+}
