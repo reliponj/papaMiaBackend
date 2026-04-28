@@ -22,4 +22,19 @@ public class RoleActionExecution : RoleActions, IRoleAction
     {
         return GetRoleByIdActionExecution(id);
     }
+
+    public RoleDto? CreateRoleAction(RoleCreateDto roleCreateDto)
+    {
+        return CreateRoleActionExecution(roleCreateDto);
+    }
+
+    public RoleDto? UpdateRoleAction(int id, RoleUpdateDto roleUpdateDto)
+    {
+        return UpdateRoleActionExecution(id, roleUpdateDto);
+    }
+
+    public bool DeleteRoleAction(int id)
+    {
+        return DeleteRoleActionExecution(id);
+    }
 }

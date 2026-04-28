@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
+using papaMiaBackend.Domain.Models.Role;
 
 namespace papaMiaBackend.Api.Controller;
 
@@ -32,5 +33,47 @@ public class RoleAdminController : ControllerBase
         }
 
         return Ok(role);
+    }
+
+    [HttpPost]
+    public IActionResult CreateRole(RoleCreateDto roleCreateDto)
+    {
+        var role = _role.CreateRoleAction(roleCreateDto);
+        if (role == null)
+        {
+            return BadRequest(new { message = "role_code_already_exists" });
+        }
+
+        return Ok(role);
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdateRole(int id, RoleUpdateDto roleUpdateDto)
+    {
+        var existing = _role.GetRoleByIdAction(id);
+        if (existing == null)
+        {
+            return NotFound(new { message = "role_not_found" });
+        }
+
+        var role = _role.UpdateRoleAction(id, roleUpdateDto);
+        if (role == null)
+        {
+            return BadRequest(new { message = "role_code_already_exists" });
+        }
+
+        return Ok(role);
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteRole(int id)
+    {
+        var result = _role.DeleteRoleAction(id);
+        if (!result)
+        {
+            return NotFound(new { message = "role_not_found" });
+        }
+
+        return NoContent();
     }
 }

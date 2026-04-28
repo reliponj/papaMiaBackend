@@ -10,6 +10,14 @@ public class RoleMappingProfile : Profile
     {
         CreateMap<Role, RoleListDto>();
         CreateMap<Role, RoleDto>();
+        CreateMap<RoleCreateDto, Role>()
+            .ForMember(d => d.Id, o => o.Ignore())
+            .ForMember(d => d.Permissions, o => o.Ignore())
+            .ForMember(d => d.Users, o => o.Ignore());
+        CreateMap<RoleUpdateDto, Role>()
+            .ForMember(d => d.Id, o => o.Ignore())
+            .ForMember(d => d.Permissions, o => o.Ignore())
+            .ForMember(d => d.Users, o => o.Ignore());
         CreateMap<Permission, PermissionDto>();
         CreateMap<PermissionCreateDto, Permission>()
             .ForMember(d => d.Id, o => o.Ignore())
