@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using papaMiaBackend.Domain.Entities.User;
 
-namespace papaMiaBackend.Domain.Entities.User;
+namespace papaMiaBackend.Domain.Entities.Role;
 
 [Table("Roles")]
 public class Role

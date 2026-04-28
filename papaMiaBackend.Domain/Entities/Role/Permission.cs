@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace papaMiaBackend.Domain.Entities.User;
+namespace papaMiaBackend.Domain.Entities.Role;
 
 [Table("Permissions")]
 public class Permission

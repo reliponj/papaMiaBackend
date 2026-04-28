@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using papaMiaBackend.Domain.Entities.User;
+using papaMiaBackend.Domain.Entities.Role;
 
 namespace papaMiaBackend.DataAccess.Context;
 
