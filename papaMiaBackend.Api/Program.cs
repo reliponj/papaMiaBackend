@@ -62,6 +62,7 @@ builder.Services.AddAutoMapper(cfg => cfg.AddProfile<CategoryMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<BannerMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<PromocodeMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<CartMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<RoleMappingProfile>());
 
 builder.Services.AddScoped<BusinessLogicManager>();
 

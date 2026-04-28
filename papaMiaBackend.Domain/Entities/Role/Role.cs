@@ -1,7 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using papaMiaBackend.Domain.Entities.User;
-
 namespace papaMiaBackend.Domain.Entities.Role;
 
 [Table("Roles")]
@@ -24,7 +22,7 @@ public class Role
 
     public bool IsSystem { get; set; } = true;
 
-    public ICollection<User> Users { get; set; } = new List<User>();
+    public ICollection<User.User> Users { get; set; } = new List<User.User>();
 
     public ICollection<Permission> Permissions { get; set; } = new List<Permission>();
 }
