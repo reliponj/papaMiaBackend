@@ -21,4 +21,16 @@ public class RoleAdminController : ControllerBase
         var roles = _role.GetAllRolesAction();
         return Ok(roles);
     }
+
+    [HttpGet("{id}")]
+    public IActionResult GetRoleById(int id)
+    {
+        var role = _role.GetRoleByIdAction(id);
+        if (role == null)
+        {
+            return NotFound(new { message = "role_not_found" });
+        }
+
+        return Ok(role);
+    }
 }

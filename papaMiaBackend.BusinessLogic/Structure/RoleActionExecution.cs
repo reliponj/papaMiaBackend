@@ -13,8 +13,13 @@ public class RoleActionExecution : RoleActions, IRoleAction
     {
     }
 
-    public List<RoleDto> GetAllRolesAction()
+    public List<RoleListDto> GetAllRolesAction()
     {
         return GetAllRolesActionExecution();
+    }
+
+    public RoleDto? GetRoleByIdAction(int id)
+    {
+        return GetRoleByIdActionExecution(id);
     }
 }

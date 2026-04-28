@@ -4,5 +4,6 @@ namespace papaMiaBackend.BusinessLogic.Interfaces;
 
 public interface IRoleAction
 {
-    List<RoleDto> GetAllRolesAction();
+    List<RoleListDto> GetAllRolesAction();
+    RoleDto? GetRoleByIdAction(int id);
 }
