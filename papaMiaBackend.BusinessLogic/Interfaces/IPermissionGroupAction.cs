@@ -5,4 +5,6 @@ namespace papaMiaBackend.BusinessLogic.Interfaces;
 public interface IPermissionGroupAction
 {
     List<PermissionGroupDto> GetAllPermissionGroupsAction();
+    PermissionGroupDto? CreatePermissionGroupAction(PermissionGroupCreateDto permissionGroupCreateDto);
+    bool DeletePermissionGroupAction(int id);
 }

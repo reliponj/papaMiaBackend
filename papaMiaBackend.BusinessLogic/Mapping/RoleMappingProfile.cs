@@ -11,5 +11,8 @@ public class RoleMappingProfile : Profile
         CreateMap<Role, RoleDto>();
         CreateMap<Permission, PermissionDto>();
         CreateMap<PermissionGroup, PermissionGroupDto>();
+        CreateMap<PermissionGroupCreateDto, PermissionGroup>()
+            .ForMember(d => d.Id, o => o.Ignore())
+            .ForMember(d => d.Permissions, o => o.Ignore());
     }
 }

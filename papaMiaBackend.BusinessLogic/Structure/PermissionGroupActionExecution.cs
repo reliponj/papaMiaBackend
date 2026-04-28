@@ -17,4 +17,14 @@ public class PermissionGroupActionExecution : PermissionGroupActions, IPermissio
     {
         return GetAllPermissionGroupsActionExecution();
     }
+
+    public PermissionGroupDto? CreatePermissionGroupAction(PermissionGroupCreateDto permissionGroupCreateDto)
+    {
+        return CreatePermissionGroupActionExecution(permissionGroupCreateDto);
+    }
+
+    public bool DeletePermissionGroupAction(int id)
+    {
+        return DeletePermissionGroupActionExecution(id);
+    }
 }
