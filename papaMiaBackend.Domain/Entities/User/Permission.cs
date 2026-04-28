@@ -3,27 +3,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace papaMiaBackend.Domain.Entities.User;
 
-[Table("Roles")]
-public class Role
+[Table("Permissions")]
+public class Permission
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     [Required]
-    [StringLength(50, MinimumLength = 2)]
+    [StringLength(100, MinimumLength = 2)]
     public string Name { get; set; } = string.Empty;
 
     [Required]
-    [StringLength(50, MinimumLength = 2)]
+    [StringLength(100, MinimumLength = 2)]
     public string Code { get; set; } = string.Empty;
 
     [StringLength(250)]
     public string Description { get; set; } = string.Empty;
 
-    public bool IsSystem { get; set; } = true;
-
-    public ICollection<User> Users { get; set; } = new List<User>();
-
-    public ICollection<Permission> Permissions { get; set; } = new List<Permission>();
+    public ICollection<Role> Roles { get; set; } = new List<Role>();
 }
