@@ -18,6 +18,16 @@ public class PermissionGroupActionExecution : PermissionGroupActions, IPermissio
         return GetAllPermissionGroupsActionExecution();
     }
 
+    public List<PermissionDto>? GetPermissionsByGroupIdAction(int id)
+    {
+        return GetPermissionsByGroupIdActionExecution(id);
+    }
+
+    public PermissionDto? AddPermissionToGroupAction(int id, PermissionCreateDto permissionCreateDto)
+    {
+        return AddPermissionToGroupActionExecution(id, permissionCreateDto);
+    }
+
     public PermissionGroupDto? CreatePermissionGroupAction(PermissionGroupCreateDto permissionGroupCreateDto)
     {
         return CreatePermissionGroupActionExecution(permissionGroupCreateDto);
