@@ -2,6 +2,7 @@ using AutoMapper;
 using papaMiaBackend.BusinessLogic.Core;
 using papaMiaBackend.BusinessLogic.Interfaces;
 using papaMiaBackend.DataAccess.Context;
+using papaMiaBackend.Domain.Models.Role;
 using papaMiaBackend.Domain.Models.User;
 
 namespace papaMiaBackend.BusinessLogic.Structure;
@@ -21,6 +22,11 @@ public class UserActionExecution : UserActions, IUserAction
     public UserDto? GetUserByIdAction(int id)
     {
         return GetUserByIdActionExecution(id);
+    }
+
+    public List<RoleListDto>? GetUserRolesAction(int id)
+    {
+        return GetUserRolesActionExecution(id);
     }
 
     public UserDto CreateUserAction(UserCreateDto userCreateDto)

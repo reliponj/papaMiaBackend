@@ -1,4 +1,3 @@
-
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -31,4 +30,6 @@ public class User
 
     [StringLength(30)]
     public string LastIp { get; set; } = string.Empty;
+
+    public ICollection<Role.Role> Roles { get; set; } = new List<Role.Role>();
 }

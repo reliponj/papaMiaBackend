@@ -37,6 +37,16 @@ public class UserAdminController : ControllerBase
         return Ok(user);
     }
 
+    [HttpGet("{id:int}/roles")]
+    public IActionResult GetUserRoles(int id)
+    {
+        var roles = _user.GetUserRolesAction(id);
+        if (roles is null)
+            return UserNotFound();
+
+        return Ok(roles);
+    }
+
     [HttpPost]
     public IActionResult CreateUser(UserCreateDto userCreateDto)
     {
