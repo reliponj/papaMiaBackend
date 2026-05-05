@@ -85,13 +85,16 @@ public class UserActions
     internal UserDto? UpdateUserActionExecution(int id, UserUpdateDto userUpdateDto)
     {
         var entity = Db.Users.FirstOrDefault(u => u.Id == id);
-        if (entity == null)
-        {
+        if (entity is null)
             return null;
-        }
+
+        var email = userUpdateDto.Email.Trim();
+        if (Db.Users.Any(u => u.Id != id && u.Email.ToLower() == email.ToLower()))
+            throw new InvalidOperationException("email_already_exists");
+
 
         entity.Username = userUpdateDto.Username;
-        entity.Email = userUpdateDto.Email;
+        entity.Email = email;
         Db.SaveChanges();
         return Mapper.Map<UserDto>(entity);
     }

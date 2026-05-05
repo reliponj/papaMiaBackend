@@ -3,6 +3,7 @@ using papaMiaBackend.Api.Auth;
 using papaMiaBackend.Api.Swagger;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
+using papaMiaBackend.Domain.Models.User;
 
 namespace papaMiaBackend.Api.Controller;
 
@@ -27,6 +28,20 @@ public class UserController : ControllerBase
             return Unauthorized();
 
         var user = _user.GetUserByIdAction(id);
+        if (user is null)
+            return NotFound();
+
+        return Ok(user);
+    }
+
+    [SwaggerBearer]
+    [HttpPut("me")]
+    public IActionResult UpdateMe([FromBody] UserUpdateDto dto)
+    {
+        if (!_currentUser.TryGetUserId(out var id))
+            return Unauthorized();
+
+        var user = _user.UpdateUserAction(id, dto);
         if (user is null)
             return NotFound();
 
