@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Models.Product;
 using papaMiaBackend.Domain.Entities.Product;
@@ -14,14 +15,18 @@ public class ProductActions
         Mapper = mapper;
         Db = db;
     }
-    internal List<ProductDto> GetAllProductsActionExecution()
+    internal List<ProductListDto> GetAllProductsActionExecution(int? categoryId)
     {
-        var entities = Db.Products.ToList();
-        return Mapper.Map<List<ProductDto>>(entities);
+        IQueryable<Product> query = Db.Products;
+        if (categoryId is int cid)
+        {
+            query = query.Where(p => p.CategoryId == cid);
+        }
+        return Mapper.Map<List<ProductListDto>>(query.ToList());
     }
     internal ProductDto? GetProductByIdActionExecution(int id)
     {
-        var entity = Db.Products.FirstOrDefault(p => p.Id == id);
+        var entity = Db.Products.Include(p => p.Category).FirstOrDefault(p => p.Id == id);
         if (entity == null)
         {
             return null;
@@ -33,7 +38,8 @@ public class ProductActions
         var entity = Mapper.Map<Product>(productCreateDto);
         Db.Products.Add(entity);
         Db.SaveChanges();
-        return Mapper.Map<ProductDto>(entity);
+        var created = Db.Products.Include(p => p.Category).First(p => p.Id == entity.Id);
+        return Mapper.Map<ProductDto>(created);
     }
     internal ProductDto? UpdateProductActionExecution(int id, ProductUpdateDto productUpdateDto)
     {
@@ -42,16 +48,10 @@ public class ProductActions
         {
             return null;
         }
-        entity.Name = productUpdateDto.Name;
-        entity.Description = productUpdateDto.Description;
-        entity.Price = productUpdateDto.Price;
-        entity.ImageUrl = productUpdateDto.ImageUrl;
-        entity.Weight = productUpdateDto.Weight;
-        entity.WeightType = productUpdateDto.WeightType;
-        entity.Allergens = productUpdateDto.Allergens;
-        entity.IsActive = productUpdateDto.IsActive;
+        Mapper.Map(productUpdateDto, entity);
         Db.SaveChanges();
-        return Mapper.Map<ProductDto>(entity);
+        var updated = Db.Products.Include(p => p.Category).First(p => p.Id == entity.Id);
+        return Mapper.Map<ProductDto>(updated);
     }
     internal bool DeleteProductActionExecution(int id)
     {

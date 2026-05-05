@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using papaMiaBackend.Domain.Entities.Product;
+
 namespace papaMiaBackend.Domain.Entities.Category;
 
 [Table("Categories")]
@@ -24,4 +26,6 @@ public class Category
     [Display(Name = "Sort")]
     [Range(0, int.MaxValue, ErrorMessage = "Sort must be a positive number.")]
     public int Sort { get; set; }
+
+    public ICollection<Product.Product> Products { get; set; } = new List<Product.Product>();
 }

@@ -5,25 +5,25 @@ using papaMiaBackend.Domain.Models.Product;
 
 namespace papaMiaBackend.Api.Controller;
 
-[Route("api/product")]
+[Route("api/admin/product")]
 [ApiController]
-public class ProductController : ControllerBase
+public class ProductAdminController : ControllerBase
 {
     internal IProductAction _product;
 
-    public ProductController(BusinessLogicManager bl)
+    public ProductAdminController(BusinessLogicManager bl)
     {
         _product = bl.ProductAction();
     }
 
     [HttpGet]
-    public IActionResult GetAllProducts()
+    public IActionResult GetAllProducts([FromQuery] int? categoryId)
     {
-        var products = _product.GetAllProductsAction();
+        var products = _product.GetAllProductsAction(categoryId);
         return Ok(products);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public IActionResult GetProductById(int id)
     {
         var product = _product.GetProductByIdAction(id);
