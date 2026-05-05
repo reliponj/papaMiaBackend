@@ -4,13 +4,13 @@ using papaMiaBackend.BusinessLogic.Interfaces;
 
 namespace papaMiaBackend.Api.Controller;
 
-[Route("api/cart")]
+[Route("api/admin/cart")]
 [ApiController]
-public class CartController : ControllerBase
+public class CartAdminController : ControllerBase
 {
     internal ICartAction _cart;
 
-    public CartController(BusinessLogicManager bl)
+    public CartAdminController(BusinessLogicManager bl)
     {
         _cart = bl.CartAction();
     }
