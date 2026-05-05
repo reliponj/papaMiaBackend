@@ -15,7 +15,11 @@ public class ProductActions
         Mapper = mapper;
         Db = db;
     }
-    internal List<ProductListDto> GetAllProductsActionExecution(int? categoryId, int? allergenExclude)
+    internal List<ProductListDto> GetAllProductsActionExecution(
+        int? categoryId,
+        int[]? allergenExcludeIds,
+        string? sortBy,
+        string? sortDir)
     {
         IQueryable<Product> query = Db.Products;
         if (categoryId is int cid)
@@ -23,10 +27,23 @@ public class ProductActions
             query = query.Where(p => p.CategoryId == cid);
         }
 
-        if (allergenExclude is int excludeAllergenId)
+        if (allergenExcludeIds is { Length: > 0 })
         {
-            query = query.Where(p => !p.AllergenLinks.Any(a => a.Id == excludeAllergenId));
+            var ids = allergenExcludeIds.Distinct().ToArray();
+            query = query.Where(p => !p.AllergenLinks.Any(a => ids.Contains(a.Id)));
         }
+
+        var byPrice = string.Equals(sortBy?.Trim(), "price", StringComparison.OrdinalIgnoreCase);
+        var desc = string.Equals(sortDir?.Trim(), "desc", StringComparison.OrdinalIgnoreCase);
+
+        if (byPrice)
+            query = desc
+                ? query.OrderByDescending(p => p.Price).ThenBy(p => p.Id)
+                : query.OrderBy(p => p.Price).ThenBy(p => p.Id);
+        else
+            query = desc
+                ? query.OrderByDescending(p => p.Name).ThenBy(p => p.Id)
+                : query.OrderBy(p => p.Name).ThenBy(p => p.Id);
 
         return Mapper.Map<List<ProductListDto>>(query.ToList());
     }

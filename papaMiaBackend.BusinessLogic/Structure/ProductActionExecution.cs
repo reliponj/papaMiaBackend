@@ -13,9 +13,13 @@ public class ProductActionExecution : ProductActions, IProductAction
     {
     }
 
-    public List<ProductListDto> GetAllProductsAction(int? categoryId, int? allergenExclude = null)
+    public List<ProductListDto> GetAllProductsAction(
+        int? categoryId,
+        int[]? allergenExclude = null,
+        string? sortBy = null,
+        string? sortDir = null)
     {
-        return GetAllProductsActionExecution(categoryId, allergenExclude);
+        return GetAllProductsActionExecution(categoryId, allergenExclude, sortBy, sortDir);
     }
 
     public ProductDto? GetProductByIdAction(int id)

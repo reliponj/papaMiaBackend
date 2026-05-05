@@ -25,12 +25,16 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("category/{categoryId:int}")]
-    public IActionResult GetProductsByCategory(int categoryId, [FromQuery] int? allergenExclude)
+    public IActionResult GetProductsByCategory(
+        int categoryId,
+        [FromQuery] int[]? allergenExclude,
+        [FromQuery] string? sortBy,
+        [FromQuery] string? sortDir)
     {
         if (_category.GetCategoryByIdAction(categoryId) is null)
             return NotFound(new { message = "category_not_found" });
 
-        var products = _product.GetAllProductsAction(categoryId, allergenExclude);
+        var products = _product.GetAllProductsAction(categoryId, allergenExclude, sortBy, sortDir);
         return Ok(products);
     }
 }
