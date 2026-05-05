@@ -5,12 +5,12 @@ using papaMiaBackend.Domain.Models.Promocode;
 
 namespace papaMiaBackend.Api.Controller;
 
-[Route("api/promocode")]
+[Route("api/admin/promocode")]
 [ApiController]
-public class PromocodeController : ControllerBase
+public class PromocodeAdminController : ControllerBase
 {
     internal IPromocodeAction _promocode;
-    public PromocodeController(BusinessLogicManager bl)
+    public PromocodeAdminController(BusinessLogicManager bl)
     {
         _promocode = bl.PromocodeAction();
     }

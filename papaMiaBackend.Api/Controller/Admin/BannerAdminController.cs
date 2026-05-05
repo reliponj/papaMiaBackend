@@ -5,12 +5,12 @@ using papaMiaBackend.Domain.Models.Banner;
 
 namespace papaMiaBackend.Api.Controller;
 
-[Route("api/banner")]
+[Route("api/admin/banner")]
 [ApiController]
-public class BannerController : ControllerBase
+public class BannerAdminController : ControllerBase
 {
     internal IBannerAction _banner;
-    public BannerController(BusinessLogicManager bl)
+    public BannerAdminController(BusinessLogicManager bl)
     {
         _banner = bl.BannerAction();
     }
