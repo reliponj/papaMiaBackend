@@ -11,5 +11,6 @@ public interface IUserAction
     List<RoleListDto>? SetUserRolesAction(int userId, IEnumerable<int> roleIds);
     UserDto CreateUserAction(UserCreateDto userCreateDto);
     UserDto? UpdateUserAction(int id, UserUpdateDto userUpdateDto);
+    ChangePasswordResult ChangePasswordAction(int userId, ChangePasswordDto dto);
     bool DeleteUserAction(int id);
 }

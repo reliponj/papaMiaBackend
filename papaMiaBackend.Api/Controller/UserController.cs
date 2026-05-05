@@ -47,4 +47,19 @@ public class UserController : ControllerBase
 
         return Ok(user);
     }
+
+    [SwaggerBearer]
+    [HttpPut("me/password")]
+    public IActionResult ChangeMyPassword([FromBody] ChangePasswordDto dto)
+    {
+        if (!_currentUser.TryGetUserId(out var id))
+            return Unauthorized();
+
+        return _user.ChangePasswordAction(id, dto) switch
+        {
+            ChangePasswordResult.Success => NoContent(),
+            ChangePasswordResult.UserNotFound => NotFound(),
+            ChangePasswordResult.InvalidCurrentPassword => BadRequest(new { message = "invalid_current_password" })
+        };
+    }
 }

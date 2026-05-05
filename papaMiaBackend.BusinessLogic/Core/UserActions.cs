@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Entities.Role;
@@ -13,11 +14,13 @@ public class UserActions
 {
     protected readonly IMapper Mapper;
     protected readonly UserContext Db;
+    protected readonly IPasswordHasher<User> PasswordHasher;
 
-    public UserActions(IMapper mapper, UserContext db)
+    public UserActions(IMapper mapper, UserContext db, IPasswordHasher<User> passwordHasher)
     {
         Mapper = mapper;
         Db = db;
+        PasswordHasher = passwordHasher;
     }
 
     internal List<UserDto> GetAllUsersActionExecution()
@@ -97,6 +100,21 @@ public class UserActions
         entity.Email = email;
         Db.SaveChanges();
         return Mapper.Map<UserDto>(entity);
+    }
+
+    internal ChangePasswordResult ChangePasswordActionExecution(int userId, ChangePasswordDto dto)
+    {
+        var entity = Db.Users.FirstOrDefault(u => u.Id == userId);
+        if (entity is null)
+            return ChangePasswordResult.UserNotFound;
+
+        var verification = PasswordHasher.VerifyHashedPassword(entity, entity.Password, dto.CurrentPassword);
+        if (verification == PasswordVerificationResult.Failed)
+            return ChangePasswordResult.InvalidCurrentPassword;
+
+        entity.Password = PasswordHasher.HashPassword(entity, dto.NewPassword);
+        Db.SaveChanges();
+        return ChangePasswordResult.Success;
     }
 
     internal bool DeleteUserActionExecution(int id)

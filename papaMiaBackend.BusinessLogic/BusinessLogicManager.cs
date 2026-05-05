@@ -45,7 +45,7 @@ public class BusinessLogicManager
 
     public IUserAction UserAction()
     {
-        return new UserActionExecution(_mapper, _userDb);
+        return new UserActionExecution(_mapper, _userDb, _passwordHasher);
     }
 
     public IAuthAction AuthAction()
