@@ -32,4 +32,9 @@ public class PromocodeActionExecution : PromocodeActions, IPromocodeAction
     {
         return DeletePromocodeActionExecution(id);
     }
+
+    public PromocodeValidationResult ValidatePromocodeForUserAction(string code, int userId)
+    {
+        return ValidatePromocodeForUserActionExecution(code, userId);
+    }
 }

@@ -8,4 +8,5 @@ public interface IPromocodeAction
     PromocodeDto CreatePromocodeAction(PromocodeCreateDto promocodeCreateDto);
     PromocodeDto? UpdatePromocodeAction(int id, PromocodeUpdateDto promocodeUpdateDto);
     bool DeletePromocodeAction(int id);
+    PromocodeValidationResult ValidatePromocodeForUserAction(string code, int userId);
 }

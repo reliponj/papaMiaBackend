@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Models.Promocode;
 using papaMiaBackend.Domain.Entities.Promocode;
@@ -58,5 +59,30 @@ public class PromocodeActions
         Db.Promocodes.Remove(entity);
         Db.SaveChanges();
         return true;
+    }
+
+    internal PromocodeValidationResult ValidatePromocodeForUserActionExecution(string code, int userId)
+    {
+        var trimmed = code.Trim();
+        if (trimmed.Length == 0)
+            return new PromocodeValidationResult(PromocodeValidationStatus.NotFound);
+
+        var lower = trimmed.ToLowerInvariant();
+        var entity = Db.Promocodes.AsNoTracking().FirstOrDefault(p => p.Code.ToLower() == lower);
+        if (entity is null)
+            return new PromocodeValidationResult(PromocodeValidationStatus.NotFound);
+
+        if (!entity.IsActive)
+            return new PromocodeValidationResult(PromocodeValidationStatus.Inactive);
+
+        if (entity.ExpiryDate < DateTime.UtcNow)
+            return new PromocodeValidationResult(PromocodeValidationStatus.Expired);
+
+        var alreadyUsed = Db.PromocodeUsages.AsNoTracking()
+            .Any(u => u.UserId == userId && u.PromocodeId == entity.Id);
+        if (alreadyUsed)
+            return new PromocodeValidationResult(PromocodeValidationStatus.AlreadyUsedByUser);
+
+        return new PromocodeValidationResult(PromocodeValidationStatus.Ok, Mapper.Map<PromocodeDto>(entity));
     }
 }
