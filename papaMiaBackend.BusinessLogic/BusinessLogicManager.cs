@@ -82,4 +82,9 @@ public class BusinessLogicManager
     {
         return new PromocodeActionExecution(_mapper, _promocodeDb);
     }
+
+    public IAllergenAction AllergenAction()
+    {
+        return new AllergenActionExecution(_mapper, _productDb);
+    }
 }
