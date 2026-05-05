@@ -3,7 +3,11 @@
 namespace papaMiaBackend.BusinessLogic.Interfaces;
 public interface IProductAction
 {
-    List<ProductListDto> GetAllProductsAction(int? categoryId);
+    List<ProductListDto> GetAllProductsAction(
+        int? categoryId,
+        int[]? allergenExclude = null,
+        string? sortBy = null,
+        string? sortDir = null);
     ProductDto? GetProductByIdAction(int id);
     ProductDto CreateProductAction(ProductCreateDto productCreateDto);
     ProductDto? UpdateProductAction(int id, ProductUpdateDto productUpdateDto);
