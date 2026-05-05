@@ -49,5 +49,6 @@ public class Product
 
     [ForeignKey(nameof(CategoryId))]
     public Category.Category Category { get; set; } = null!;
-}
 
+    public ICollection<Allergen> AllergenLinks { get; set; } = new List<Allergen>();
+}

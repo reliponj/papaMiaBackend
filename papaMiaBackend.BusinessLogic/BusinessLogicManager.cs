@@ -42,7 +42,7 @@ public class BusinessLogicManager
 
     public IUserAction UserAction()
     {
-        return new UserActionExecution(_mapper, _userDb);
+        return new UserActionExecution(_mapper, _userDb, _passwordHasher);
     }
 
     public IAuthAction AuthAction()
@@ -73,5 +73,10 @@ public class BusinessLogicManager
     public IPromocodeAction PromocodeAction()
     {
         return new PromocodeActionExecution(_mapper, _promocodeDb);
+    }
+
+    public IAllergenAction AllergenAction()
+    {
+        return new AllergenActionExecution(_mapper, _productDb);
     }
 }

@@ -42,20 +42,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = "Access token",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT"
-    });
-    c.OperationFilter<SwaggerBearerOperationFilter>();
-});
+builder.Services.AddPapaMiaSwagger();
 
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<UserMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ProductMappingProfile>());
@@ -63,6 +50,7 @@ builder.Services.AddAutoMapper(cfg => cfg.AddProfile<CategoryMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<BannerMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<PromocodeMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<RoleMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AllergenMappingProfile>());
 
 builder.Services.AddScoped<BusinessLogicManager>();
 
@@ -76,8 +64,7 @@ using (var scope = app.Services.CreateScope())
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UsePapaMiaSwagger();
 }
 
 app.UseForwardedHeaders();

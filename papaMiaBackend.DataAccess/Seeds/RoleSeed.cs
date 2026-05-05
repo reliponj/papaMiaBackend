@@ -1,4 +1,5 @@
 using papaMiaBackend.DataAccess.Context;
+using papaMiaBackend.Domain.Constants;
 using papaMiaBackend.Domain.Entities.Role;
 
 namespace papaMiaBackend.DataAccess.Seeds;
@@ -7,34 +8,34 @@ public static class RoleSeed
 {
     public static void Apply(RoleContext db)
     {
-        if (!db.Roles.Any(r => r.Code == "user"))
+        if (!db.Roles.Any(r => r.Code == RoleCodes.User))
         {
             db.Roles.Add(new Role
             {
                 Name = "User",
-                Code = "user",
+                Code = RoleCodes.User,
                 Description = "Default user role",
                 IsSystem = true
             });
         }
 
-        if (!db.Roles.Any(r => r.Code == "moderator"))
+        if (!db.Roles.Any(r => r.Code == RoleCodes.Moderator))
         {
             db.Roles.Add(new Role
             {
                 Name = "Moderator",
-                Code = "moderator",
+                Code = RoleCodes.Moderator,
                 Description = "Moderator role",
                 IsSystem = true
             });
         }
 
-        if (!db.Roles.Any(r => r.Code == "admin"))
+        if (!db.Roles.Any(r => r.Code == RoleCodes.Admin))
         {
             db.Roles.Add(new Role
             {
                 Name = "Admin",
-                Code = "admin",
+                Code = RoleCodes.Admin,
                 Description = "Administrator role",
                 IsSystem = true
             });
@@ -61,7 +62,7 @@ public static class RoleSeed
         db.SaveChanges();
 
         var adminRole = db.Roles
-            .Where(r => r.Code == "admin")
+            .Where(r => r.Code == RoleCodes.Admin)
             .FirstOrDefault();
 
         if (adminRole != null)

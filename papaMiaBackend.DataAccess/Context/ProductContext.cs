@@ -13,6 +13,7 @@ public class ProductContext : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
     public virtual DbSet<Category> Categories { get; set; }
+    public virtual DbSet<Allergen> Allergens { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -29,5 +30,10 @@ public class ProductContext : DbContext
             .WithMany(c => c.Products)
             .HasForeignKey(p => p.CategoryId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Product>()
+            .HasMany(p => p.AllergenLinks)
+            .WithMany(a => a.Products)
+            .UsingEntity(j => j.ToTable("ProductAllergens"));
     }
 }

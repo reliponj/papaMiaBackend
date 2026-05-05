@@ -1,8 +1,10 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Entities.Role;
 using papaMiaBackend.Domain.Entities.User;
+using papaMiaBackend.Domain.Exceptions;
 using papaMiaBackend.Domain.Models.Role;
 using papaMiaBackend.Domain.Models.User;
 
@@ -12,11 +14,13 @@ public class UserActions
 {
     protected readonly IMapper Mapper;
     protected readonly UserContext Db;
+    protected readonly IPasswordHasher<User> PasswordHasher;
 
-    public UserActions(IMapper mapper, UserContext db)
+    public UserActions(IMapper mapper, UserContext db, IPasswordHasher<User> passwordHasher)
     {
         Mapper = mapper;
         Db = db;
+        PasswordHasher = passwordHasher;
     }
 
     internal List<UserDto> GetAllUsersActionExecution()
@@ -50,6 +54,9 @@ public class UserActions
     internal List<RoleListDto>? SetUserRolesActionExecution(int userId, IEnumerable<int> roleIds)
     {
         var ids = roleIds.Distinct().ToList();
+        var baseUserRole = UserRoleDefaults.ResolveDefaultUserRole(Db);
+        if (!ids.Contains(baseUserRole.Id))
+            throw new UserBaseRoleRequiredException();
 
         var user = Db.Users
             .Include(u => u.Roles)
@@ -73,6 +80,7 @@ public class UserActions
     {
         var entity = Mapper.Map<User>(userCreateDto);
         Db.Users.Add(entity);
+        entity.Roles.Add(UserRoleDefaults.ResolveDefaultUserRole(Db));
         Db.SaveChanges();
         return Mapper.Map<UserDto>(entity);
     }
@@ -92,6 +100,21 @@ public class UserActions
         entity.Email = email;
         Db.SaveChanges();
         return Mapper.Map<UserDto>(entity);
+    }
+
+    internal ChangePasswordResult ChangePasswordActionExecution(int userId, ChangePasswordDto dto)
+    {
+        var entity = Db.Users.FirstOrDefault(u => u.Id == userId);
+        if (entity is null)
+            return ChangePasswordResult.UserNotFound;
+
+        var verification = PasswordHasher.VerifyHashedPassword(entity, entity.Password, dto.CurrentPassword);
+        if (verification == PasswordVerificationResult.Failed)
+            return ChangePasswordResult.InvalidCurrentPassword;
+
+        entity.Password = PasswordHasher.HashPassword(entity, dto.NewPassword);
+        Db.SaveChanges();
+        return ChangePasswordResult.Success;
     }
 
     internal bool DeleteUserActionExecution(int id)
