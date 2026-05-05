@@ -5,13 +5,13 @@ using papaMiaBackend.Domain.Models.Category;
 
 namespace papaMiaBackend.Api.Controller;
 
-[Route("api/category")]
+[Route("api/admin/category")]
 [ApiController]
-public class CategoryController : ControllerBase
+public class CategoryAdminController : ControllerBase
 {
     internal ICategoryAction _category;
 
-    public CategoryController(BusinessLogicManager bl)
+    public CategoryAdminController(BusinessLogicManager bl)
     {
         _category = bl.CategoryAction();
     }

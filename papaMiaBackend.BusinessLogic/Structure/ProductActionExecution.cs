@@ -13,10 +13,11 @@ public class ProductActionExecution : ProductActions, IProductAction
     {
     }
 
-    public List<ProductDto> GetAllProductsAction()
+    public List<ProductListDto> GetAllProductsAction(int? categoryId)
     {
-        return GetAllProductsActionExecution();
+        return GetAllProductsActionExecution(categoryId);
     }
+
     public ProductDto? GetProductByIdAction(int id)
     {
         return GetProductByIdActionExecution(id);
