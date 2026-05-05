@@ -30,7 +30,6 @@ builder.Services.AddDbContext<ProductContext>(options => options.UseNpgsql(DbSes
 builder.Services.AddDbContext<LocationContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<BannerContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<PromocodeContext>(options => options.UseNpgsql(DbSession.ConnectionString));
-builder.Services.AddDbContext<CartContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<OrderContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<RoleContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 
@@ -63,7 +62,6 @@ builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ProductMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<CategoryMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<BannerMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<PromocodeMappingProfile>());
-builder.Services.AddAutoMapper(cfg => cfg.AddProfile<CartMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<RoleMappingProfile>());
 
 builder.Services.AddScoped<BusinessLogicManager>();

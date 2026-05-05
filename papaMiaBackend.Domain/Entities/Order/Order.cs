@@ -14,8 +14,5 @@ public class Order
     public int UserId { get; set; }
 
     [Required]
-    public int CartId { get; set; }
-
-    [Required]
     public DateTime CreatedAt { get; set; }
 }

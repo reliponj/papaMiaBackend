@@ -17,7 +17,6 @@ public class BusinessLogicManager
     private readonly RoleContext _roleDb;
     private readonly BannerContext _bannerDb;
     private readonly PromocodeContext _promocodeDb;
-    private readonly CartContext _cartDb;
     private readonly IPasswordHasher<User> _passwordHasher;
     private readonly IOptions<JwtGenerationSettings> _jwtOptions;
 
@@ -28,7 +27,6 @@ public class BusinessLogicManager
         RoleContext roleDb,
         BannerContext bannerDb,
         PromocodeContext promocodeDb,
-        CartContext cartDb,
         IPasswordHasher<User> passwordHasher,
         IOptions<JwtGenerationSettings> jwtOptions)
     {
@@ -38,7 +36,6 @@ public class BusinessLogicManager
         _roleDb = roleDb;
         _bannerDb = bannerDb;
         _promocodeDb = promocodeDb;
-        _cartDb = cartDb;
         _passwordHasher = passwordHasher;
         _jwtOptions = jwtOptions;
     }
@@ -65,11 +62,6 @@ public class BusinessLogicManager
     {
         return new PermissionGroupActionExecution(_mapper, _roleDb);
     }
-    public ICartAction CartAction()
-    {
-        return new CartActionExecution(_mapper, _cartDb);
-    }
-
     public ICategoryAction CategoryAction()
     {
         return new CategoryActionExecution(_mapper, _productDb);
