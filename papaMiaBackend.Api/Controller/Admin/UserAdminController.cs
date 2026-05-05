@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
+using papaMiaBackend.Domain.Exceptions;
 using papaMiaBackend.Domain.Models.User;
 
 namespace papaMiaBackend.Api.Controller;
@@ -50,11 +51,18 @@ public class UserAdminController : ControllerBase
     [HttpPut("{id:int}/roles")]
     public IActionResult SetUserRoles(int id, [FromBody] UserRolesSaveDto dto)
     {
-        var roles = _user.SetUserRolesAction(id, dto?.RoleIds ?? []);
-        if (roles is null)
-            return UserNotFound();
+        try
+        {
+            var roles = _user.SetUserRolesAction(id, dto?.RoleIds ?? []);
+            if (roles is null)
+                return UserNotFound();
 
-        return Ok(roles);
+            return Ok(roles);
+        }
+        catch (UserBaseRoleRequiredException)
+        {
+            return BadRequest(new { message = "user_role_required" });
+        }
     }
 
     [HttpPost]

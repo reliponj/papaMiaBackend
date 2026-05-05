@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Entities.Role;
 using papaMiaBackend.Domain.Entities.User;
+using papaMiaBackend.Domain.Exceptions;
 using papaMiaBackend.Domain.Models.Role;
 using papaMiaBackend.Domain.Models.User;
 
@@ -50,6 +51,9 @@ public class UserActions
     internal List<RoleListDto>? SetUserRolesActionExecution(int userId, IEnumerable<int> roleIds)
     {
         var ids = roleIds.Distinct().ToList();
+        var baseUserRole = UserRoleDefaults.ResolveDefaultUserRole(Db);
+        if (!ids.Contains(baseUserRole.Id))
+            throw new UserBaseRoleRequiredException();
 
         var user = Db.Users
             .Include(u => u.Roles)
@@ -73,6 +77,7 @@ public class UserActions
     {
         var entity = Mapper.Map<User>(userCreateDto);
         Db.Users.Add(entity);
+        entity.Roles.Add(UserRoleDefaults.ResolveDefaultUserRole(Db));
         Db.SaveChanges();
         return Mapper.Map<UserDto>(entity);
     }

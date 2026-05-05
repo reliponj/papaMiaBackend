@@ -43,6 +43,7 @@ public class AuthActions
         entity.Password = PasswordHasher.HashPassword(entity, request.Password);
 
         Db.Users.Add(entity);
+        entity.Roles.Add(UserRoleDefaults.ResolveDefaultUserRole(Db));
         Db.SaveChanges();
 
         return CreateAndPersistTokenPair(entity.Id);
