@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using papaMiaBackend.DataAccess.Context;
+using papaMiaBackend.Domain.Entities.Role;
 using papaMiaBackend.Domain.Entities.User;
 using papaMiaBackend.Domain.Models.Role;
 using papaMiaBackend.Domain.Models.User;
@@ -44,6 +45,28 @@ public class UserActions
             return null;
 
         return Mapper.Map<List<RoleListDto>>(entity.Roles.ToList());
+    }
+
+    internal List<RoleListDto>? SetUserRolesActionExecution(int userId, IEnumerable<int> roleIds)
+    {
+        var ids = roleIds.Distinct().ToList();
+
+        var user = Db.Users
+            .Include(u => u.Roles)
+            .FirstOrDefault(u => u.Id == userId);
+        if (user is null)
+            return null;
+
+        var roles = Db.Set<Role>()
+            .Where(r => ids.Contains(r.Id))
+            .ToList();
+
+        user.Roles.Clear();
+        foreach (var role in roles)
+            user.Roles.Add(role);
+
+        Db.SaveChanges();
+        return Mapper.Map<List<RoleListDto>>(user.Roles.ToList());
     }
 
     internal UserDto CreateUserActionExecution(UserCreateDto userCreateDto)

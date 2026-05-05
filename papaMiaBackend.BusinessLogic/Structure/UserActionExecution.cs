@@ -29,6 +29,11 @@ public class UserActionExecution : UserActions, IUserAction
         return GetUserRolesActionExecution(id);
     }
 
+    public List<RoleListDto>? SetUserRolesAction(int userId, IEnumerable<int> roleIds)
+    {
+        return SetUserRolesActionExecution(userId, roleIds);
+    }
+
     public UserDto CreateUserAction(UserCreateDto userCreateDto)
     {
         return CreateUserActionExecution(userCreateDto);
