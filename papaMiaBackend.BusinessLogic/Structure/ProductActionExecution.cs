@@ -13,9 +13,9 @@ public class ProductActionExecution : ProductActions, IProductAction
     {
     }
 
-    public List<ProductListDto> GetAllProductsAction(int? categoryId)
+    public List<ProductListDto> GetAllProductsAction(int? categoryId, int? allergenExclude = null)
     {
-        return GetAllProductsActionExecution(categoryId);
+        return GetAllProductsActionExecution(categoryId, allergenExclude);
     }
 
     public ProductDto? GetProductByIdAction(int id)

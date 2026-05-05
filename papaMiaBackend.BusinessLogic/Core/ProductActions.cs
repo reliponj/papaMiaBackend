@@ -15,13 +15,19 @@ public class ProductActions
         Mapper = mapper;
         Db = db;
     }
-    internal List<ProductListDto> GetAllProductsActionExecution(int? categoryId)
+    internal List<ProductListDto> GetAllProductsActionExecution(int? categoryId, int? allergenExclude)
     {
         IQueryable<Product> query = Db.Products;
         if (categoryId is int cid)
         {
             query = query.Where(p => p.CategoryId == cid);
         }
+
+        if (allergenExclude is int excludeAllergenId)
+        {
+            query = query.Where(p => !p.AllergenLinks.Any(a => a.Id == excludeAllergenId));
+        }
+
         return Mapper.Map<List<ProductListDto>>(query.ToList());
     }
     internal ProductDto? GetProductByIdActionExecution(int id)
