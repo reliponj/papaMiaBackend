@@ -42,6 +42,18 @@ builder.Services.Configure<JwtGenerationSettings>(
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
+var corsOrigins = builder.Configuration.GetSection("Cors:Origins").Get<string[]>();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins(corsOrigins)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
 builder.Services.AddControllers();
 builder.Services.AddPapaMiaSwagger();
 
@@ -71,6 +83,8 @@ if (app.Environment.IsDevelopment())
 app.UseForwardedHeaders();
 
 app.UseHttpsRedirection();
+app.UseCors();
+
 app.UseAuthorization();
 app.MapControllers();
 
