@@ -22,4 +22,19 @@ public class AllergenActionExecution : AllergenActions, IAllergenAction
     {
         return GetAllergenByIdActionExecution(id);
     }
+
+    public AllergenDto? CreateAllergenAction(AllergenCreateDto dto)
+    {
+        return CreateAllergenActionExecution(dto);
+    }
+
+    public AllergenDto? UpdateAllergenAction(int id, AllergenUpdateDto dto)
+    {
+        return UpdateAllergenActionExecution(id, dto);
+    }
+
+    public bool DeleteAllergenAction(int id)
+    {
+        return DeleteAllergenActionExecution(id);
+    }
 }

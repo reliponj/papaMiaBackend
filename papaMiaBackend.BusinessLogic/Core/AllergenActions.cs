@@ -30,4 +30,35 @@ public class AllergenActions
 
         return Mapper.Map<AllergenDto>(entity);
     }
+
+    internal AllergenDto? CreateAllergenActionExecution(AllergenCreateDto dto)
+    {
+        var entity = Mapper.Map<Allergen>(dto);
+        entity.Name = dto.Name;
+        Db.Allergens.Add(entity);
+        Db.SaveChanges();
+        return Mapper.Map<AllergenDto>(entity);
+    }
+
+    internal AllergenDto? UpdateAllergenActionExecution(int id, AllergenUpdateDto dto)
+    {
+        var entity = Db.Allergens.FirstOrDefault(a => a.Id == id);
+        if (entity is null)
+            return null;
+
+        entity.Name = dto.Name;
+        Db.SaveChanges();
+        return Mapper.Map<AllergenDto>(entity);
+    }
+
+    internal bool DeleteAllergenActionExecution(int id)
+    {
+        var entity = Db.Allergens.FirstOrDefault(a => a.Id == id);
+        if (entity is null)
+            return false;
+
+        Db.Allergens.Remove(entity);
+        Db.SaveChanges();
+        return true;
+    }
 }
