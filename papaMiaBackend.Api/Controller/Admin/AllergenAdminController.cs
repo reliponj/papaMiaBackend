@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using papaMiaBackend.Api.Auth;
+using papaMiaBackend.Api.Swagger;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
 using papaMiaBackend.Domain.Models.Product;
@@ -7,6 +8,7 @@ using papaMiaBackend.Domain.Models.Product;
 namespace papaMiaBackend.Api.Controller;
 
 [AdminMod]
+[SwaggerBearer]
 [Route("api/admin/allergen")]
 [ApiController]
 public class AllergenAdminController : ControllerBase

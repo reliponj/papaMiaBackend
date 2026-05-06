@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using papaMiaBackend.Api.Auth;
+using papaMiaBackend.Api.Swagger;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
 using papaMiaBackend.Domain.Models.Banner;
@@ -7,6 +8,7 @@ using papaMiaBackend.Domain.Models.Banner;
 namespace papaMiaBackend.Api.Controller;
 
 [AdminMod]
+[SwaggerBearer]
 [Route("api/admin/banner")]
 [ApiController]
 public class BannerAdminController : ControllerBase

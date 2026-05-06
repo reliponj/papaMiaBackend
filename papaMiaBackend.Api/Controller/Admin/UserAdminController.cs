@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using papaMiaBackend.Api.Auth;
+using papaMiaBackend.Api.Swagger;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
 using papaMiaBackend.Domain.Exceptions;
@@ -8,6 +9,7 @@ using papaMiaBackend.Domain.Models.User;
 namespace papaMiaBackend.Api.Controller;
 
 [AdminMod]
+[SwaggerBearer]
 [Route("api/admin/user")]
 [ApiController]
 public class UserAdminController : ControllerBase
