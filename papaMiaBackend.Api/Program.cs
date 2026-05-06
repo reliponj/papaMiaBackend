@@ -6,6 +6,8 @@ using Microsoft.OpenApi;
 using papaMiaBackend.Api.Auth;
 using papaMiaBackend.Api.Swagger;
 using papaMiaBackend.BusinessLogic;
+using papaMiaBackend.BusinessLogic.Core;
+using papaMiaBackend.BusinessLogic.Interfaces;
 using papaMiaBackend.BusinessLogic.Mapping;
 using papaMiaBackend.DataAccess;
 using papaMiaBackend.DataAccess.Context;
@@ -41,6 +43,7 @@ builder.Services.Configure<JwtGenerationSettings>(
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
+builder.Services.AddScoped<IUserRoleAccessService, UserRoleAccessService>();
 
 var corsOrigins = builder.Configuration.GetSection("Cors:Origins").Get<string[]>();
 builder.Services.AddCors(options =>
