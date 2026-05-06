@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using papaMiaBackend.Api.Auth;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
 using papaMiaBackend.Domain.Models.Product;
 
 namespace papaMiaBackend.Api.Controller;
 
+[AdminMod]
 [Route("api/admin/product")]
 [ApiController]
 public class ProductAdminController : ControllerBase

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using papaMiaBackend.Api.Auth;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
 using papaMiaBackend.Domain.Models.Category;
 
 namespace papaMiaBackend.Api.Controller;
 
+[AdminMod]
 [Route("api/admin/category")]
 [ApiController]
 public class CategoryAdminController : ControllerBase

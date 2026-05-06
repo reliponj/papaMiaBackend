@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using papaMiaBackend.Api.Auth;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
 using papaMiaBackend.Domain.Models.Role;
 
 namespace papaMiaBackend.Api.Controller;
 
+[AdminMod]
 [Route("api/admin/permission")]
 [ApiController]
 public class PermissionAdminController : ControllerBase
