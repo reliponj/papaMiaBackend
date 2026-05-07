@@ -15,6 +15,7 @@ public class BusinessLogicManager
     private readonly UserContext _userDb;
     private readonly ProductContext _productDb;
     private readonly OrderContext _orderDb;
+    private readonly IngridientContext _ingridientDb;
     private readonly RoleContext _roleDb;
     private readonly BannerContext _bannerDb;
     private readonly PromocodeContext _promocodeDb;
@@ -26,6 +27,7 @@ public class BusinessLogicManager
         UserContext userDb,
         ProductContext productDb,
         OrderContext orderDb,
+        IngridientContext ingridientDb,
         RoleContext roleDb,
         BannerContext bannerDb,
         PromocodeContext promocodeDb,
@@ -36,6 +38,7 @@ public class BusinessLogicManager
         _userDb = userDb;
         _productDb = productDb;
         _orderDb = orderDb;
+        _ingridientDb = ingridientDb;
         _roleDb = roleDb;
         _bannerDb = bannerDb;
         _promocodeDb = promocodeDb;
@@ -85,5 +88,10 @@ public class BusinessLogicManager
     public IAllergenAction AllergenAction()
     {
         return new AllergenActionExecution(_mapper, _productDb);
+    }
+
+    public IIngridientAction IngridientAction()
+    {
+        return new IngridientActionExecution(_mapper, _ingridientDb);
     }
 }
