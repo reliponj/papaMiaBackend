@@ -56,4 +56,5 @@ public class Order
     public PromoNs.Promocode? Promocode { get; set; }
 
     public ICollection<OrderItem> Items { get; set; } = new List<OrderItem>();
+    public ICollection<OrderCustomPizzaItem> CustomPizzaItems { get; set; } = new List<OrderCustomPizzaItem>();
 }

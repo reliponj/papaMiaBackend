@@ -14,14 +14,16 @@ public class OrderMappingProfile : Profile
             .ForMember(d => d.CreatedAt, o => o.Ignore())
             .ForMember(d => d.Status, o => o.Ignore())
             .ForMember(d => d.Promocode, o => o.Ignore())
-            .ForMember(d => d.Items, o => o.MapFrom(s => s.Items));
+            .ForMember(d => d.Items, o => o.MapFrom(s => s.Items))
+            .ForMember(d => d.CustomPizzaItems, o => o.Ignore());
 
         CreateMap<OrderUpdateDto, OrdNs.Order>()
             .ForMember(d => d.Id, o => o.Ignore())
             .ForMember(d => d.UserId, o => o.Ignore())
             .ForMember(d => d.CreatedAt, o => o.Ignore())
             .ForMember(d => d.Promocode, o => o.Ignore())
-            .ForMember(d => d.Items, o => o.Ignore());
+            .ForMember(d => d.Items, o => o.Ignore())
+            .ForMember(d => d.CustomPizzaItems, o => o.Ignore());
 
         CreateMap<OrderCreateItemDto, OrdNs.OrderItem>()
             .ForMember(d => d.Id, o => o.Ignore())
