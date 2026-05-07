@@ -22,4 +22,19 @@ public class IngridientActionExecution : IngridientActions, IIngridientAction
     {
         return GetIngridientByIdActionExecution(id);
     }
+
+    public IngridientDto? CreateIngridientAction(IngridientCreateDto dto)
+    {
+        return CreateIngridientActionExecution(dto);
+    }
+
+    public IngridientDto? UpdateIngridientAction(int id, IngridientUpdateDto dto)
+    {
+        return UpdateIngridientActionExecution(id, dto);
+    }
+
+    public bool DeleteIngridientAction(int id)
+    {
+        return DeleteIngridientActionExecution(id);
+    }
 }
