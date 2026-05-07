@@ -47,5 +47,8 @@ public class Order
     [Required]
     public DateTime CreatedAt { get; set; }
 
+    [Required]
+    public OrderStatus Status { get; set; } = OrderStatus.New;
+
     public ICollection<OrderItem> Items { get; set; } = new List<OrderItem>();
 }
