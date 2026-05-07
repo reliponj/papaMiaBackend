@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using PizzaNs = papaMiaBackend.Domain.Entities.CustomPizza;
 
 namespace papaMiaBackend.Domain.Entities.Ingridient;
 
@@ -23,4 +24,6 @@ public class Ingridient
 
     [Required]
     public IngridientType Type { get; set; }
+
+    public ICollection<PizzaNs.CustomPizza> CustomPizzas { get; set; } = new List<PizzaNs.CustomPizza>();
 }
