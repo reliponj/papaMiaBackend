@@ -12,6 +12,7 @@ contexts=(
   PromocodeContext
   OrderContext
   ArticleContext
+  IngridientContext
 )
 for ctx in "${contexts[@]}"; do
   echo "Applying $ctx..."

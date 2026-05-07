@@ -32,6 +32,7 @@ builder.Services.AddDbContext<BannerContext>(options => options.UseNpgsql(DbSess
 builder.Services.AddDbContext<PromocodeContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<OrderContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<ArticleContext>(options => options.UseNpgsql(DbSession.ConnectionString));
+builder.Services.AddDbContext<IngridientContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<RoleContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
