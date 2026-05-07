@@ -65,4 +65,56 @@ public class OrderActions
             .First(o => o.Id == entity.Id);
         return Mapper.Map<OrderDto>(created);
     }
+
+    internal OrderDto? UpdateOrderActionExecution(int id, OrderUpdateDto dto)
+    {
+        var entity = Db.Orders
+            .Include(o => o.Items)
+            .FirstOrDefault(o => o.Id == id);
+        if (entity is null)
+            return null;
+
+        if (dto.Items.Count == 0 || dto.Items.Any(i => i.ProductId <= 0 || i.Quantity <= 0))
+            return null;
+        if (dto.PromocodeId is int promocodeId
+            && !Db.Set<PromoNs.Promocode>().Any(p => p.Id == promocodeId))
+            return null;
+
+        Mapper.Map(dto, entity);
+        entity.FirstName = entity.FirstName.Trim();
+        entity.LastName = entity.LastName.Trim();
+        entity.Phone = entity.Phone.Trim();
+        entity.Email = entity.Email.Trim();
+        entity.District = entity.District.Trim();
+        entity.Address = entity.Address.Trim();
+        entity.Note = entity.Note?.Trim();
+
+        entity.Items.Clear();
+        foreach (var i in dto.Items)
+        {
+            entity.Items.Add(new OrdNs.OrderItem
+            {
+                ProductId = i.ProductId,
+                Quantity = i.Quantity
+            });
+        }
+
+        Db.SaveChanges();
+
+        var updated = Db.Orders
+            .Include(o => o.Items)
+            .First(o => o.Id == id);
+        return Mapper.Map<OrderDto>(updated);
+    }
+
+    internal bool DeleteOrderActionExecution(int id)
+    {
+        var entity = Db.Orders.FirstOrDefault(o => o.Id == id);
+        if (entity is null)
+            return false;
+
+        Db.Orders.Remove(entity);
+        Db.SaveChanges();
+        return true;
+    }
 }

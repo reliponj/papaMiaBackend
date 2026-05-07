@@ -27,4 +27,14 @@ public class OrderActionExecution : OrderActions, IOrderAction
     {
         return CreateOrderActionExecution(dto, userId);
     }
+
+    public OrderDto? UpdateOrderAction(int id, OrderUpdateDto dto)
+    {
+        return UpdateOrderActionExecution(id, dto);
+    }
+
+    public bool DeleteOrderAction(int id)
+    {
+        return DeleteOrderActionExecution(id);
+    }
 }
