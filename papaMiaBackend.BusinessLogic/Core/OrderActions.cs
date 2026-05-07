@@ -18,6 +18,26 @@ public class OrderActions
         Db = db;
     }
 
+    internal List<OrderDto> GetAllOrdersActionExecution()
+    {
+        var entities = Db.Orders
+            .Include(o => o.Items)
+            .OrderByDescending(o => o.CreatedAt)
+            .ToList();
+        return Mapper.Map<List<OrderDto>>(entities);
+    }
+
+    internal OrderDto? GetOrderByIdActionExecution(int id)
+    {
+        var entity = Db.Orders
+            .Include(o => o.Items)
+            .FirstOrDefault(o => o.Id == id);
+        if (entity is null)
+            return null;
+
+        return Mapper.Map<OrderDto>(entity);
+    }
+
     internal OrderDto? CreateOrderActionExecution(OrderCreateDto dto, int? userId)
     {
         if (dto.Items.Count == 0 || dto.Items.Any(i => i.ProductId <= 0 || i.Quantity <= 0))

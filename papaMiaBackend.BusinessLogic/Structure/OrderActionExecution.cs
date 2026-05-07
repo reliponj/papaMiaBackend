@@ -13,6 +13,16 @@ public class OrderActionExecution : OrderActions, IOrderAction
     {
     }
 
+    public List<OrderDto> GetAllOrdersAction()
+    {
+        return GetAllOrdersActionExecution();
+    }
+
+    public OrderDto? GetOrderByIdAction(int id)
+    {
+        return GetOrderByIdActionExecution(id);
+    }
+
     public OrderDto? CreateOrderAction(OrderCreateDto dto, int? userId)
     {
         return CreateOrderActionExecution(dto, userId);
