@@ -13,6 +13,7 @@ public class OrderMappingProfile : Profile
             .ForMember(d => d.UserId, o => o.Ignore())
             .ForMember(d => d.CreatedAt, o => o.Ignore())
             .ForMember(d => d.Status, o => o.Ignore())
+            .ForMember(d => d.Promocode, o => o.Ignore())
             .ForMember(d => d.Items, o => o.MapFrom(s => s.Items));
 
         CreateMap<OrderCreateItemDto, OrdNs.OrderItem>()

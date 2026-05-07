@@ -11,6 +11,7 @@ public class OrderCreateDto
     public string District { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;
     public string? Note { get; set; }
+    public int? PromocodeId { get; set; }
     public OrderPaymentKind PaymentKind { get; set; }
     public OrderCardProvider? CardProvider { get; set; }
     public List<OrderCreateItemDto> Items { get; set; } = [];

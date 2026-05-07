@@ -1,6 +1,8 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using papaMiaBackend.DataAccess.Context;
 using OrdNs = papaMiaBackend.Domain.Entities.Order;
+using PromoNs = papaMiaBackend.Domain.Entities.Promocode;
 using papaMiaBackend.Domain.Models.Order;
 
 namespace papaMiaBackend.BusinessLogic.Core;
@@ -20,6 +22,9 @@ public class OrderActions
     {
         if (dto.Items.Count == 0 || dto.Items.Any(i => i.ProductId <= 0 || i.Quantity <= 0))
             return null;
+        if (dto.PromocodeId is int promocodeId
+            && !Db.Set<PromoNs.Promocode>().Any(p => p.Id == promocodeId))
+            return null;
 
         var entity = Mapper.Map<OrdNs.Order>(dto);
         entity.UserId = userId;
@@ -35,6 +40,9 @@ public class OrderActions
 
         Db.Orders.Add(entity);
         Db.SaveChanges();
-        return Mapper.Map<OrderDto>(entity);
+        var created = Db.Orders
+            .Include(o => o.Items)
+            .First(o => o.Id == entity.Id);
+        return Mapper.Map<OrderDto>(created);
     }
 }
