@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
+using papaMiaBackend.Domain.Models.CustomPizza;
 
 namespace papaMiaBackend.Api.Controller;
 
@@ -9,10 +10,12 @@ namespace papaMiaBackend.Api.Controller;
 public class PizzaConstructorController : ControllerBase
 {
     private readonly IIngridientAction _ingridient;
+    private readonly ICustomPizzaAction _customPizza;
 
     public PizzaConstructorController(BusinessLogicManager bl)
     {
         _ingridient = bl.IngridientAction();
+        _customPizza = bl.CustomPizzaAction();
     }
 
     [HttpGet("ingridients")]
@@ -20,5 +23,15 @@ public class PizzaConstructorController : ControllerBase
     {
         var items = _ingridient.GetAllIngridientsAction();
         return Ok(items);
+    }
+
+    [HttpPost("custom-pizza")]
+    public IActionResult CreateCustomPizza([FromBody] CustomPizzaCreateDto dto)
+    {
+        var customPizza = _customPizza.CreateCustomPizzaAction(dto);
+        if (customPizza is null)
+            return BadRequest(new { message = "invalid_ingridients" });
+
+        return Ok(customPizza);
     }
 }
