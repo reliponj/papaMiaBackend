@@ -75,6 +75,12 @@ using (var scope = app.Services.CreateScope())
 {
     var roleDb = scope.ServiceProvider.GetRequiredService<RoleContext>();
     RoleSeed.Apply(roleDb);
+
+    var userDb = scope.ServiceProvider.GetRequiredService<UserContext>();
+    var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
+    var seedUser = new User();
+    var adminPasswordHash = passwordHasher.HashPassword(seedUser, "123");
+    AdminUserSeed.Apply(userDb, adminPasswordHash);
 }
 
 if (app.Environment.IsDevelopment())
