@@ -67,6 +67,7 @@ builder.Services.AddAutoMapper(cfg => cfg.AddProfile<PromocodeMappingProfile>())
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<RoleMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AllergenMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<OrderMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<IngridientMappingProfile>());
 
 builder.Services.AddScoped<BusinessLogicManager>();
 
