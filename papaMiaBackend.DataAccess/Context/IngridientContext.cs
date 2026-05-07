@@ -12,6 +12,14 @@ public class IngridientContext : DbContext
 
     public virtual DbSet<Ingridient> Ingridients { get; set; }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Ingridient>(entity =>
+        {
+            entity.Ignore(i => i.CustomPizzas);
+        });
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)

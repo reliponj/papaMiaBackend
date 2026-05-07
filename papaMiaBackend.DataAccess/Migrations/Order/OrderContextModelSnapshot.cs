@@ -22,21 +22,6 @@ namespace papaMiaBackend.DataAccess.Migrations.Order
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("CustomPizzaIngridient", b =>
-                {
-                    b.Property<int>("CustomPizzasId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("IngridientsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("CustomPizzasId", "IngridientsId");
-
-                    b.HasIndex("IngridientsId");
-
-                    b.ToTable("CustomPizzaIngridient");
-                });
-
             modelBuilder.Entity("papaMiaBackend.Domain.Entities.CustomPizza.CustomPizza", b =>
                 {
                     b.Property<int>("Id")
@@ -71,7 +56,10 @@ namespace papaMiaBackend.DataAccess.Migrations.Order
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ingridients");
+                    b.ToTable("Ingridients", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
                 });
 
             modelBuilder.Entity("papaMiaBackend.Domain.Entities.Order.Order", b =>
@@ -215,21 +203,6 @@ namespace papaMiaBackend.DataAccess.Migrations.Order
                     b.HasKey("Id");
 
                     b.ToTable("Promocodes");
-                });
-
-            modelBuilder.Entity("CustomPizzaIngridient", b =>
-                {
-                    b.HasOne("papaMiaBackend.Domain.Entities.CustomPizza.CustomPizza", null)
-                        .WithMany()
-                        .HasForeignKey("CustomPizzasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("papaMiaBackend.Domain.Entities.Ingridient.Ingridient", null)
-                        .WithMany()
-                        .HasForeignKey("IngridientsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("papaMiaBackend.Domain.Entities.Order.Order", b =>

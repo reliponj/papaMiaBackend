@@ -12,8 +12,8 @@ using papaMiaBackend.DataAccess.Context;
 namespace papaMiaBackend.DataAccess.Migrations.Order
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20260507125500_Order with custom pizza")]
-    partial class Orderwithcustompizza
+    [Migration("20260507144204_Ingridient ignore in order")]
+    partial class Ingridientignoreinorder
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,21 +24,6 @@ namespace papaMiaBackend.DataAccess.Migrations.Order
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("CustomPizzaIngridient", b =>
-                {
-                    b.Property<int>("CustomPizzasId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("IngridientsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("CustomPizzasId", "IngridientsId");
-
-                    b.HasIndex("IngridientsId");
-
-                    b.ToTable("CustomPizzaIngridient");
-                });
 
             modelBuilder.Entity("papaMiaBackend.Domain.Entities.CustomPizza.CustomPizza", b =>
                 {
@@ -74,7 +59,10 @@ namespace papaMiaBackend.DataAccess.Migrations.Order
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ingridients");
+                    b.ToTable("Ingridients", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
                 });
 
             modelBuilder.Entity("papaMiaBackend.Domain.Entities.Order.Order", b =>
@@ -218,21 +206,6 @@ namespace papaMiaBackend.DataAccess.Migrations.Order
                     b.HasKey("Id");
 
                     b.ToTable("Promocodes");
-                });
-
-            modelBuilder.Entity("CustomPizzaIngridient", b =>
-                {
-                    b.HasOne("papaMiaBackend.Domain.Entities.CustomPizza.CustomPizza", null)
-                        .WithMany()
-                        .HasForeignKey("CustomPizzasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("papaMiaBackend.Domain.Entities.Ingridient.Ingridient", null)
-                        .WithMany()
-                        .HasForeignKey("IngridientsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("papaMiaBackend.Domain.Entities.Order.Order", b =>

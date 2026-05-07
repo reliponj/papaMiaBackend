@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using OrdNs = papaMiaBackend.Domain.Entities.Order;
 using PromoNs = papaMiaBackend.Domain.Entities.Promocode;
 using PizzaNs = papaMiaBackend.Domain.Entities.CustomPizza;
+using IngNs = papaMiaBackend.Domain.Entities.Ingridient;
 
 namespace papaMiaBackend.DataAccess.Context;
 
@@ -28,6 +29,13 @@ public class OrderContext : DbContext
         modelBuilder.Entity<PizzaNs.CustomPizza>(entity =>
         {
             entity.ToTable("CustomPizzas", t => t.ExcludeFromMigrations());
+            entity.Ignore(p => p.Ingridients);
+        });
+
+        modelBuilder.Entity<IngNs.Ingridient>(entity =>
+        {
+            entity.ToTable("Ingridients", t => t.ExcludeFromMigrations());
+            entity.Ignore(i => i.CustomPizzas);
         });
 
         modelBuilder.Entity<OrdNs.OrderCustomPizzaItem>()
