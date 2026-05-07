@@ -16,4 +16,5 @@ public class OrderUpdateDto
     public OrderCardProvider? CardProvider { get; set; }
     public OrderStatus Status { get; set; }
     public List<OrderCreateItemDto> Items { get; set; } = [];
+    public List<OrderCreateCustomPizzaItemDto> CustomPizzaItems { get; set; } = [];
 }

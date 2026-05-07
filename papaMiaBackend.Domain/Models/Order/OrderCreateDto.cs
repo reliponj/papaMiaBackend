@@ -15,4 +15,5 @@ public class OrderCreateDto
     public OrderPaymentKind PaymentKind { get; set; }
     public OrderCardProvider? CardProvider { get; set; }
     public List<OrderCreateItemDto> Items { get; set; } = [];
+    public List<OrderCreateCustomPizzaItemDto> CustomPizzaItems { get; set; } = [];
 }
