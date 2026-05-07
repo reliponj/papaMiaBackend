@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using OrdNs = papaMiaBackend.Domain.Entities.Order;
+using PromoNs = papaMiaBackend.Domain.Entities.Promocode;
 
 namespace papaMiaBackend.DataAccess.Context;
 
@@ -21,6 +22,12 @@ public class OrderContext : DbContext
             .WithMany(o => o.Items)
             .HasForeignKey(oi => oi.OrderId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<OrdNs.Order>()
+            .HasOne<PromoNs.Promocode>(o => o.Promocode)
+            .WithMany()
+            .HasForeignKey(o => o.PromocodeId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

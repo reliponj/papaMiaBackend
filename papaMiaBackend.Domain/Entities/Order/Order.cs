@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using PromoNs = papaMiaBackend.Domain.Entities.Promocode;
 
 namespace papaMiaBackend.Domain.Entities.Order;
 
@@ -11,6 +12,7 @@ public class Order
     public int Id { get; set; }
 
     public int? UserId { get; set; }
+    public int? PromocodeId { get; set; }
 
     [Required]
     [StringLength(100)]
@@ -49,6 +51,9 @@ public class Order
 
     [Required]
     public OrderStatus Status { get; set; } = OrderStatus.New;
+
+    [ForeignKey(nameof(PromocodeId))]
+    public PromoNs.Promocode? Promocode { get; set; }
 
     public ICollection<OrderItem> Items { get; set; } = new List<OrderItem>();
 }
