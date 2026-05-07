@@ -14,6 +14,7 @@ public class BusinessLogicManager
     private readonly IMapper _mapper;
     private readonly UserContext _userDb;
     private readonly ProductContext _productDb;
+    private readonly OrderContext _orderDb;
     private readonly RoleContext _roleDb;
     private readonly BannerContext _bannerDb;
     private readonly PromocodeContext _promocodeDb;
@@ -24,6 +25,7 @@ public class BusinessLogicManager
         IMapper mapper,
         UserContext userDb,
         ProductContext productDb,
+        OrderContext orderDb,
         RoleContext roleDb,
         BannerContext bannerDb,
         PromocodeContext promocodeDb,
@@ -33,6 +35,7 @@ public class BusinessLogicManager
         _mapper = mapper;
         _userDb = userDb;
         _productDb = productDb;
+        _orderDb = orderDb;
         _roleDb = roleDb;
         _bannerDb = bannerDb;
         _promocodeDb = promocodeDb;
@@ -53,6 +56,10 @@ public class BusinessLogicManager
     public IProductAction ProductAction()
     {
         return new ProductActionExecution(_mapper, _productDb);
+    }
+    public IOrderAction OrderAction()
+    {
+        return new OrderActionExecution(_mapper, _orderDb);
     }
     public IRoleAction RoleAction()
     {
