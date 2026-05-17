@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using papaMiaBackend.Domain.Entities.Product;
+using papaMiaBackend.Domain.Entities.Category;
 
 namespace papaMiaBackend.DataAccess.Context;
 
@@ -11,6 +12,8 @@ public class ProductContext : DbContext
     }
 
     public virtual DbSet<Product> Products { get; set; }
+    public virtual DbSet<Category> Categories { get; set; }
+    public virtual DbSet<Allergen> Allergens { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -18,5 +21,19 @@ public class ProductContext : DbContext
         {
             optionsBuilder.UseNpgsql(DbSession.ConnectionString);
         }
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Product>()
+            .HasOne(p => p.Category)
+            .WithMany(c => c.Products)
+            .HasForeignKey(p => p.CategoryId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Product>()
+            .HasMany(p => p.AllergenLinks)
+            .WithMany(a => a.Products)
+            .UsingEntity(j => j.ToTable("ProductAllergens"));
     }
 }

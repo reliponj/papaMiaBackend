@@ -8,18 +8,33 @@ namespace papaMiaBackend.Api.Controller;
 [ApiController]
 public class ProductController : ControllerBase
 {
-    internal IProductAction _product;
+    private readonly ICategoryAction _category;
+    private readonly IProductAction _product;
 
     public ProductController(BusinessLogicManager bl)
     {
+        _category = bl.CategoryAction();
         _product = bl.ProductAction();
     }
 
-    [HttpGet]
-    public IActionResult GetAllProducts()
+    [HttpGet("categories")]
+    public IActionResult GetAllCategories()
     {
-        var products = _product.GetAllProductsAction();
-        return Ok(products);
+        var categories = _category.GetAllCategoriesAction();
+        return Ok(categories);
     }
 
+    [HttpGet("category/{categoryId:int}")]
+    public IActionResult GetProductsByCategory(
+        int categoryId,
+        [FromQuery] int[]? allergenExclude,
+        [FromQuery] string? sortBy,
+        [FromQuery] string? sortDir)
+    {
+        if (_category.GetCategoryByIdAction(categoryId) is null)
+            return NotFound(new { message = "category_not_found" });
+
+        var products = _product.GetAllProductsAction(categoryId, allergenExclude, sortBy, sortDir);
+        return Ok(products);
+    }
 }

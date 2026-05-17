@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using papaMiaBackend.Domain.Models.Category;
 
 namespace papaMiaBackend.Domain.Models.Product;
+
 public class ProductDto
 {
     public int Id { get; set; }
@@ -17,4 +14,7 @@ public class ProductDto
     public string Allergens { get; set; } = string.Empty;
     public bool IsActive { get; set; } = true;
 
+    public int CategoryId { get; set; }
+
+    public CategoryDto? Category { get; set; }
 }

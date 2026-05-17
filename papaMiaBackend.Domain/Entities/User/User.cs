@@ -1,4 +1,3 @@
-
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,7 +15,6 @@ public class User
     [StringLength(30, MinimumLength = 5, ErrorMessage = "Username cannot be longer than 30 chars.")]
     public string Username { get; set; } = string.Empty;
 
-    /// <summary>Хеш пароля (PBKDF2). Plaintext не хранить.</summary>
     [Required]
     [Display(Name = "Password")]
     [StringLength(500)]
@@ -33,5 +31,5 @@ public class User
     [StringLength(30)]
     public string LastIp { get; set; } = string.Empty;
 
-    public URole Level { get; set; }
+    public ICollection<Role.Role> Roles { get; set; } = new List<Role.Role>();
 }

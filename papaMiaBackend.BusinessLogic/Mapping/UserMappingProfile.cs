@@ -14,6 +14,6 @@ public class UserMappingProfile : Profile
             .ForMember(d => d.Id, o => o.Ignore())
             .ForMember(d => d.LastLogin, o => o.MapFrom(_ => DateTime.UtcNow))
             .ForMember(d => d.LastIp, o => o.MapFrom(_ => string.Empty))
-            .ForMember(d => d.Level, o => o.MapFrom(_ => URole.User));
+            .ForMember(d => d.Roles, o => o.Ignore());
     }
 }

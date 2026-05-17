@@ -37,13 +37,13 @@ public class AuthActions
             Username = request.Username,
             Email = request.Email,
             LastLogin = DateTime.UtcNow,
-            LastIp = string.Empty,
-            Level = URole.User
+            LastIp = string.Empty
         };
 
         entity.Password = PasswordHasher.HashPassword(entity, request.Password);
 
         Db.Users.Add(entity);
+        entity.Roles.Add(UserRoleDefaults.ResolveDefaultUserRole(Db));
         Db.SaveChanges();
 
         return CreateAndPersistTokenPair(entity.Id);

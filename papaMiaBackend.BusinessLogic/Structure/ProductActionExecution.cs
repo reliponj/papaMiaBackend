@@ -3,9 +3,6 @@ using papaMiaBackend.BusinessLogic.Core;
 using papaMiaBackend.BusinessLogic.Interfaces;
 using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Models.Product;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace papaMiaBackend.BusinessLogic.Structure;
 
@@ -15,8 +12,33 @@ public class ProductActionExecution : ProductActions, IProductAction
         : base(mapper, db)
     {
     }
-    public List<ProductDto> GetAllProductsAction()
+
+    public List<ProductListDto> GetAllProductsAction(
+        int? categoryId,
+        int[]? allergenExclude = null,
+        string? sortBy = null,
+        string? sortDir = null)
     {
-        return GetAllProductsActionExecution();
+        return GetAllProductsActionExecution(categoryId, allergenExclude, sortBy, sortDir);
+    }
+
+    public ProductDto? GetProductByIdAction(int id)
+    {
+        return GetProductByIdActionExecution(id);
+    }
+
+    public ProductDto CreateProductAction(ProductCreateDto productCreateDto)
+    {
+        return CreateProductActionExecution(productCreateDto);
+    }
+
+    public ProductDto? UpdateProductAction(int id, ProductUpdateDto productUpdateDto)
+    {
+        return UpdateProductActionExecution(id, productUpdateDto);
+    }
+
+    public bool DeleteProductAction(int id)
+    {
+        return DeleteProductActionExecution(id);
     }
 }
