@@ -21,6 +21,7 @@ public class BusinessLogicManager
     private readonly BannerContext _bannerDb;
     private readonly PromocodeContext _promocodeDb;
     private readonly ReviewContext _reviewDb;
+    private readonly ArticleContext _articleDb;
     private readonly IPasswordHasher<User> _passwordHasher;
     private readonly IOptions<JwtGenerationSettings> _jwtOptions;
 
@@ -35,6 +36,7 @@ public class BusinessLogicManager
         BannerContext bannerDb,
         PromocodeContext promocodeDb,
         ReviewContext reviewDb,
+        ArticleContext articleDb,
         IPasswordHasher<User> passwordHasher,
         IOptions<JwtGenerationSettings> jwtOptions)
     {
@@ -48,6 +50,7 @@ public class BusinessLogicManager
         _bannerDb = bannerDb;
         _promocodeDb = promocodeDb;
         _reviewDb = reviewDb;
+        _articleDb = articleDb;
         _passwordHasher = passwordHasher;
         _jwtOptions = jwtOptions;
     }
@@ -109,5 +112,10 @@ public class BusinessLogicManager
     public IReviewAction ReviewAction()
     {
         return new ReviewActionExecution(_mapper, _reviewDb);
+    }
+
+    public IArticleAction ArticleAction()
+    {
+        return new ArticleActionExecution(_mapper, _articleDb);
     }
 }
