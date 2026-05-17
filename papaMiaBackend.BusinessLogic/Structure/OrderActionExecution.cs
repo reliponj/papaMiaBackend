@@ -8,8 +8,8 @@ namespace papaMiaBackend.BusinessLogic.Structure;
 
 public class OrderActionExecution : OrderActions, IOrderAction
 {
-    public OrderActionExecution(IMapper mapper, OrderContext db)
-        : base(mapper, db)
+    public OrderActionExecution(IMapper mapper, OrderContext db, PromocodeContext promocodeDb)
+        : base(mapper, db, promocodeDb)
     {
     }
 

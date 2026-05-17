@@ -74,7 +74,7 @@ public class BusinessLogicManager
     }
     public IOrderAction OrderAction()
     {
-        return new OrderActionExecution(_mapper, _orderDb);
+        return new OrderActionExecution(_mapper, _orderDb, _promocodeDb);
     }
     public IRoleAction RoleAction()
     {

@@ -11,11 +11,13 @@ public class OrderActions
 {
     protected readonly IMapper Mapper;
     protected readonly OrderContext Db;
+    protected readonly PromocodeContext PromocodeDb;
 
-    public OrderActions(IMapper mapper, OrderContext db)
+    public OrderActions(IMapper mapper, OrderContext db, PromocodeContext promocodeDb)
     {
         Mapper = mapper;
         Db = db;
+        PromocodeDb = promocodeDb;
     }
 
     internal List<OrderDto> GetAllOrdersActionExecution()
@@ -71,6 +73,18 @@ public class OrderActions
             && !Db.Set<PromoNs.Promocode>().Any(p => p.Id == promocodeId))
             return null;
 
+        var recordPromocodeUsage = userId.HasValue && dto.PromocodeId.HasValue;
+        int? promocodeUserId = null;
+        int? promocodeIdToRecord = null;
+        if (recordPromocodeUsage)
+        {
+            promocodeUserId = userId!.Value;
+            promocodeIdToRecord = dto.PromocodeId!.Value;
+            if (PromocodeDb.PromocodeUsages.Any(u =>
+                    u.UserId == promocodeUserId && u.PromocodeId == promocodeIdToRecord))
+                return null;
+        }
+
         var entity = Mapper.Map<OrdNs.Order>(dto);
         entity.UserId = userId;
         entity.FirstName = entity.FirstName.Trim();
@@ -85,8 +99,28 @@ public class OrderActions
 
         Db.Orders.Add(entity);
         Db.SaveChanges();
+
+        if (recordPromocodeUsage)
+        {
+            PromocodeDb.PromocodeUsages.Add(new PromoNs.PromocodeUsage
+            {
+                UserId = promocodeUserId!.Value,
+                PromocodeId = promocodeIdToRecord!.Value,
+                UsedAt = DateTime.UtcNow
+            });
+            try
+            {
+                PromocodeDb.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                return null;
+            }
+        }
+
         var created = Db.Orders
             .Include(o => o.Items)
+            .Include(o => o.CustomPizzaItems)
             .First(o => o.Id == entity.Id);
         return Mapper.Map<OrderDto>(created);
     }
