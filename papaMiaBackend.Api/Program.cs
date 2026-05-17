@@ -71,6 +71,7 @@ builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AllergenMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<OrderMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<IngridientMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<CustomPizzaMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ReviewMappingProfile>());
 
 builder.Services.AddScoped<BusinessLogicManager>();
 
