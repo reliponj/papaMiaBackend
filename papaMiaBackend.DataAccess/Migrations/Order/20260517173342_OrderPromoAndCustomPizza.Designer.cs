@@ -12,8 +12,8 @@ using papaMiaBackend.DataAccess.Context;
 namespace papaMiaBackend.DataAccess.Migrations.Order
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20260517172819_OrderFix")]
-    partial class OrderFix
+    [Migration("20260517173342_OrderPromoAndCustomPizza")]
+    partial class OrderPromoAndCustomPizza
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
