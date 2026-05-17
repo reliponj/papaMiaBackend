@@ -73,6 +73,7 @@ builder.Services.AddAutoMapper(cfg => cfg.AddProfile<IngridientMappingProfile>()
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<CustomPizzaMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ReviewMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ArticleMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<LocationMappingProfile>());
 
 builder.Services.AddScoped<BusinessLogicManager>();
 
