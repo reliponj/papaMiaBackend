@@ -22,6 +22,18 @@ public class OrderActions
     {
         var entities = Db.Orders
             .Include(o => o.Items)
+            .Include(o => o.CustomPizzaItems)
+            .OrderByDescending(o => o.CreatedAt)
+            .ToList();
+        return Mapper.Map<List<OrderDto>>(entities);
+    }
+
+    internal List<OrderDto> GetOrdersByUserActionExecution(int userId)
+    {
+        var entities = Db.Orders
+            .Include(o => o.Items)
+            .Include(o => o.CustomPizzaItems)
+            .Where(o => o.UserId == userId)
             .OrderByDescending(o => o.CreatedAt)
             .ToList();
         return Mapper.Map<List<OrderDto>>(entities);
@@ -31,7 +43,20 @@ public class OrderActions
     {
         var entity = Db.Orders
             .Include(o => o.Items)
+            .Include(o => o.CustomPizzaItems)
             .FirstOrDefault(o => o.Id == id);
+        if (entity is null)
+            return null;
+
+        return Mapper.Map<OrderDto>(entity);
+    }
+
+    internal OrderDto? GetOrderForUserActionExecution(int orderId, int userId)
+    {
+        var entity = Db.Orders
+            .Include(o => o.Items)
+            .Include(o => o.CustomPizzaItems)
+            .FirstOrDefault(o => o.Id == orderId && o.UserId == userId);
         if (entity is null)
             return null;
 
