@@ -32,6 +32,8 @@ builder.Services.AddDbContext<BannerContext>(options => options.UseNpgsql(DbSess
 builder.Services.AddDbContext<PromocodeContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<OrderContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<ArticleContext>(options => options.UseNpgsql(DbSession.ConnectionString));
+builder.Services.AddDbContext<IngridientContext>(options => options.UseNpgsql(DbSession.ConnectionString));
+builder.Services.AddDbContext<CustomPizzaContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<RoleContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
@@ -41,6 +43,7 @@ builder.Services.Configure<JwtGenerationSettings>(
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
+builder.Services.AddAdminAccessControl();
 
 var corsOrigins = builder.Configuration.GetSection("Cors:Origins").Get<string[]>();
 builder.Services.AddCors(options =>
@@ -64,6 +67,9 @@ builder.Services.AddAutoMapper(cfg => cfg.AddProfile<BannerMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<PromocodeMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<RoleMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AllergenMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<OrderMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<IngridientMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<CustomPizzaMappingProfile>());
 
 builder.Services.AddScoped<BusinessLogicManager>();
 
@@ -73,6 +79,12 @@ using (var scope = app.Services.CreateScope())
 {
     var roleDb = scope.ServiceProvider.GetRequiredService<RoleContext>();
     RoleSeed.Apply(roleDb);
+
+    var userDb = scope.ServiceProvider.GetRequiredService<UserContext>();
+    var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
+    var seedUser = new User();
+    var adminPasswordHash = passwordHasher.HashPassword(seedUser, "123");
+    AdminUserSeed.Apply(userDb, adminPasswordHash);
 }
 
 if (app.Environment.IsDevelopment())

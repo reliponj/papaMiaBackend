@@ -12,3 +12,11 @@ public enum OrderCardProvider
     Mastercard = 1,
     PayPal = 2
 }
+
+public enum OrderStatus
+{
+    New = 0,
+    Process = 1,
+    Done = 2,
+    Cancel = 3
+}

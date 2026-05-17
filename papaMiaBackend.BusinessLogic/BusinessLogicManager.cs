@@ -14,6 +14,9 @@ public class BusinessLogicManager
     private readonly IMapper _mapper;
     private readonly UserContext _userDb;
     private readonly ProductContext _productDb;
+    private readonly OrderContext _orderDb;
+    private readonly IngridientContext _ingridientDb;
+    private readonly CustomPizzaContext _customPizzaDb;
     private readonly RoleContext _roleDb;
     private readonly BannerContext _bannerDb;
     private readonly PromocodeContext _promocodeDb;
@@ -24,6 +27,9 @@ public class BusinessLogicManager
         IMapper mapper,
         UserContext userDb,
         ProductContext productDb,
+        OrderContext orderDb,
+        IngridientContext ingridientDb,
+        CustomPizzaContext customPizzaDb,
         RoleContext roleDb,
         BannerContext bannerDb,
         PromocodeContext promocodeDb,
@@ -33,6 +39,9 @@ public class BusinessLogicManager
         _mapper = mapper;
         _userDb = userDb;
         _productDb = productDb;
+        _orderDb = orderDb;
+        _ingridientDb = ingridientDb;
+        _customPizzaDb = customPizzaDb;
         _roleDb = roleDb;
         _bannerDb = bannerDb;
         _promocodeDb = promocodeDb;
@@ -53,6 +62,10 @@ public class BusinessLogicManager
     public IProductAction ProductAction()
     {
         return new ProductActionExecution(_mapper, _productDb);
+    }
+    public IOrderAction OrderAction()
+    {
+        return new OrderActionExecution(_mapper, _orderDb);
     }
     public IRoleAction RoleAction()
     {
@@ -78,5 +91,15 @@ public class BusinessLogicManager
     public IAllergenAction AllergenAction()
     {
         return new AllergenActionExecution(_mapper, _productDb);
+    }
+
+    public IIngridientAction IngridientAction()
+    {
+        return new IngridientActionExecution(_mapper, _ingridientDb);
+    }
+
+    public ICustomPizzaAction CustomPizzaAction()
+    {
+        return new CustomPizzaActionExecution(_mapper, _customPizzaDb);
     }
 }

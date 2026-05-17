@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using papaMiaBackend.Api.Auth;
+using papaMiaBackend.Api.Swagger;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
 using papaMiaBackend.Domain.Models.Promocode;
 
 namespace papaMiaBackend.Api.Controller;
 
+[AdminMod]
+[SwaggerBearer]
 [Route("api/admin/promocode")]
 [ApiController]
 public class PromocodeAdminController : ControllerBase
