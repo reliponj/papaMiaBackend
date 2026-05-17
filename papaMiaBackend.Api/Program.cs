@@ -35,6 +35,7 @@ builder.Services.AddDbContext<ArticleContext>(options => options.UseNpgsql(DbSes
 builder.Services.AddDbContext<IngridientContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<CustomPizzaContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<RoleContext>(options => options.UseNpgsql(DbSession.ConnectionString));
+builder.Services.AddDbContext<ReviewContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
@@ -70,6 +71,9 @@ builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AllergenMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<OrderMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<IngridientMappingProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<CustomPizzaMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ReviewMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ArticleMappingProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<LocationMappingProfile>());
 
 builder.Services.AddScoped<BusinessLogicManager>();
 

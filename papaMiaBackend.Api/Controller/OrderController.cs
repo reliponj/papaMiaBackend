@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using papaMiaBackend.Api.Auth;
+using papaMiaBackend.Api.Swagger;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
 using papaMiaBackend.Domain.Models.Order;
@@ -17,6 +18,31 @@ public class OrderController : ControllerBase
     {
         _order = bl.OrderAction();
         _currentUser = currentUser;
+    }
+
+    [SwaggerBearer]
+    [HttpGet]
+    public IActionResult GetMyOrders()
+    {
+        if (!_currentUser.TryGetUserId(out var userId))
+            return Unauthorized();
+
+        var orders = _order.GetOrdersByUserAction(userId);
+        return Ok(orders);
+    }
+
+    [SwaggerBearer]
+    [HttpGet("{id:int}")]
+    public IActionResult GetMyOrderById(int id)
+    {
+        if (!_currentUser.TryGetUserId(out var userId))
+            return Unauthorized();
+
+        var order = _order.GetOrderForUserAction(id, userId);
+        if (order is null)
+            return NotFound(new { message = "order_not_found" });
+
+        return Ok(order);
     }
 
     [HttpPost]
