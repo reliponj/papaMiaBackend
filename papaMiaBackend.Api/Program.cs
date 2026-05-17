@@ -35,6 +35,7 @@ builder.Services.AddDbContext<ArticleContext>(options => options.UseNpgsql(DbSes
 builder.Services.AddDbContext<IngridientContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<CustomPizzaContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 builder.Services.AddDbContext<RoleContext>(options => options.UseNpgsql(DbSession.ConnectionString));
+builder.Services.AddDbContext<ReviewContext>(options => options.UseNpgsql(DbSession.ConnectionString));
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
