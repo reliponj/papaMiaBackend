@@ -50,6 +50,11 @@ public class OrderContext : DbContext
             .HasForeignKey(oi => oi.CustomPizzaId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        modelBuilder.Entity<PromoNs.Promocode>(entity =>
+        {
+            entity.ToTable("Promocodes", t => t.ExcludeFromMigrations());
+        });
+
         modelBuilder.Entity<OrdNs.Order>()
             .HasOne<PromoNs.Promocode>(o => o.Promocode)
             .WithMany()

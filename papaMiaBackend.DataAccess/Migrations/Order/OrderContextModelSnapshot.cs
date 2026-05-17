@@ -202,7 +202,10 @@ namespace papaMiaBackend.DataAccess.Migrations.Order
 
                     b.HasKey("Id");
 
-                    b.ToTable("Promocodes");
+                    b.ToTable("Promocodes", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
                 });
 
             modelBuilder.Entity("papaMiaBackend.Domain.Entities.Order.Order", b =>
