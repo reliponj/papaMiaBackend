@@ -15,6 +15,8 @@ public class UserContext : DbContext
 
     public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
 
+    public virtual DbSet<UserFavorite> UserFavorites { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Ignore<Permission>();
@@ -30,6 +32,10 @@ public class UserContext : DbContext
             .HasMany(u => u.Roles)
             .WithMany(r => r.Users)
             .UsingEntity(j => j.ToTable("UserRoles"));
+
+        modelBuilder.Entity<UserFavorite>()
+            .HasIndex(f => new { f.UserId, f.ProductId })
+            .IsUnique();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
