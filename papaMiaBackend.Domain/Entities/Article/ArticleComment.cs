@@ -3,26 +3,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace papaMiaBackend.Domain.Entities.Article;
 
-[Table("Articles")]
-public class Article
+[Table("ArticleComments")]
+public class ArticleComment
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     [Required]
-    [StringLength(200)]
-    public string Title { get; set; } = string.Empty;
+    public int ArticleId { get; set; }
+
+    [Required]
+    public int UserId { get; set; }
+
+    [Required]
+    [StringLength(2000)]
+    public string Text { get; set; } = string.Empty;
 
     [Required]
     public DateTime CreatedAt { get; set; }
 
-    [Required]
-    public string Text { get; set; } = string.Empty;
-
-    [Required]
-    [Display(Name = "ImageUrl")]
-    public string ImageUrl { get; set; } = string.Empty;
-
-    public ICollection<ArticleComment> Comments { get; set; } = new List<ArticleComment>();
+    [ForeignKey(nameof(ArticleId))]
+    public Article Article { get; set; } = null!;
 }
