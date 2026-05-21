@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
+using papaMiaBackend.Api.Auth;
+using papaMiaBackend.Api.Swagger;
 using papaMiaBackend.BusinessLogic;
 using papaMiaBackend.BusinessLogic.Interfaces;
 using papaMiaBackend.Domain.Models.Role;
 
 namespace papaMiaBackend.Api.Controller;
 
+[AdminMod]
+[SwaggerBearer]
 [Route("api/admin/permission-group")]
 [ApiController]
 public class PermissionGroupAdminController : ControllerBase

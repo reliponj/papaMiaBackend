@@ -22,6 +22,46 @@ namespace papaMiaBackend.DataAccess.Migrations.Order
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("papaMiaBackend.Domain.Entities.CustomPizza.CustomPizza", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomPizzas", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
+                });
+
+            modelBuilder.Entity("papaMiaBackend.Domain.Entities.Ingridient.Ingridient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ingridients", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
+                });
+
             modelBuilder.Entity("papaMiaBackend.Domain.Entities.Order.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -73,12 +113,46 @@ namespace papaMiaBackend.DataAccess.Migrations.Order
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
 
+                    b.Property<int?>("PromocodeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PromocodeId");
+
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("papaMiaBackend.Domain.Entities.Order.OrderCustomPizzaItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CustomPizzaId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomPizzaId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderCustomPizzaItems");
                 });
 
             modelBuilder.Entity("papaMiaBackend.Domain.Entities.Order.OrderItem", b =>
@@ -105,6 +179,64 @@ namespace papaMiaBackend.DataAccess.Migrations.Order
                     b.ToTable("OrderItems");
                 });
 
+            modelBuilder.Entity("papaMiaBackend.Domain.Entities.Promocode.Promocode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Percent")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Promocodes", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
+                });
+
+            modelBuilder.Entity("papaMiaBackend.Domain.Entities.Order.Order", b =>
+                {
+                    b.HasOne("papaMiaBackend.Domain.Entities.Promocode.Promocode", "Promocode")
+                        .WithMany()
+                        .HasForeignKey("PromocodeId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Promocode");
+                });
+
+            modelBuilder.Entity("papaMiaBackend.Domain.Entities.Order.OrderCustomPizzaItem", b =>
+                {
+                    b.HasOne("papaMiaBackend.Domain.Entities.CustomPizza.CustomPizza", "CustomPizza")
+                        .WithMany()
+                        .HasForeignKey("CustomPizzaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("papaMiaBackend.Domain.Entities.Order.Order", "Order")
+                        .WithMany("CustomPizzaItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CustomPizza");
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("papaMiaBackend.Domain.Entities.Order.OrderItem", b =>
                 {
                     b.HasOne("papaMiaBackend.Domain.Entities.Order.Order", "Order")
@@ -118,6 +250,8 @@ namespace papaMiaBackend.DataAccess.Migrations.Order
 
             modelBuilder.Entity("papaMiaBackend.Domain.Entities.Order.Order", b =>
                 {
+                    b.Navigation("CustomPizzaItems");
+
                     b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
