@@ -10,6 +10,7 @@ public class CustomPizzaMappingProfile : Profile
     {
         CreateMap<CustomPizzaCreateDto, PizzaNs.CustomPizza>()
             .ForMember(d => d.Id, o => o.Ignore())
+            .ForMember(d => d.TotalPrice, o => o.Ignore())
             .ForMember(d => d.Ingridients, o => o.Ignore());
 
         CreateMap<PizzaNs.CustomPizza, CustomPizzaDto>()

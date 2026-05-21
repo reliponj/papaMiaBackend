@@ -34,4 +34,14 @@ public class PizzaConstructorController : ControllerBase
 
         return Ok(customPizza);
     }
+
+    [HttpGet("custom-pizza/{id:int}")]
+    public IActionResult GetCustomPizzaById(int id)
+    {
+        var customPizza = _customPizza.GetCustomPizzaByIdAction(id);
+        if (customPizza is null)
+            return NotFound(new { message = "custom_pizza_not_found" });
+
+        return Ok(customPizza);
+    }
 }

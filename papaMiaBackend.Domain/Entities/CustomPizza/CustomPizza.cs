@@ -11,5 +11,9 @@ public class CustomPizza
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
+    [Required]
+    [Range(0, int.MaxValue)]
+    public int TotalPrice { get; set; }
+
     public ICollection<IngNs.Ingridient> Ingridients { get; set; } = new List<IngNs.Ingridient>();
 }
