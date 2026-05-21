@@ -6,4 +6,6 @@ public class IngridientCreateDto
 {
     public string Name { get; set; } = string.Empty;
     public IngridientType Type { get; set; }
+    public int Price { get; set; }
+    public bool IsActive { get; set; } = true;
 }

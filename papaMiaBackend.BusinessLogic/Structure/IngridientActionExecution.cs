@@ -18,6 +18,11 @@ public class IngridientActionExecution : IngridientActions, IIngridientAction
         return GetAllIngridientsActionExecution();
     }
 
+    public List<IngridientDto> GetActiveIngridientsAction()
+    {
+        return GetActiveIngridientsActionExecution();
+    }
+
     public IngridientDto? GetIngridientByIdAction(int id)
     {
         return GetIngridientByIdActionExecution(id);

@@ -21,7 +21,7 @@ public class PizzaConstructorController : ControllerBase
     [HttpGet("ingridients")]
     public IActionResult GetAllIngridients()
     {
-        var items = _ingridient.GetAllIngridientsAction();
+        var items = _ingridient.GetActiveIngridientsAction();
         return Ok(items);
     }
 

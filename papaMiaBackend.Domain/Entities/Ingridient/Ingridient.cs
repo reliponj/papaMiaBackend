@@ -25,5 +25,12 @@ public class Ingridient
     [Required]
     public IngridientType Type { get; set; }
 
+    [Required]
+    [Range(0, int.MaxValue)]
+    public int Price { get; set; }
+
+    [Required]
+    public bool IsActive { get; set; } = true;
+
     public ICollection<PizzaNs.CustomPizza> CustomPizzas { get; set; } = new List<PizzaNs.CustomPizza>();
 }
