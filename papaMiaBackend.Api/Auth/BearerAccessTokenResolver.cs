@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using papaMiaBackend.Domain.Models.Auth;
-using papaMiaBackend.Helpers.Tokens;
+using papaMiaBackend.BusinessLogic.Structure;
 
 namespace papaMiaBackend.Api.Auth;
 

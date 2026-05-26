@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using papaMiaBackend.Domain.Models.Auth;
 
-namespace papaMiaBackend.Helpers.Tokens;
+namespace papaMiaBackend.BusinessLogic.Structure;
 
 public static class AccessTokenValidator
 {

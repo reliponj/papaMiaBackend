@@ -5,7 +5,7 @@ using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Entities.User;
 using papaMiaBackend.Domain.Models.Auth;
 using papaMiaBackend.Domain.Models.User;
-using papaMiaBackend.Helpers.Tokens;
+using papaMiaBackend.BusinessLogic.Structure;
 
 namespace papaMiaBackend.BusinessLogic.Core;
 
