@@ -7,7 +7,7 @@ using papaMiaBackend.Domain.Models.Product;
 
 namespace papaMiaBackend.Api.Controller;
 
-[AdminMod]
+[AdminPermission("products")]
 [SwaggerBearer]
 [Route("api/admin/product")]
 [ApiController]

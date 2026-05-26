@@ -8,8 +8,8 @@ namespace papaMiaBackend.BusinessLogic.Structure;
 
 public class OrderActionExecution : OrderActions, IOrderAction
 {
-    public OrderActionExecution(IMapper mapper, OrderContext db)
-        : base(mapper, db)
+    public OrderActionExecution(IMapper mapper, OrderContext db, PromocodeContext promocodeDb)
+        : base(mapper, db, promocodeDb)
     {
     }
 
@@ -18,9 +18,19 @@ public class OrderActionExecution : OrderActions, IOrderAction
         return GetAllOrdersActionExecution();
     }
 
+    public List<OrderDto> GetOrdersByUserAction(int userId)
+    {
+        return GetOrdersByUserActionExecution(userId);
+    }
+
     public OrderDto? GetOrderByIdAction(int id)
     {
         return GetOrderByIdActionExecution(id);
+    }
+
+    public OrderDto? GetOrderForUserAction(int orderId, int userId)
+    {
+        return GetOrderForUserActionExecution(orderId, userId);
     }
 
     public OrderDto? CreateOrderAction(OrderCreateDto dto, int? userId)

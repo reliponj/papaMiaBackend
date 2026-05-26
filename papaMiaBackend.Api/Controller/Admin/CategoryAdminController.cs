@@ -7,7 +7,7 @@ using papaMiaBackend.Domain.Models.Category;
 
 namespace papaMiaBackend.Api.Controller;
 
-[AdminMod]
+[AdminPermission("categories")]
 [SwaggerBearer]
 [Route("api/admin/category")]
 [ApiController]

@@ -44,6 +44,9 @@ namespace papaMiaBackend.DataAccess.Migrations.CustomPizza
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("TotalPrice")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("CustomPizzas");
@@ -57,10 +60,16 @@ namespace papaMiaBackend.DataAccess.Migrations.CustomPizza
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");

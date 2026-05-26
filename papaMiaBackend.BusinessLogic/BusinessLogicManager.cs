@@ -20,6 +20,9 @@ public class BusinessLogicManager
     private readonly RoleContext _roleDb;
     private readonly BannerContext _bannerDb;
     private readonly PromocodeContext _promocodeDb;
+    private readonly ReviewContext _reviewDb;
+    private readonly ArticleContext _articleDb;
+    private readonly LocationContext _locationDb;
     private readonly IPasswordHasher<User> _passwordHasher;
     private readonly IOptions<JwtGenerationSettings> _jwtOptions;
 
@@ -33,6 +36,9 @@ public class BusinessLogicManager
         RoleContext roleDb,
         BannerContext bannerDb,
         PromocodeContext promocodeDb,
+        ReviewContext reviewDb,
+        ArticleContext articleDb,
+        LocationContext locationDb,
         IPasswordHasher<User> passwordHasher,
         IOptions<JwtGenerationSettings> jwtOptions)
     {
@@ -45,6 +51,9 @@ public class BusinessLogicManager
         _roleDb = roleDb;
         _bannerDb = bannerDb;
         _promocodeDb = promocodeDb;
+        _reviewDb = reviewDb;
+        _articleDb = articleDb;
+        _locationDb = locationDb;
         _passwordHasher = passwordHasher;
         _jwtOptions = jwtOptions;
     }
@@ -54,9 +63,14 @@ public class BusinessLogicManager
         return new UserActionExecution(_mapper, _userDb, _passwordHasher);
     }
 
+    public IFavoriteAction FavoriteAction()
+    {
+        return new FavoriteActionExecution(_mapper, _userDb, _productDb);
+    }
+
     public IAuthAction AuthAction()
     {
-        return new AuthActionExecution(_userDb, _mapper, _passwordHasher, _jwtOptions);
+        return new AuthActionExecution(_userDb, _roleDb, _mapper, _passwordHasher, _jwtOptions);
     }
 
     public IProductAction ProductAction()
@@ -65,7 +79,7 @@ public class BusinessLogicManager
     }
     public IOrderAction OrderAction()
     {
-        return new OrderActionExecution(_mapper, _orderDb);
+        return new OrderActionExecution(_mapper, _orderDb, _promocodeDb);
     }
     public IRoleAction RoleAction()
     {
@@ -101,5 +115,20 @@ public class BusinessLogicManager
     public ICustomPizzaAction CustomPizzaAction()
     {
         return new CustomPizzaActionExecution(_mapper, _customPizzaDb);
+    }
+
+    public IReviewAction ReviewAction()
+    {
+        return new ReviewActionExecution(_mapper, _reviewDb);
+    }
+
+    public IArticleAction ArticleAction()
+    {
+        return new ArticleActionExecution(_mapper, _articleDb);
+    }
+
+    public ILocationAction LocationAction()
+    {
+        return new LocationActionExecution(_mapper, _locationDb);
     }
 }

@@ -13,10 +13,11 @@ public class AuthActionExecution : AuthActions, IAuthAction
 {
     public AuthActionExecution(
         UserContext db,
+        RoleContext roleDb,
         IMapper mapper,
         IPasswordHasher<User> passwordHasher,
         IOptions<JwtGenerationSettings> jwtOptions)
-        : base(db, mapper, passwordHasher, jwtOptions)
+        : base(db, roleDb, mapper, passwordHasher, jwtOptions)
     {
     }
 

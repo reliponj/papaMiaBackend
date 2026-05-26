@@ -17,4 +17,9 @@ public class CustomPizzaActionExecution : CustomPizzaActions, ICustomPizzaAction
     {
         return CreateCustomPizzaActionExecution(dto);
     }
+
+    public CustomPizzaDto? GetCustomPizzaByIdAction(int id)
+    {
+        return GetCustomPizzaByIdActionExecution(id);
+    }
 }

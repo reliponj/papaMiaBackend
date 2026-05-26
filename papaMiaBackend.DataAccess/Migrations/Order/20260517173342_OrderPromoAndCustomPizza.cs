@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -7,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace papaMiaBackend.DataAccess.Migrations.Order
 {
     /// <inheritdoc />
-    public partial class Ordertopromo : Migration
+    public partial class OrderPromoAndCustomPizza : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,25 +18,46 @@ namespace papaMiaBackend.DataAccess.Migrations.Order
                 nullable: true);
 
             migrationBuilder.CreateTable(
-                name: "Promocodes",
+                name: "OrderCustomPizzaItems",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Code = table.Column<string>(type: "text", nullable: false),
-                    Percent = table.Column<int>(type: "integer", nullable: false),
-                    ExpiryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    OrderId = table.Column<int>(type: "integer", nullable: false),
+                    CustomPizzaId = table.Column<int>(type: "integer", nullable: false),
+                    Quantity = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Promocodes", x => x.Id);
+                    table.PrimaryKey("PK_OrderCustomPizzaItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderCustomPizzaItems_CustomPizzas_CustomPizzaId",
+                        column: x => x.CustomPizzaId,
+                        principalTable: "CustomPizzas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderCustomPizzaItems_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_PromocodeId",
                 table: "Orders",
                 column: "PromocodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderCustomPizzaItems_CustomPizzaId",
+                table: "OrderCustomPizzaItems",
+                column: "CustomPizzaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderCustomPizzaItems_OrderId",
+                table: "OrderCustomPizzaItems",
+                column: "OrderId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Orders_Promocodes_PromocodeId",
@@ -56,7 +76,7 @@ namespace papaMiaBackend.DataAccess.Migrations.Order
                 table: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Promocodes");
+                name: "OrderCustomPizzaItems");
 
             migrationBuilder.DropIndex(
                 name: "IX_Orders_PromocodeId",

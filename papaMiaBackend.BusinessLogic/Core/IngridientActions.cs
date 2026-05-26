@@ -25,6 +25,16 @@ public class IngridientActions
         return Mapper.Map<List<IngridientDto>>(entities);
     }
 
+    internal List<IngridientDto> GetActiveIngridientsActionExecution()
+    {
+        var entities = Db.Ingridients
+            .Where(i => i.IsActive)
+            .OrderBy(i => i.Type)
+            .ThenBy(i => i.Name)
+            .ToList();
+        return Mapper.Map<List<IngridientDto>>(entities);
+    }
+
     internal IngridientDto? GetIngridientByIdActionExecution(int id)
     {
         var entity = Db.Ingridients.FirstOrDefault(i => i.Id == id);
@@ -37,7 +47,6 @@ public class IngridientActions
     internal IngridientDto? CreateIngridientActionExecution(IngridientCreateDto dto)
     {
         var entity = Mapper.Map<Ingridient>(dto);
-        entity.Name = dto.Name;
         Db.Ingridients.Add(entity);
         Db.SaveChanges();
         return Mapper.Map<IngridientDto>(entity);
@@ -50,7 +59,6 @@ public class IngridientActions
             return null;
 
         Mapper.Map(dto, entity);
-        entity.Name = dto.Name;
         Db.SaveChanges();
         return Mapper.Map<IngridientDto>(entity);
     }

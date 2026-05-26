@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Constants;
 using papaMiaBackend.Domain.Entities.Role;
@@ -6,99 +7,92 @@ namespace papaMiaBackend.DataAccess.Seeds;
 
 public static class RoleSeed
 {
+    private static readonly (string Code, string Name, string Description)[] Roles =
+    [
+        (RoleCodes.User, "User", "Default user role"),
+        (RoleCodes.Moderator, "Moderator", "Moderator role"),
+        (RoleCodes.Admin, "Admin", "Administrator role")
+    ];
+
+    private static readonly string[] Resources =
+    [
+        "users", "products", "categories", "allergens", "orders", "articles",
+        "banners", "promocodes", "locations", "ingridients", "reviews", "roles", "permissions"
+    ];
+
+    private static readonly string[] Actions = ["view", "create", "update", "delete"];
+
     public static void Apply(RoleContext db)
     {
-        if (!db.Roles.Any(r => r.Code == RoleCodes.User))
+        foreach (var (code, name, description) in Roles)
         {
+            if (db.Roles.Any(r => r.Code == code))
+                continue;
+
             db.Roles.Add(new Role
             {
-                Name = "User",
-                Code = RoleCodes.User,
-                Description = "Default user role",
+                Name = name,
+                Code = code,
+                Description = description,
                 IsSystem = true
             });
         }
 
-        if (!db.Roles.Any(r => r.Code == RoleCodes.Moderator))
+        foreach (var resource in Resources)
         {
-            db.Roles.Add(new Role
+            var groupCode = $"permission.{resource}";
+            var group = db.PermissionGroups.FirstOrDefault(g => g.Code == groupCode);
+            if (group is null)
             {
-                Name = "Moderator",
-                Code = RoleCodes.Moderator,
-                Description = "Moderator role",
-                IsSystem = true
-            });
-        }
+                group = new PermissionGroup
+                {
+                    Code = groupCode,
+                    Name = char.ToUpper(resource[0]) + resource[1..],
+                    Description = $"{resource} permissions"
+                };
+                db.PermissionGroups.Add(group);
+                db.SaveChanges();
+            }
 
-        if (!db.Roles.Any(r => r.Code == RoleCodes.Admin))
-        {
-            db.Roles.Add(new Role
+            foreach (var action in Actions)
             {
-                Name = "Admin",
-                Code = RoleCodes.Admin,
-                Description = "Administrator role",
-                IsSystem = true
-            });
-        }
+                var code = $"{resource}.{action}";
+                if (db.Permissions.Any(p => p.Code == code))
+                    continue;
 
-        var usersGroup = db.PermissionGroups.FirstOrDefault(g => g.Code == "permission.users");
-        if (usersGroup == null)
-        {
-            usersGroup = new PermissionGroup
-            {
-                Name = "Users",
-                Code = "permission.users",
-                Description = "Users permissions"
-            };
-            db.PermissionGroups.Add(usersGroup);
-            db.SaveChanges();
+                db.Permissions.Add(new Permission
+                {
+                    Code = code,
+                    Name = $"{resource}.{action}",
+                    Description = code,
+                    PermissionGroupId = group.Id
+                });
+            }
         }
-
-        EnsurePermission(db, usersGroup.Id, "Users.View", "users.view", "View users");
-        EnsurePermission(db, usersGroup.Id, "Users.Create", "users.create", "Create users");
-        EnsurePermission(db, usersGroup.Id, "Users.Update", "users.update", "Update users");
-        EnsurePermission(db, usersGroup.Id, "Users.Delete", "users.delete", "Delete users");
 
         db.SaveChanges();
 
-        var adminRole = db.Roles
-            .Where(r => r.Code == RoleCodes.Admin)
-            .FirstOrDefault();
-
-        if (adminRole != null)
-        {
-            var usersPermissions = db.Permissions
-                .Where(p => p.PermissionGroupId == usersGroup.Id)
-                .ToList();
-
-            db.Entry(adminRole).Collection(r => r.Permissions).Load();
-
-            foreach (var permission in usersPermissions)
-            {
-                if (adminRole.Permissions.All(p => p.Id != permission.Id))
-                    adminRole.Permissions.Add(permission);
-            }
-
-            db.SaveChanges();
-        }
+        LinkPermissions(db, RoleCodes.Admin, db.Permissions.Select(p => p.Code));
+        LinkPermissions(db, RoleCodes.Moderator, PermissionCodes.Moderator);
     }
 
-    private static void EnsurePermission(
-        RoleContext db,
-        int groupId,
-        string name,
-        string code,
-        string description)
+    private static void LinkPermissions(RoleContext db, string roleCode, IEnumerable<string> permissionCodes)
     {
-        if (db.Permissions.Any(p => p.Code == code))
+        var role = db.Roles
+            .Include(r => r.Permissions)
+            .FirstOrDefault(r => r.Code == roleCode);
+
+        if (role is null)
             return;
 
-        db.Permissions.Add(new Permission
+        var linked = role.Permissions.Select(p => p.Id).ToHashSet();
+
+        foreach (var permission in db.Permissions.Where(p => permissionCodes.Contains(p.Code)))
         {
-            Name = name,
-            Code = code,
-            Description = description,
-            PermissionGroupId = groupId
-        });
+            if (!linked.Contains(permission.Id))
+                role.Permissions.Add(permission);
+        }
+
+        db.SaveChanges();
     }
 }
