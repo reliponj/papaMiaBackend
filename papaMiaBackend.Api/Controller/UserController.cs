@@ -12,11 +12,13 @@ namespace papaMiaBackend.Api.Controller;
 public class UserController : ControllerBase
 {
     private readonly IUserAction _user;
+    private readonly IFavoriteAction _favorite;
     private readonly ICurrentUser _currentUser;
 
     public UserController(BusinessLogicManager bl, ICurrentUser currentUser)
     {
         _user = bl.UserAction();
+        _favorite = bl.FavoriteAction();
         _currentUser = currentUser;
     }
 
@@ -46,6 +48,31 @@ public class UserController : ControllerBase
             return NotFound();
 
         return Ok(user);
+    }
+
+    [SwaggerBearer]
+    [HttpGet("favorites")]
+    public IActionResult GetFavorites()
+    {
+        if (!_currentUser.TryGetUserId(out var id))
+            return Unauthorized();
+
+        var products = _favorite.GetFavoriteProductsAction(id);
+        return Ok(products);
+    }
+
+    [SwaggerBearer]
+    [HttpPost("favorites/toggle")]
+    public IActionResult ToggleFavorite([FromBody] FavoriteToggleRequestDto dto)
+    {
+        if (!_currentUser.TryGetUserId(out var id))
+            return Unauthorized();
+
+        var result = _favorite.ToggleFavoriteAction(id, dto?.ProductId ?? 0);
+        if (result is null)
+            return BadRequest(new { message = "product_not_found" });
+
+        return Ok(result);
     }
 
     [SwaggerBearer]

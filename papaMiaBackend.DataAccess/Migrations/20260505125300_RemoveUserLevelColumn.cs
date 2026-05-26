@@ -8,9 +8,7 @@ namespace papaMiaBackend.DataAccess.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Level",
-                table: "Users");
+            migrationBuilder.Sql("ALTER TABLE \"Users\" DROP COLUMN IF EXISTS \"Level\";");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

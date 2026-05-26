@@ -9,4 +9,5 @@ public interface IArticleAction
     ArticleDto? CreateArticleAction(ArticleCreateDto dto);
     ArticleDto? UpdateArticleAction(int id, ArticleUpdateDto dto);
     bool DeleteArticleAction(int id);
+    ArticleCommentDto? AddArticleCommentAction(int articleId, int userId, ArticleCommentCreateDto dto);
 }

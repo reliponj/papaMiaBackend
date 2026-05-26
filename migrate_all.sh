@@ -10,10 +10,10 @@ contexts=(
   LocationContext
   BannerContext
   PromocodeContext
-  OrderContext
-  ArticleContext
   IngridientContext
   CustomPizzaContext
+  OrderContext
+  ArticleContext
   ReviewContext
 )
 for ctx in "${contexts[@]}"; do

@@ -20,12 +20,19 @@ public class CustomPizzaActions
 
     internal CustomPizzaDto? CreateCustomPizzaActionExecution(CustomPizzaCreateDto dto)
     {
-        var ids = dto.IngridientIds;
+        var ids = dto.IngridientIds.Distinct().ToList();
+        if (ids.Count == 0)
+            return null;
+
         var ingridients = Db.Set<IngNs.Ingridient>()
-            .Where(i => ids.Contains(i.Id))
+            .Where(i => ids.Contains(i.Id) && i.IsActive)
             .ToList();
 
+        if (ingridients.Count != ids.Count)
+            return null;
+
         var entity = Mapper.Map<PizzaNs.CustomPizza>(dto);
+        entity.TotalPrice = ingridients.Sum(i => i.Price);
         entity.Ingridients = ingridients;
 
         Db.CustomPizzas.Add(entity);
@@ -36,5 +43,14 @@ public class CustomPizzaActions
             .First(p => p.Id == entity.Id);
 
         return Mapper.Map<CustomPizzaDto>(created);
+    }
+
+    internal CustomPizzaDto? GetCustomPizzaByIdActionExecution(int id)
+    {
+        var entity = Db.CustomPizzas
+            .Include(p => p.Ingridients)
+            .FirstOrDefault(p => p.Id == id);
+
+        return entity is null ? null : Mapper.Map<CustomPizzaDto>(entity);
     }
 }

@@ -22,34 +22,38 @@ public class ArticleActions
         var entities = Db.Articles
             .OrderByDescending(a => a.CreatedAt)
             .ToList();
-        return Mapper.Map<List<ArticleDto>>(entities);
+        return entities.Select(MapArticleListItem).ToList();
     }
 
     internal ArticleDto? GetArticleByIdActionExecution(int id)
     {
         var entity = Db.Articles
+            .Include(a => a.Comments)
             .FirstOrDefault(a => a.Id == id);
         if (entity is null)
             return null;
 
-        return Mapper.Map<ArticleDto>(entity);
+        return MapArticleDetail(entity);
     }
 
     internal ArticleDto? CreateArticleActionExecution(ArticleCreateDto dto)
     {
+        if (string.IsNullOrWhiteSpace(dto.Title))
+            return null;
         if (string.IsNullOrWhiteSpace(dto.Text))
             return null;
         if (string.IsNullOrWhiteSpace(dto.ImageUrl))
             return null;
 
         var entity = Mapper.Map<Article>(dto);
+        entity.Title = entity.Title.Trim();
         entity.Text = entity.Text.Trim();
         entity.ImageUrl = entity.ImageUrl.Trim();
         entity.CreatedAt = DateTime.UtcNow;
 
         Db.Articles.Add(entity);
         Db.SaveChanges();
-        return Mapper.Map<ArticleDto>(entity);
+        return MapArticleListItem(entity);
     }
 
     internal ArticleDto? UpdateArticleActionExecution(int id, ArticleUpdateDto dto)
@@ -58,16 +62,19 @@ public class ArticleActions
         if (entity is null)
             return null;
 
+        if (string.IsNullOrWhiteSpace(dto.Title))
+            return null;
         if (string.IsNullOrWhiteSpace(dto.Text))
             return null;
         if (string.IsNullOrWhiteSpace(dto.ImageUrl))
             return null;
 
+        entity.Title = dto.Title.Trim();
         entity.Text = dto.Text.Trim();
         entity.ImageUrl = dto.ImageUrl.Trim();
 
         Db.SaveChanges();
-        return Mapper.Map<ArticleDto>(entity);
+        return MapArticleListItem(entity);
     }
 
     internal bool DeleteArticleActionExecution(int id)
@@ -79,5 +86,41 @@ public class ArticleActions
         Db.Articles.Remove(entity);
         Db.SaveChanges();
         return true;
+    }
+
+    internal ArticleCommentDto? AddArticleCommentActionExecution(int articleId, int userId, ArticleCommentCreateDto dto)
+    {
+        if (string.IsNullOrWhiteSpace(dto.Text))
+            return null;
+
+        if (!Db.Articles.Any(a => a.Id == articleId))
+            return null;
+
+        var entity = new ArticleComment
+        {
+            ArticleId = articleId,
+            UserId = userId,
+            Text = dto.Text.Trim(),
+            CreatedAt = DateTime.UtcNow
+        };
+
+        Db.ArticleComments.Add(entity);
+        Db.SaveChanges();
+        return Mapper.Map<ArticleCommentDto>(entity);
+    }
+
+    private ArticleDto MapArticleListItem(Article entity)
+    {
+        var dto = Mapper.Map<ArticleDto>(entity);
+        dto.Comments = [];
+        return dto;
+    }
+
+    private ArticleDto MapArticleDetail(Article entity)
+    {
+        var dto = Mapper.Map<ArticleDto>(entity);
+        dto.Comments = Mapper.Map<List<ArticleCommentDto>>(
+            entity.Comments.OrderBy(c => c.CreatedAt));
+        return dto;
     }
 }

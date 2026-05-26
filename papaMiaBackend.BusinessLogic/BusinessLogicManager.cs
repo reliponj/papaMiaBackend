@@ -63,9 +63,14 @@ public class BusinessLogicManager
         return new UserActionExecution(_mapper, _userDb, _passwordHasher);
     }
 
+    public IFavoriteAction FavoriteAction()
+    {
+        return new FavoriteActionExecution(_mapper, _userDb, _productDb);
+    }
+
     public IAuthAction AuthAction()
     {
-        return new AuthActionExecution(_userDb, _mapper, _passwordHasher, _jwtOptions);
+        return new AuthActionExecution(_userDb, _roleDb, _mapper, _passwordHasher, _jwtOptions);
     }
 
     public IProductAction ProductAction()

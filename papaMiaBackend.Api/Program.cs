@@ -44,8 +44,6 @@ builder.Services.Configure<JwtGenerationSettings>(
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
-builder.Services.AddAdminAccessControl();
-
 var corsOrigins = builder.Configuration.GetSection("Cors:Origins").Get<string[]>();
 builder.Services.AddCors(options =>
 {
@@ -89,6 +87,7 @@ using (var scope = app.Services.CreateScope())
     var seedUser = new User();
     var adminPasswordHash = passwordHasher.HashPassword(seedUser, "123");
     AdminUserSeed.Apply(userDb, adminPasswordHash);
+    ModeratorUserSeed.Apply(userDb, adminPasswordHash);
 }
 
 if (app.Environment.IsDevelopment())

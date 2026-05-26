@@ -5,7 +5,7 @@ using papaMiaBackend.DataAccess.Context;
 using papaMiaBackend.Domain.Entities.User;
 using papaMiaBackend.Domain.Models.Auth;
 using papaMiaBackend.Domain.Models.User;
-using papaMiaBackend.Helpers.Tokens;
+using papaMiaBackend.BusinessLogic.Structure;
 
 namespace papaMiaBackend.BusinessLogic.Core;
 
@@ -16,15 +16,18 @@ public class AuthActions
     protected readonly UserContext Db;
     protected readonly IMapper Mapper;
     protected readonly IPasswordHasher<User> PasswordHasher;
+    protected readonly RoleContext RoleDb;
     protected readonly JwtGenerationSettings JwtSettings;
 
     public AuthActions(
         UserContext db,
+        RoleContext roleDb,
         IMapper mapper,
         IPasswordHasher<User> passwordHasher,
         IOptions<JwtGenerationSettings> jwtOptions)
     {
         Db = db;
+        RoleDb = roleDb;
         Mapper = mapper;
         PasswordHasher = passwordHasher;
         JwtSettings = jwtOptions.Value;
@@ -87,7 +90,8 @@ public class AuthActions
 
     private AuthTokenPair CreateAndPersistTokenPair(int userId)
     {
-        var pair = TokenGenerator.CreatePair(JwtSettings, userId);
+        var permissionCodes = UserPermissions.GetCodes(Db, RoleDb, userId);
+        var pair = TokenGenerator.CreatePair(JwtSettings, userId, permissionCodes);
         var hash = RefreshTokenHasher.Hash(pair.RefreshToken);
         Db.RefreshTokens.Add(new RefreshToken
         {
