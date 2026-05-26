@@ -89,6 +89,7 @@ using (var scope = app.Services.CreateScope())
     var seedUser = new User();
     var adminPasswordHash = passwordHasher.HashPassword(seedUser, "123");
     AdminUserSeed.Apply(userDb, adminPasswordHash);
+    ModeratorUserSeed.Apply(userDb, adminPasswordHash);
 }
 
 if (app.Environment.IsDevelopment())
