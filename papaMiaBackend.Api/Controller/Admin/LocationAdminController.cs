@@ -7,7 +7,7 @@ using papaMiaBackend.Domain.Models.Location;
 
 namespace papaMiaBackend.Api.Controller;
 
-[AdminMod]
+[AdminPermission("locations")]
 [SwaggerBearer]
 [Route("api/admin/location")]
 [ApiController]

@@ -7,7 +7,7 @@ using papaMiaBackend.Domain.Models.Banner;
 
 namespace papaMiaBackend.Api.Controller;
 
-[AdminMod]
+[AdminPermission("banners")]
 [SwaggerBearer]
 [Route("api/admin/banner")]
 [ApiController]

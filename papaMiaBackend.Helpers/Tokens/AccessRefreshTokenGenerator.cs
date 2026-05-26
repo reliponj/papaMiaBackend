@@ -9,7 +9,7 @@ namespace papaMiaBackend.Helpers.Tokens;
 
 public sealed class AccessRefreshTokenGenerator
 {
-    public AuthTokenPair CreatePair(JwtGenerationSettings settings, int userId)
+    public AuthTokenPair CreatePair(JwtGenerationSettings settings, int userId, IEnumerable<string> permissions)
     {
         ArgumentNullException.ThrowIfNull(settings);
         if (string.IsNullOrWhiteSpace(settings.Secret) || settings.Secret.Length < 32)
@@ -18,7 +18,7 @@ public sealed class AccessRefreshTokenGenerator
         var accessExpiresAt = DateTimeOffset.UtcNow.AddMinutes(settings.AccessTokenLifetimeMinutes);
         var refreshExpiresAt = DateTimeOffset.UtcNow.AddDays(settings.RefreshTokenLifetimeDays);
 
-        var accessToken = CreateAccessToken(settings, userId, accessExpiresAt);
+        var accessToken = CreateAccessToken(settings, userId, permissions, accessExpiresAt);
         var refreshToken = CreateRefreshTokenValue();
 
         return new AuthTokenPair(accessToken, refreshToken, accessExpiresAt, refreshExpiresAt);
@@ -27,6 +27,7 @@ public sealed class AccessRefreshTokenGenerator
     private static string CreateAccessToken(
         JwtGenerationSettings settings,
         int userId,
+        IEnumerable<string> permissions,
         DateTimeOffset accessExpiresAtUtc)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.Secret));
@@ -35,6 +36,9 @@ public sealed class AccessRefreshTokenGenerator
         {
             new(JwtRegisteredClaimNames.Sub, userId.ToString())
         };
+
+        foreach (var permission in permissions)
+            claims.Add(new Claim("permission", permission));
 
         var token = new JwtSecurityToken(
             settings.Issuer,

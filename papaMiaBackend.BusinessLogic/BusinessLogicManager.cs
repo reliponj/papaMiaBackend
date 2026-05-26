@@ -70,7 +70,7 @@ public class BusinessLogicManager
 
     public IAuthAction AuthAction()
     {
-        return new AuthActionExecution(_userDb, _mapper, _passwordHasher, _jwtOptions);
+        return new AuthActionExecution(_userDb, _roleDb, _mapper, _passwordHasher, _jwtOptions);
     }
 
     public IProductAction ProductAction()

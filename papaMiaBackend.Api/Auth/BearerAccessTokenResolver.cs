@@ -23,10 +23,13 @@ public static class BearerAccessTokenResolver
         return true;
     }
 
-    public static int? TryGetUserId(HttpRequest? request, JwtGenerationSettings jwtSettings)
-    {
-        return TryGetBearerToken(request, out var accessToken)
+    public static int? TryGetUserId(HttpRequest? request, JwtGenerationSettings jwtSettings) =>
+        TryGetBearerToken(request, out var accessToken)
             ? AccessTokenValidator.TryGetUserId(accessToken, jwtSettings)
             : null;
-    }
+
+    public static HashSet<string>? TryGetPermissions(HttpRequest? request, JwtGenerationSettings jwtSettings) =>
+        TryGetBearerToken(request, out var accessToken)
+            ? AccessTokenValidator.TryGetPermissions(accessToken, jwtSettings)
+            : null;
 }

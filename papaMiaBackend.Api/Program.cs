@@ -44,8 +44,6 @@ builder.Services.Configure<JwtGenerationSettings>(
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
-builder.Services.AddAdminAccessControl();
-
 var corsOrigins = builder.Configuration.GetSection("Cors:Origins").Get<string[]>();
 builder.Services.AddCors(options =>
 {

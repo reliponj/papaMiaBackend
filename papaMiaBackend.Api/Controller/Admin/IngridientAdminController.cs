@@ -7,7 +7,7 @@ using papaMiaBackend.Domain.Models.Ingridient;
 
 namespace papaMiaBackend.Api.Controller;
 
-[AdminMod]
+[AdminPermission("ingridients")]
 [SwaggerBearer]
 [Route("api/admin/ingridient")]
 [ApiController]
