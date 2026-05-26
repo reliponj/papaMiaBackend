@@ -41,9 +41,59 @@ namespace papaMiaBackend.DataAccess.Migrations.Article
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Articles");
+                });
+
+            modelBuilder.Entity("papaMiaBackend.Domain.Entities.Article.ArticleComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("ArticleComments");
+                });
+
+            modelBuilder.Entity("papaMiaBackend.Domain.Entities.Article.ArticleComment", b =>
+                {
+                    b.HasOne("papaMiaBackend.Domain.Entities.Article.Article", "Article")
+                        .WithMany("Comments")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+                });
+
+            modelBuilder.Entity("papaMiaBackend.Domain.Entities.Article.Article", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,7 +7,7 @@ using papaMiaBackend.Domain.Models.Review;
 
 namespace papaMiaBackend.Api.Controller;
 
-[AdminMod]
+[AdminPermission("reviews")]
 [SwaggerBearer]
 [Route("api/admin/review")]
 [ApiController]

@@ -21,7 +21,7 @@ public class PizzaConstructorController : ControllerBase
     [HttpGet("ingridients")]
     public IActionResult GetAllIngridients()
     {
-        var items = _ingridient.GetAllIngridientsAction();
+        var items = _ingridient.GetActiveIngridientsAction();
         return Ok(items);
     }
 
@@ -31,6 +31,16 @@ public class PizzaConstructorController : ControllerBase
         var customPizza = _customPizza.CreateCustomPizzaAction(dto);
         if (customPizza is null)
             return BadRequest(new { message = "invalid_ingridients" });
+
+        return Ok(customPizza);
+    }
+
+    [HttpGet("custom-pizza/{id:int}")]
+    public IActionResult GetCustomPizzaById(int id)
+    {
+        var customPizza = _customPizza.GetCustomPizzaByIdAction(id);
+        if (customPizza is null)
+            return NotFound(new { message = "custom_pizza_not_found" });
 
         return Ok(customPizza);
     }

@@ -11,6 +11,10 @@ public class Article
     public int Id { get; set; }
 
     [Required]
+    [StringLength(200)]
+    public string Title { get; set; } = string.Empty;
+
+    [Required]
     public DateTime CreatedAt { get; set; }
 
     [Required]
@@ -19,4 +23,6 @@ public class Article
     [Required]
     [Display(Name = "ImageUrl")]
     public string ImageUrl { get; set; } = string.Empty;
+
+    public ICollection<ArticleComment> Comments { get; set; } = new List<ArticleComment>();
 }

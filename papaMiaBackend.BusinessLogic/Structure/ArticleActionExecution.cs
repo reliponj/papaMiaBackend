@@ -37,4 +37,9 @@ public class ArticleActionExecution : ArticleActions, IArticleAction
     {
         return DeleteArticleActionExecution(id);
     }
+
+    public ArticleCommentDto? AddArticleCommentAction(int articleId, int userId, ArticleCommentCreateDto dto)
+    {
+        return AddArticleCommentActionExecution(articleId, userId, dto);
+    }
 }

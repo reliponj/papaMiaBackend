@@ -7,7 +7,7 @@ using papaMiaBackend.Domain.Models.Promocode;
 
 namespace papaMiaBackend.Api.Controller;
 
-[AdminMod]
+[AdminPermission("promocodes")]
 [SwaggerBearer]
 [Route("api/admin/promocode")]
 [ApiController]
